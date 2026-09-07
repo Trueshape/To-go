@@ -1,10 +1,37 @@
 <!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Japan 2028</title><style>
-:root{--bg:#f6f5f2;--card:#fff;--ink:#1c1b18;--mut:#6b675f;--line:#e7e3db;--accent:#b4472e;--ok:#2e7d5b}
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1c1b18;--mut:#6b675f;--line:#e7e3db;--accent:#b4472e;--ok:#2e7d5b;--rail:210px}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 a{color:var(--accent)}
 button{font:inherit;cursor:pointer}
-header{padding:24px 20px 10px;max-width:820px;margin:0 auto}
+#app{display:flex;align-items:flex-start}
+.rail{flex:0 0 var(--rail);position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);background:var(--card)}
+.railinner{padding:16px 10px;display:flex;flex-direction:column;gap:3px}
+.raillabel{font-weight:700;font-size:13px;padding:2px 8px 8px;color:var(--mut)}
+.raillink{display:flex;flex-direction:column;gap:1px;text-decoration:none;color:var(--ink);padding:7px 9px;border-radius:8px;line-height:1.2}
+.raillink b{font-size:13px}
+.raillink span{font-size:11px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.raillink:hover{background:var(--bg)}
+.raillink.here{background:var(--accent);color:#fff}
+.raillink.here span{color:#fde7e1}
+.content{flex:1;min-width:0}
+section.day{scroll-margin-top:8px}
+@media(max-width:720px){
+  #app{display:block}
+  .rail{position:sticky;top:0;height:auto;width:100%;flex-basis:auto;border-right:0;border-bottom:1px solid var(--line);z-index:20}
+  .railinner{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:8px 12px}
+  .raillabel{display:none}
+  .raillink{flex-direction:row;gap:5px;align-items:baseline;border:1px solid var(--line);white-space:nowrap}
+  .raillink span{max-width:90px}
+}
+.itinbar{max-width:820px;margin:0 auto;padding:14px 20px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.itinbar select{font:inherit;padding:4px 6px;border:1px solid var(--line);border-radius:7px;max-width:60vw}
+.itinbar .newitin{flex-basis:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:6px}
+.itinbar .newitin input,.itinbar .newitin textarea{width:100%;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:7px;margin:5px 0}
+.itinbar .newitin .r{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.itinbar .newitin .go{background:var(--accent);color:#fff;border:0;border-radius:7px;padding:6px 12px}
+header{padding:16px 20px 10px;max-width:820px;margin:0 auto}
 header h1{margin:0 0 4px;font-size:26px}
 .sub{margin:0 0 12px;color:var(--mut);font-size:14px}
 .panel{max-width:820px;margin:0 auto;padding:0 20px}
@@ -55,7 +82,9 @@ main{max-width:820px;margin:0 auto;padding:6px 20px 70px}
 .stoprow input[type=time],.stoprow select{font:inherit;padding:2px 4px;border:1px solid var(--line);border-radius:6px}
 .usernote{display:block;font-size:12px;color:var(--mut);margin-top:8px}
 .usernote input{display:block;width:100%;font:inherit;color:var(--ink);padding:5px 7px;border:1px solid var(--line);border-radius:7px;margin-top:3px;background:#fffdf7}
-.hiddenrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.hiddenrow,.fillpanel{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.fillpanel{background:#eef3ec;border:1px solid #d3e0cf;border-radius:12px;padding:9px 11px}
+.fillpanel .hint{flex-basis:100%}
 .pill{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;color:var(--ink)}
 .pill b{color:var(--accent)}
 .leg{display:flex;align-items:center;gap:9px;margin:1px 0 1px 18px;color:var(--mut);font-size:13px}
@@ -72,27 +101,39 @@ main{max-width:820px;margin:0 auto;padding:6px 20px 70px}
 .hint{color:var(--mut);font-size:12px}
 footer{max-width:820px;margin:0 auto;padding:20px;color:var(--mut);font-size:12px}
 @media(max-width:560px){.stop{flex-direction:column}.photo{flex-basis:170px}.photo img,.noimg{min-height:170px}}
-</style></head><body><div id="app"></div><script id="ITIN" type="application/json">{"title": "Japan 2028", "sourceUrl": "examples/japan-2028.places.json", "enriched": false, "mode": "transit", "stateKey": "mli:2c5ef78bf67d", "cfg": {"dayStart": "09:30", "lunchAt": "13:00", "lunchMin": 60, "pace": 1.0, "walkKm": 1.1, "speeds": {"walking": 4.5, "transit": 16.0, "driving": 22.0}, "dwell": {"museum": 90, "gallery": 75, "park": 60, "garden": 60, "market": 60, "mall": 90, "shop": 45, "shopping_street": 60, "shrine": 45, "temple": 45, "church": 30, "castle": 90, "landmark": 30, "viewpoint": 30, "photo_spot": 20, "restaurant": 75, "cafe": 40, "bar": 60, "nightlife_alley": 75, "neighborhood": 90, "station": 15, "convenience": 10, "default": 45}}, "kindLabels": {"museum": "Museo", "gallery": "Galleria d'arte", "park": "Parco", "garden": "Giardino", "market": "Mercato", "mall": "Centro commerciale", "shop": "Negozio", "shopping_street": "Via dello shopping", "shrine": "Santuario shintoista", "temple": "Tempio", "church": "Chiesa", "castle": "Castello", "landmark": "Monumento", "viewpoint": "Punto panoramico", "photo_spot": "Attrazione", "restaurant": "Ristorante", "cafe": "Caffè", "bar": "Bar", "nightlife_alley": "Vicolo notturno", "neighborhood": "Quartiere", "station": "Stazione", "convenience": "Konbini", "default": "Luogo"}, "kindEmoji": {"park": "🌳", "garden": "🌱", "shrine": "⛩️", "temple": "🛐", "market": "🍜", "mall": "🛍️", "shop": "🛍️", "museum": "🏛️", "viewpoint": "🌄", "photo_spot": "📷", "restaurant": "🍱", "cafe": "☕", "bar": "🍸", "castle": "🏰", "station": "🚉", "neighborhood": "🏙️", "landmark": "🗼", "convenience": "🏪", "default": "📍"}, "skippedNoCoords": [], "days": [{"index": 1, "label": "Osaka", "stops": [{"id": "1-0-shinsekai-market", "name": "Shinsekai Market", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmupBOQYujXkSgwR8teWZrJ-MKL5J7jIXmjsv8lxjx1q_MeleVIKhuvVf51lu10sJq_ZvsQtzCWqSeAGUZdRJfhKGh16iJeyTWfyF5eHGeVgc7ja3sWBXUzRH-Hi_PWqy61ynOQzg=w1000-h640-k-no", "address": "1 Chome-21-12 Ebisuhigashi, Naniwa Ward, Osaka, 556-0002, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6536555, "lng": 135.5056051, "placeId": "", "reason": ""}, {"id": "1-1-nipponbashi", "name": "Nipponbashi", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmOh4WBa_VD-bWbVlWt9qzqK0h1vnB8ycobtj0_s1sw3rCA6vyF0NgwC_3Ndegbc7AEwGiOLxYzgI73t02jk04O-5pP4mYLn9haLsy2-gtYtcl5dL4cFnOKRUjrvULOivdKP6Ys=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 34.6590233, "lng": 135.5057497, "placeId": "", "reason": "generic"}, {"id": "1-2-kuromon-market", "name": "Kuromon Market", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.1, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn7nPCy5jr76zlE5SRGsO1GiijvQ0ouxzwZwmqyT6uTVFr6lj5cqz-X0FIY_0jSgGaxwfTTNmc_COd1GjM6dqaLAzCkfaur1-og4ykabUWe6MeGBV-fbHABf6gBIi-jc8v5LuY=w1000-h640-k-no", "address": "2 Chome-4-1 Nipponbashi, Chuo Ward, Osaka, 542-0073, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6653511, "lng": 135.5062417, "placeId": "", "reason": ""}, {"id": "1-3-familymart-ebisubashi", "name": "FamilyMart Ebisubashi", "kind": "convenience", "category": "Convenience store", "rating": 2.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkPir8a8roI6KqH-dm0MdiHIKgQmXsjfsGnw0W3DX7wudPCs3FHF3Ysx5YrcIpoZtnU_Z80jpzYtnQjHiKDEeJu9lzF8EGcSOd_MZAwH2GE9TAj30hRVhd3hiy-z7OcrLuug7ru9vKE46cR=w1000-h640-k-no", "address": "1 Chome-9-1 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6686393, "lng": 135.5012014, "placeId": "", "reason": ""}, {"id": "1-4-glico-sign-dotonbori", "name": "Glico Sign Dotonbori", "kind": "landmark", "category": "Cultural landmark", "rating": 4.5, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnAQBkC6oY1eSk7Wn5fW4ml0YXJmxgfuyK3U1991mk7r0atCHw9_SCYHyt1ENZ_SruX0-s_WCX1UvHT5IbjQB7LnEcfog2scyZ-wngspZOk20vBuB4EzO04r5V1H5Xm2Bd1-WRn=w1000-h640-k-no", "address": "1 Chome-10-3 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6689339, "lng": 135.5010679, "placeId": "", "reason": ""}, {"id": "1-5-dotonbori-hotel", "name": "Dotonbori Hotel", "kind": "default", "category": "", "rating": 4.1, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkibxtcTLa-2-DyPAxy-nKInMf9QCrFH9LjfRvaVpOWKH0S4iBA9WcZ-2ESWC4n28VlmxeOq1O7hkoZa5hyvspWAAsCaWZgRnQoBPqQgZ6IM2OUydWV7UCnl7vkH2lXL7GaWzMZmg=w1000-h640-k-no", "address": "2 Chome-3-25 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6685423, "lng": 135.4987916, "placeId": "", "reason": ""}]}, {"index": 2, "label": "Nara", "stops": [{"id": "2-0-ikoma", "name": "Ikoma", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWks5S3X9WFFZmPjQeMbwhFMJ5UYYiz9OwLFWueCGv-v7LzzLri1vJSrKikSkpsZ5lwm2cuVREvVdWLGaFEe1KrlQIKeCC_pHRkGQux4w3BjcGS1H-_Hsz-k5UoRkxALe0kF2lQ=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 34.6919529, "lng": 135.7005192, "placeId": "", "reason": "generic"}, {"id": "2-1-nara-station", "name": "Nara Station", "kind": "station", "category": "Train station", "rating": 4.1, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkMN9fqUJkA7g7mISXFxWD9o7CvW6UHxOo-S6DxDB0SyIAlLx8JtD2SEFKnuDorENF7pitki5M-COAEDZfYjSTBbd75hXDYpxvoEXvWFLV1lC2oYWiaXlAfkIuFSnB2CYJRRfzPlg=w1000-h640-k-no", "address": "1 Sanjōhonmachi, Nara, 630-8122, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6808126, "lng": 135.8189522, "placeId": "", "reason": ""}, {"id": "2-2-x", "name": "メンズショツプエビスヤ&雑貨", "kind": "shop", "category": "Clothing store", "rating": 5.0, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWldkPMQC7_MxO6ouzTNKzErqaknh28Z6tPdiEndhO_rGGn3e9uqL5O9_p8ehyYZJy6G-ndIrOwZoFhoNJWvf_PWTfFJCdKUN7PPed95cLIebzOQY2fbv1cwEIbCUSiHkl7-DHs=w1000-h640-k-no", "address": "6-番地 Kamisanjocho, Nara, 630-8228, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6819141, "lng": 135.8264081, "placeId": "", "reason": ""}, {"id": "2-3-x", "name": "奈良県庁前噴水", "kind": "photo_spot", "category": "Tourist attraction", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkhIJENjGAGpXtg3YjyPwCQGpcZAh12ZRMvWK38OKMHW3IQdxuAlZj8khSMuDP2fmRkgn2TeOCaa-9b8VviYICA4kuhvybVznK8hGabRRFw82_hdHYwxVdKWFv-XZP9E-zag02lyFzGJQ4T=w1000-h640-k-no", "address": "Noboriojicho, Nara, 630-8213, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6849219, "lng": 135.8328735, "placeId": "", "reason": ""}, {"id": "2-4-nara-park", "name": "Nara Park", "kind": "park", "category": "Park", "rating": 4.6, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnSN0b4Icd4HDmbfBuhzNOeV4jT2KBN4M_l9ZaJFrS56gMSc3O5RaoA8n3-lNLwXM-ONAhRoM0oaUg-vNcBsFxQ4gbQDIeRTewJu8G_22pwgvVGsesr8taxB3AHZNQQFXKgCz80bg6JLYIf=w1000-h640-k-no", "address": "Nara, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 34.685047, "lng": 135.843012, "placeId": "", "reason": ""}]}, {"index": 3, "label": "Kyoto", "stops": [{"id": "3-0-senbon-torii-thousand-torii-gates", "name": "Senbon Torii (Thousand Torii Gates)", "kind": "shrine", "category": "Shinto shrine", "rating": 4.7, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnvyVwc52_ZwrVEc3adeNNYyjdZWiG6fPzL1mQiDPSXisTe3pMYTjuAXWgseVceWFB3IHFF8xYhhK6tbPsGCiLAPyPvs3WSmpiRbVw5HhLXoz6wJAcZcDgqgZHxQ6MnKClVJWE=w1000-h640-k-no", "address": "68番地 Fukakusa Yabunouchicho, Fushimi Ward, Kyoto, 612-0882, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.9670429, "lng": 135.7746595, "placeId": "", "reason": ""}, {"id": "3-1-animate-kyoto-avanti", "name": "Animate - Kyoto Avanti", "kind": "shop", "category": "Comic book store", "rating": 3.9, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWk_B5veQwHUSwaea-N4Jepqu_vwvUWPyazmHs1sS12Ht_iVAkQ4MsLet5cHnRTR8er9se51a_ticvSnA2TZz6Qlt_CcpMP2hz6XgTR13lzsMuCzrlrvSu2dZlRuFd7awcepnDZc=w1000-h640-k-no", "address": "Japan, 〒601-8003 Kyoto, Minami Ward, Higashikujo Nishisannocho, 31 京都アバンティ 6F", "note": "", "editorial": "", "hours": [], "lat": 34.9836255, "lng": 135.7603642, "placeId": "", "reason": ""}, {"id": "3-2-katsukura-kyoto-porta", "name": "Katsukura - Kyoto Porta", "kind": "restaurant", "category": "Tonkatsu restaurant", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWllxWNJ6AsfITcdBjHHPoInF9uveQThfXlQR33LBSyIzkXoZLgPUq0cGryHux40OFb_oqTT9fsex48rEqrxwPLXG0EMDOtQGHrGpJFy95SVrMPfMD6GOg_l-TuPpa8hN1D8EbFvMA=w1000-h640-k-no", "address": "Japan, 〒600-8216 Kyoto, Shimogyo Ward, Higashishiokojicho, 901 京都ポルタ 11F", "note": "", "editorial": "", "hours": [], "lat": 34.9856948, "lng": 135.7575095, "placeId": "", "reason": ""}, {"id": "3-3-nishiki-market", "name": "Nishiki Market", "kind": "market", "category": "Market", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnDg7NuN4oQ4rAypG0FfetqLXFMbAD4egdkPE-WtbkVMDsyXWMm3AdKlL7nWCjdAyxo46Crj6n9_6K_9Er9ZUV36TL5TFwg1oEj9QPH6kKZaOK8UXKsvldKIWy4zwc5iCf3tdRUEXC3EjE=w1000-h640-k-no", "address": "Nakagyo Ward, Kyoto, 604-8055, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.0050258, "lng": 135.764723, "placeId": "", "reason": ""}, {"id": "3-4-philosopher-s-path-tetsugaku-no-michi-no", "name": "Philosopher's Path (Tetsugaku no Michi), North End", "kind": "viewpoint", "category": "Scenic spot", "rating": 4.6, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlGEbw5XVDgG6ELQF-ASq4ysa2fhYGIRMYWMerCio6Jjcqw2t878Jc4DdAhsikaSHKIv_I_wCiSDlDsjzKuqtqmBZxhg0Q6ZbsDtuCgXC82OSn3fq-5w_lHXrhjewZgFxU09EFJ=w1000-h640-k-no", "address": "Shishigatani Teranomaecho, Sakyo Ward, Kyoto, 606-8426, Japan", "note": "(dopo pausa pranzo) (dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.0266194, "lng": 135.795457, "placeId": "", "reason": ""}, {"id": "3-5-arashiyama-bamboo-forest", "name": "Arashiyama Bamboo Forest", "kind": "viewpoint", "category": "Scenic spot", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlDomv6an-BzYH35BILwIxi4oeH4qFzukZgRiMUuF4Ix7FdaUPTp5GYZekxq103xOcPEs2yVI7FTzTLPnmPYZV1W9jYochTEJcI8CywnR2qoIS8Fjt4zNvbvfKoacZeOa8Q-NxPYw=w1000-h640-k-no", "address": "Sagaogurayama Tabuchiyamacho, Ukyo Ward, Kyoto, 616-8394, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.0168187, "lng": 135.6713013, "placeId": "", "reason": ""}]}, {"index": 4, "label": "Fuji / Fujiyoshida", "stops": [{"id": "4-0-chureito-pagoda", "name": "Chureito Pagoda", "kind": "landmark", "category": "Memorial", "rating": 4.7, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkKIl8Qa-HM1NAJVQv15tMU1ZhgDv3foPY9URJ_x_b2KPsORXsW20067TU59FduMLQsdbiGEyCzuB-En_5P4Zp7ad7MpSakIMaiSYg6hDVm6TGCWDFwpF7Lt1ROPXLPkPOYYstolg=w1000-h640-k-no", "address": "2-chome-4-1 Asama, Fujiyoshida, Yamanashi 403-0011, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.5012626, "lng": 138.8013852, "placeId": "", "reason": ""}]}, {"index": 5, "label": "Tokyo", "stops": [{"id": "5-0-enoshima", "name": "Enoshima", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm2_bzVwMjMKgDns1dXVh7hqFhUcCbaNcwMtHYwzSVE3By6xfR1YKvMK_6gsqI7K1NSK0dnOMWaB_bDZz9v3WLp-ykvd_yCO0x74u3hROhhWZiR3qW2cx9BM7Oqa3CBIVVR2r7E2w=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.2990992, "lng": 139.4809269, "placeId": "", "reason": "generic"}, {"id": "5-1-tokyo-city-flea-market", "name": "Tokyo City Flea Market", "kind": "market", "category": "Flea market", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWklhQKzg6InuhdiF5ioclF64fB6z9LIDEBq9-PKJBa9F2XIKkbu2XkLM8ejXOBgyCKGfpriyh3MRO4bnYAG4z4Tc_-f_e851VDyIb7hg9rWPz6iLY3JXtwel8AY0xO7qN0Glo3TrqxHVN-B=w1000-h640-k-no", "address": "2 Chome-1-1 Katsushima, Shinagawa City, Tokyo 140-0012, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.5949798, "lng": 139.7430414, "placeId": "", "reason": ""}, {"id": "5-2-divercity-tokyo-plaza", "name": "DiverCity Tokyo Plaza", "kind": "mall", "category": "Shopping mall", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlO1NWOi7mZWMD_JenqzHCVTy2fI-joqMGjlQCqz82Ojlw1eWDjwOf4BunRlbG_iHPU1SYmikuerzk9M9K6jj2FRpeVx0UiCUrZdsBU6wnHB90yBc-JXzCV1SYH6cautEmJrfkeaQ=w1000-h640-k-no", "address": "1 Chome-1-10 Aomi, Koto City, Tokyo 135-0064, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6247851, "lng": 139.7758551, "placeId": "", "reason": ""}, {"id": "5-3-statue-of-liberty", "name": "Statue of Liberty", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.5, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmLs7G1FuJadLypTKjuR3jgEeWkcCzfqfRISlSCp9Kn9XWN9aXBAF6DEtRS_YDEMrMBLElp2G3YFZ_mrRT5UFWfCjh_fF1KRpOayL_O1ED7CALKB8D1w5l5960cU_WRFsVKC3fI=w1000-h640-k-no", "address": "1 Chome-4-2 Daiba, Minato City, Tokyo 135-0091, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6278727, "lng": 139.7718346, "placeId": "", "reason": ""}]}, {"index": 6, "label": "Tokyo", "stops": [{"id": "6-0-unicorn-gundam", "name": "Unicorn Gundam", "kind": "default", "category": "", "rating": 4.6, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlJ4kQLFABWgVOhQREMWdG4y_tEj8_ymzArymaha1MUsf72FmVW7Pvq0GoSkPlShiobgWz0weU57PDEbxCi7zIxLoO321rV794ZOCREWqHwqVjf3oJiCoDcciRZ-233YRYK9218RqlVosc=w1000-h640-k-no", "address": "Japan, 〒135-0064 Tokyo, Koto City, Aomi, 1 Chome−1−10 ダイバーシティ東京プラザ内 2Fフェスティバル広場", "note": "", "editorial": "", "hours": [], "lat": 35.624451, "lng": 139.7754917, "placeId": "", "reason": "closed"}, {"id": "6-1-ginza", "name": "Ginza", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWklfggk6Sw1BDjVxWD1Yz2swjqbDvcGvBbDzbhXMtw4bujEDERfXR_hEFB5-J56UcinhwQckTfJZMqA0h05yXBEcs71mSzi-hDmAIbawd9wCybwNbYiiFMyDN8OCrbbA1AcktX5=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.6712228, "lng": 139.7664859, "placeId": "", "reason": "generic"}, {"id": "6-2-akihabara-radio-kaikan", "name": "Akihabara Radio Kaikan", "kind": "mall", "category": "Shopping mall", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmeGwIL4aqmFr3tCMY9zgFckUXikrekCHupW9TI9rfmTtna57uq0zhRBeqZyu0__P6kSimXWC3CacxmjnOd37tjgecmOc0d0dzvkPcCE3opzVHsELPKz7_1bOg6dx4jyuLN6SidAaMB5FQ=w1000-h640-k-no", "address": "1 Chome-15-16 Sotokanda, Chiyoda City, Tokyo 101-0021, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6979149, "lng": 139.7719571, "placeId": "", "reason": ""}, {"id": "6-3-amiami-akihabara-figure-tower", "name": "amiami Akihabara Figure Tower", "kind": "shop", "category": "Hobby store", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmiaR9RQtRhJ-iAYct7C0Ap_echE3gxx5UEgOCB97X2N7Jq0J8kfLz-WQtffIVQJyTEJ1UNyodVMtyJ3VL90mYUE3wcLq7iTn0NmYHA39ATLfhS11bcbkOQxR3shronN3SbcYN-BmTjjcY=w1000-h640-k-no", "address": "1 Chome-15-3 Sotokanda, Chiyoda City, Tokyo 101-0021, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.6979497, "lng": 139.7714597, "placeId": "", "reason": ""}, {"id": "6-4-hie-shrine", "name": "Hie Shrine", "kind": "shrine", "category": "Shinto shrine", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlyuLqCyRylcVtfJkoko27yxvtuQEZ3-AU9oiao09HYopIJ6AsXYQpvB7izlsHNi0xfbEyczh-cHUV1eJixZJtroGSKJWXvdJ9AZdfCe9Jhazp-SBrSyNQZZ9pnDvATvE-ncADBGA=w1000-h640-k-no", "address": "2 Chome-10-5 Nagatachō, Chiyoda City, Tokyo 100-0014, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6747136, "lng": 139.7396621, "placeId": "", "reason": ""}, {"id": "6-5-shibuya-crossing", "name": "Shibuya Crossing", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.5, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkTC9fFkQUowmI6zhObjLyrfBwxo7egaUsFJSfPMbvZdUhnAQOGe5-HSHPvpWkpfjo06O2vIw9oArjNnA2Dppq9tAMBPX9gHsHMwYEyNoXIixHL4siNEpa6EaoJZ1CwwXtL_kjJ=w1000-h640-k-no", "address": "Shibuya, Tokyo, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.659482, "lng": 139.7005596, "placeId": "", "reason": ""}]}, {"index": 7, "label": "Tokyo", "stops": [{"id": "7-0-yoyogi-park", "name": "Yoyogi Park", "kind": "park", "category": "Park", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlu1BRld7m3TL2vUJ6XOvIsBBhxptThYzVNAtyc3su2kHWwm5h1kBu7MiDdotOl2tQv1zLib4AJGk5XoczzQUjXQToBUuW3W0KUFS3DTEgiJPNdoTbhfsPfnfNiDBbqEx4UTPBPDQ=w1000-h640-k-no", "address": "2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6700649, "lng": 139.6949656, "placeId": "", "reason": ""}, {"id": "7-1-shimokitazawa", "name": "Shimokitazawa", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWk6_F9Qw-mV7TC4xljjwjpgZqunyKOdUCawnckOfL6rOGA4-HqUZ6uHOfFH-UQwYvYHmUamnqzcHajUqYsakE-T1MV_91-RbA1aX-HxFlCRdp29DX0OZWxbTK7VVCj9jvAUAnuZ=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.665786, "lng": 139.6698627, "placeId": "", "reason": "generic"}, {"id": "7-2-omoide-yokocho-memory-lane", "name": "Omoide Yokocho Memory Lane", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkNXsBjKiobu-j9sQ7HdyugxrcPB4h5y-ekGlLZrWZBq3EwbblENGP7yLEyVqQijeYLdVLn6u3_om-lExTMt1sXD62oKagU0FqCzEUCm-VKoJ37-WFfKy6PEQjMsAq2p_Pbpaz2=w1000-h640-k-no", "address": "1 Chome-2-2 Nishishinjuku, Shinjuku City, Tokyo 160-0023, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6927037, "lng": 139.6995778, "placeId": "", "reason": ""}, {"id": "7-3-shinjuku-batting-center", "name": "Shinjuku Batting Center", "kind": "default", "category": "Batting cage center", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmJbD33Gws5XB7F4oCBuYOThbhphSzUeqcI3fcbFLKWjWvk1VlZpwRk8wyaYJ1PTAucRIoew0VA9s5rFdaudvJM32rCnpHDrL2EXle9wDIl-QYMpXoAJJsMi8ihyIRvcqEsXQAc=w1000-h640-k-no", "address": "2 Chome-21-13 Kabukicho, Shinjuku City, Tokyo 160-0021, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6966733, "lng": 139.7044587, "placeId": "", "reason": ""}, {"id": "7-4-shinjuku-golden-gai", "name": "Shinjuku Golden-Gai", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWksoLSxnoJhb_Wf3j9rVvDyG8TqJLOuxoyo_CEtSJv7R3RQRwBSLv7HkAuck4see-pQ_4vhdczQvSBLGV8uorqELo23vSSD0arNrBrhRdMrHi6qQ5cJpv51V0nH3c4h3yMV96Qi=w1000-h640-k-no", "address": "Japan, 〒160-0021 Tokyo, Shinjuku City, Kabukicho, 1 Chome−1−6 あかるい花園 五番街", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.6941118, "lng": 139.7047611, "placeId": "", "reason": ""}, {"id": "7-5-takeshita-st", "name": "Takeshita St", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlSrAbL70G43543M0fJ3qWUdEHWK5-3O_Rk41G7tma6pfLzLN6a6T4yadabhR2rOg7cVenT5eBAxvk8kOqXsDyv6iIQu60nFpp8Iql5XPfp3RK9wBknKeA6v3JfYTu51qehZECh=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.6710335, "lng": 139.7051821, "placeId": "", "reason": "generic"}, {"id": "7-6-ura-harajuku", "name": "Ura-Harajuku", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm0kkHfFVBQm3gzCqUn-Aku_FD12AGOuVZlevg5XhVuEv9MMKNC1KWoSCt7tPbFaM77JQRrQv97l9AEsGaEAEMhFzDtfemVRG3ijiCYW-dgdm9pPKHJej8a0HgRr2r1LJFh3j2M=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.6693868, "lng": 139.7111154, "placeId": "", "reason": "generic"}, {"id": "7-7-roppongi-hills", "name": "Roppongi Hills", "kind": "neighborhood", "category": "Business park", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkwGi2cmvGad21lf889DDZEoKhGz5SpjztRLmjKXsZezLEYIgG48Nua-aXkCK7WQtyuhtdR7_ox3DabuG8E2dg-quHFF1NGbB8Cv6JKCVV8RdKGznyljClmG7WvkWnFr50wpTtkqBphDbh=w1000-h640-k-no", "address": "6 Chome-10-1 Roppongi, Minato City, Tokyo 106-6108, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.6607397, "lng": 139.7292319, "placeId": "", "reason": ""}, {"id": "7-8-meguro-river", "name": "Meguro River", "kind": "viewpoint", "category": "River", "rating": 4.5, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlo8hty50DAqqTqSNgLhNbsO9oMYBkFGx9_zXKCjfoFWbOr1dFo45tFUbHidzD4T5qBm1q-nQ_u0y9vT4D0CgFVAgR_zhZqigbB5-Ulm2gDKzOWfcetEhxYhstXQWfVJpOhSp3a=w1000-h640-k-no", "address": "Tokyo, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6299045, "lng": 139.7141956, "placeId": "", "reason": ""}]}, {"index": 8, "label": "Tokyo", "stops": [{"id": "8-0-nakano-broadway", "name": "Nakano Broadway", "kind": "mall", "category": "Shopping mall", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlll3kmbcEtUrPqNiZCQTgNrGLI_aIfjuceKFPZjYBDH07lgKkO8Hk5NdHAKC2uoScFtBYp9bKI1G-HsYmynXxyqNOeGZXyW_OL3HhniiG80TJj4Vw4v9A7FU-n3F0H2HtiTENAN76ZeQ8=w1000-h640-k-no", "address": "5 Chome-52-15 Nakano, Nakano City, Tokyo 164-0001, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7092475, "lng": 139.6656524, "placeId": "", "reason": ""}, {"id": "8-1-animate-ikebukuro-flagship-store", "name": "animate Ikebukuro Flagship Store", "kind": "shop", "category": "Comic book store", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl8TegdpxlG0mZvQsYbeaiPaF6yD2XzgNa84Ja-Kj2I2f_lkpB0NBxnSVsMcoRgW9pTj9zOSEskBKGaZzHOr8MmXIsPH7PNdH_PYIOHfo92tj5z2l8p4VHNUjp0T4rXmHuohPzW1tOf4-w=w1000-h640-k-no", "address": "1 Chome-20-7 Higashiikebukuro, Toshima City, Tokyo 170-0013, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7311443, "lng": 139.7154592, "placeId": "", "reason": ""}, {"id": "8-2-biccamera-ikebukuro-main-store", "name": "BicCamera Ikebukuro Main Store", "kind": "shop", "category": "Electronics store", "rating": 3.8, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlt3YUvPb81B-xrxRPE1QdfaqwSXyHR_vpGPSnMGqoMEuIQD72DDNg7JCBXmuPRv_pFbEg8ym7bkrVG7EbtJ6b6MUv8dhseFkw0rrHs-uvcecGE8O1Kl63H1doG3XU0TWLH8lGk-o653Rwy=w1000-h640-k-no", "address": "1 Chome-41-5 Higashiikebukuro, Toshima City, Tokyo 170-0013, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7317044, "lng": 139.7128781, "placeId": "", "reason": ""}, {"id": "8-3-ikebukuro-nishi-guchi-park", "name": "Ikebukuro Nishi-guchi Park", "kind": "park", "category": "Park", "rating": 3.8, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm4SjOZ3YLEXeZiQtjDHtMddJ-U9V3Vntxss8CskcUK28bsPc68nLDBpLPoxSDzANHlGPA8TQRAY5oaHnA-rVyhT9a51lyp2gCYwPBmWjGMtAk6fQhSK3s4W67lLnrYCwHgMJ9d=w1000-h640-k-no", "address": "1 Chome-8-26 Nishiikebukuro, Toshima City, Tokyo 171-0021, Japan", "note": "(dopo pausa pranzo) (dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.7301469, "lng": 139.7089269, "placeId": "", "reason": ""}, {"id": "8-4-harmonica-yokocho", "name": "Harmonica Yokocho", "kind": "neighborhood", "category": "Business park", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkV-ZpeKX-15PGQIwq37WPnHHopCIpcdcd6k1eKBpnPVd93qsNphQZjHh6QZd3ra5PqVlZuU4cyH7m01gDjHtb3lyJ2jAH2LH2VAb7itiX91koE7ifNdhdTpcGOXFIhd2ocm7E8OR5YRch7=w1000-h640-k-no", "address": "1 Chome-1-3 Kichijoji Honcho, Musashino, Tokyo 180-0004, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7035959, "lng": 139.5790815, "placeId": "", "reason": ""}, {"id": "8-5-inokashira-park", "name": "Inokashira Park", "kind": "park", "category": "Park", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWljPOSgzR-h1mfyXBw23AnRwjaYIiZvJW6Xh9emCEyFkTALtJym1grODv5LeUffr4XXocDmaGxZv-rir23J2NvD3cRWfzYpQHyi4cQwQ-iTEpCI0RdYPqfb-Df8-NgN03ouXVFH=w1000-h640-k-no", "address": "1 Chome-18-31 Gotenyama, Musashino, Tokyo 180-0005, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6997476, "lng": 139.5737018, "placeId": "", "reason": ""}]}, {"index": 9, "label": "Tokyo", "stops": [{"id": "9-0-yanaka-ginza", "name": "Yanaka Ginza", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.1, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmLVq3DXNRZblEXOUJCKEKkV1qDiR8jrQrjBO5FXUd_hLoP5E41Y8csxruuh85aBxJu444nboBb_si4RjT5q4WuPCZXRbYgcPhB7hHyA7V-pXaIm0bO8jEGRjrgD2BrH_aE2GNh=w1000-h640-k-no", "address": "3 Chome-13-1 Yanaka, Taito City, Tokyo 110-0001, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7276965, "lng": 139.7657226, "placeId": "", "reason": ""}, {"id": "9-1-gojo-ten-shrine", "name": "Gojo-ten Shrine", "kind": "shrine", "category": "Shinto shrine", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnLQxEPDcDJjQLDmz84bVOHNRE7u2ngH5Cnfig_hX0U4XrV6y6lykvW7aU7qJywIzZlB448QWq9B710u3CVwxUj8YXN7nTKkGPu1jFyOxyFYTfpraFFQ_-dtfbEo-hBgHWLXrUZ=w1000-h640-k-no", "address": "4-１７ Uenokoen, Taito City, Tokyo 110-0007, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7136973, "lng": 139.7722533, "placeId": "", "reason": ""}, {"id": "9-2-ueno-park", "name": "Ueno Park", "kind": "park", "category": "Park", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkY_riTXuhOmiX5Ihxiah7dDoRww1DyeTt_k0tuYI-526TH0y7JrCtLuvpP5vK-q6EbsgUfJntB7-hEMR3HoKC642zE0j-Xb0K8rcph8qt5l6be7JeS7PF5--iGEW4JrxPLbAO8lg=w1000-h640-k-no", "address": "Uenokoen, Taito City, Tokyo 110-0007, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7147557, "lng": 139.7734312, "placeId": "", "reason": ""}, {"id": "9-3-kappabashi-kitchen-supply-town", "name": "Kappabashi Kitchen Supply Town", "kind": "neighborhood", "category": "Business park", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmaEvqdwVCkJLzu2fo5go96_vI4zOLybX-j-6IeVJx33X_cn3yRXzAEYQPTdI7vKPFafNTODwyoEP6n2rMwOkOi7YUh7fa2qRP3-ImMQi-XXLeh3ksYBBtB6rexX3wc-KxPkOakRWlboD_U=w1000-h640-k-no", "address": "3 Chome-18-2 Matsugaya, Taito City, Tokyo 110-0036, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7163612, "lng": 139.7886804, "placeId": "", "reason": ""}, {"id": "9-4-nakamise-dori-shopping-street", "name": "Nakamise Dori shopping street", "kind": "shop", "category": "Grocery store", "rating": 4.8, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWk7DgwfE4FyiwGsoIyVMQI2X28b74Zw6cvqH8jI4ThZI8sEPTuxM4-sO6wFTbc679KfhyHqdMnwnBPTqVUmnFlH_vYiyBfJuknJ-jZIXi7xkiwXahshzi_WYdRkPb0F8J_ATlgyGZaBtdx9=w1000-h640-k-no", "address": "2 Chome-3-1 Asakusa, Taito City, Tokyo 111-0032, Japan", "note": "(dopo pausa pranzo) (dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.7134284, "lng": 139.796664, "placeId": "", "reason": ""}, {"id": "9-5-tokyo-solamachi", "name": "Tokyo Solamachi", "kind": "mall", "category": "Shopping mall", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmixQBQh4hBhbN_mDGlP-LB2ozmdEIdCaJaWvpvrmKmEZeSjJa571PgPvqW70zuRxm6bBxd-SM-_DgSuvVnE2jnTX_wm3ieb7TBpIv1xVjJlFlAWQ9M8qK_9RLDww63yRWfGCAOQG8g5IMv=w1000-h640-k-no", "address": "1 Chome-1-2 Oshiage, Sumida City, Tokyo 131-0045, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7102333, "lng": 139.8115747, "placeId": "", "reason": ""}]}]}</script><script>
+</style></head><body><div id="app"></div><script id="ITIN" type="application/json">{"title": "Japan 2028", "sourceUrl": "examples/japan-2028.places.json", "enriched": false, "mode": "transit", "stateKey": "mli:2c5ef78bf67d", "cfg": {"dayStart": "09:30", "lunchAt": "13:00", "lunchMin": 60, "pace": 1.0, "walkKm": 1.1, "speeds": {"walking": 4.5, "transit": 16.0, "driving": 22.0}, "dwell": {"museum": 90, "gallery": 75, "park": 60, "garden": 60, "market": 60, "mall": 90, "shop": 45, "shopping_street": 60, "shrine": 45, "temple": 45, "church": 30, "castle": 90, "landmark": 30, "viewpoint": 30, "photo_spot": 20, "restaurant": 75, "cafe": 40, "bar": 60, "nightlife_alley": 75, "neighborhood": 90, "station": 15, "convenience": 10, "default": 45}}, "kindLabels": {"museum": "Museo", "gallery": "Galleria d'arte", "park": "Parco", "garden": "Giardino", "market": "Mercato", "mall": "Centro commerciale", "shop": "Negozio", "shopping_street": "Via dello shopping", "shrine": "Santuario shintoista", "temple": "Tempio", "church": "Chiesa", "castle": "Castello", "landmark": "Monumento", "viewpoint": "Punto panoramico", "photo_spot": "Attrazione", "restaurant": "Ristorante", "cafe": "Caffè", "bar": "Bar", "nightlife_alley": "Vicolo notturno", "neighborhood": "Quartiere", "station": "Stazione", "convenience": "Konbini", "default": "Luogo"}, "kindEmoji": {"park": "🌳", "garden": "🌱", "shrine": "⛩️", "temple": "🛐", "market": "🍜", "mall": "🛍️", "shop": "🛍️", "museum": "🏛️", "viewpoint": "🌄", "photo_spot": "📷", "restaurant": "🍱", "cafe": "☕", "bar": "🍸", "castle": "🏰", "station": "🚉", "neighborhood": "🏙️", "landmark": "🗼", "convenience": "🏪", "default": "📍"}, "knownAreas": [["Tokyo", 35.68, 139.75], ["Yokohama", 35.44, 139.64], ["Kamakura / Enoshima", 35.31, 139.49], ["Fuji / Fujiyoshida", 35.49, 138.8], ["Nikko", 36.75, 139.6], ["Hakone", 35.23, 139.02], ["Kyoto", 35.01, 135.76], ["Osaka", 34.69, 135.5], ["Nara", 34.685, 135.83], ["Kobe", 34.69, 135.2], ["Hiroshima", 34.39, 132.45], ["Kanazawa", 36.56, 136.65], ["Sapporo", 43.06, 141.35], ["Fukuoka", 33.59, 130.4]], "skippedNoCoords": [], "days": [{"index": 1, "label": "Osaka", "stops": [{"id": "1-0-shinsekai-market", "name": "Shinsekai Market", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmupBOQYujXkSgwR8teWZrJ-MKL5J7jIXmjsv8lxjx1q_MeleVIKhuvVf51lu10sJq_ZvsQtzCWqSeAGUZdRJfhKGh16iJeyTWfyF5eHGeVgc7ja3sWBXUzRH-Hi_PWqy61ynOQzg=w1000-h640-k-no", "address": "1 Chome-21-12 Ebisuhigashi, Naniwa Ward, Osaka, 556-0002, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6536555, "lng": 135.5056051, "placeId": "", "reason": ""}, {"id": "1-1-nipponbashi", "name": "Nipponbashi", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmOh4WBa_VD-bWbVlWt9qzqK0h1vnB8ycobtj0_s1sw3rCA6vyF0NgwC_3Ndegbc7AEwGiOLxYzgI73t02jk04O-5pP4mYLn9haLsy2-gtYtcl5dL4cFnOKRUjrvULOivdKP6Ys=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 34.6590233, "lng": 135.5057497, "placeId": "", "reason": "generic"}, {"id": "1-2-kuromon-market", "name": "Kuromon Market", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.1, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn7nPCy5jr76zlE5SRGsO1GiijvQ0ouxzwZwmqyT6uTVFr6lj5cqz-X0FIY_0jSgGaxwfTTNmc_COd1GjM6dqaLAzCkfaur1-og4ykabUWe6MeGBV-fbHABf6gBIi-jc8v5LuY=w1000-h640-k-no", "address": "2 Chome-4-1 Nipponbashi, Chuo Ward, Osaka, 542-0073, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6653511, "lng": 135.5062417, "placeId": "", "reason": ""}, {"id": "1-3-familymart-ebisubashi", "name": "FamilyMart Ebisubashi", "kind": "convenience", "category": "Convenience store", "rating": 2.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkPir8a8roI6KqH-dm0MdiHIKgQmXsjfsGnw0W3DX7wudPCs3FHF3Ysx5YrcIpoZtnU_Z80jpzYtnQjHiKDEeJu9lzF8EGcSOd_MZAwH2GE9TAj30hRVhd3hiy-z7OcrLuug7ru9vKE46cR=w1000-h640-k-no", "address": "1 Chome-9-1 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6686393, "lng": 135.5012014, "placeId": "", "reason": ""}, {"id": "1-4-glico-sign-dotonbori", "name": "Glico Sign Dotonbori", "kind": "landmark", "category": "Cultural landmark", "rating": 4.5, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnAQBkC6oY1eSk7Wn5fW4ml0YXJmxgfuyK3U1991mk7r0atCHw9_SCYHyt1ENZ_SruX0-s_WCX1UvHT5IbjQB7LnEcfog2scyZ-wngspZOk20vBuB4EzO04r5V1H5Xm2Bd1-WRn=w1000-h640-k-no", "address": "1 Chome-10-3 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6689339, "lng": 135.5010679, "placeId": "", "reason": ""}, {"id": "1-5-dotonbori-hotel", "name": "Dotonbori Hotel", "kind": "default", "category": "", "rating": 4.1, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkibxtcTLa-2-DyPAxy-nKInMf9QCrFH9LjfRvaVpOWKH0S4iBA9WcZ-2ESWC4n28VlmxeOq1O7hkoZa5hyvspWAAsCaWZgRnQoBPqQgZ6IM2OUydWV7UCnl7vkH2lXL7GaWzMZmg=w1000-h640-k-no", "address": "2 Chome-3-25 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6685423, "lng": 135.4987916, "placeId": "", "reason": ""}]}, {"index": 2, "label": "Nara", "stops": [{"id": "2-0-ikoma", "name": "Ikoma", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWks5S3X9WFFZmPjQeMbwhFMJ5UYYiz9OwLFWueCGv-v7LzzLri1vJSrKikSkpsZ5lwm2cuVREvVdWLGaFEe1KrlQIKeCC_pHRkGQux4w3BjcGS1H-_Hsz-k5UoRkxALe0kF2lQ=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 34.6919529, "lng": 135.7005192, "placeId": "", "reason": "generic"}, {"id": "2-1-nara-station", "name": "Nara Station", "kind": "station", "category": "Train station", "rating": 4.1, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkMN9fqUJkA7g7mISXFxWD9o7CvW6UHxOo-S6DxDB0SyIAlLx8JtD2SEFKnuDorENF7pitki5M-COAEDZfYjSTBbd75hXDYpxvoEXvWFLV1lC2oYWiaXlAfkIuFSnB2CYJRRfzPlg=w1000-h640-k-no", "address": "1 Sanjōhonmachi, Nara, 630-8122, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6808126, "lng": 135.8189522, "placeId": "", "reason": ""}, {"id": "2-2-x", "name": "メンズショツプエビスヤ&雑貨", "kind": "shop", "category": "Clothing store", "rating": 5.0, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWldkPMQC7_MxO6ouzTNKzErqaknh28Z6tPdiEndhO_rGGn3e9uqL5O9_p8ehyYZJy6G-ndIrOwZoFhoNJWvf_PWTfFJCdKUN7PPed95cLIebzOQY2fbv1cwEIbCUSiHkl7-DHs=w1000-h640-k-no", "address": "6-番地 Kamisanjocho, Nara, 630-8228, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6819141, "lng": 135.8264081, "placeId": "", "reason": ""}, {"id": "2-3-x", "name": "奈良県庁前噴水", "kind": "photo_spot", "category": "Tourist attraction", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkhIJENjGAGpXtg3YjyPwCQGpcZAh12ZRMvWK38OKMHW3IQdxuAlZj8khSMuDP2fmRkgn2TeOCaa-9b8VviYICA4kuhvybVznK8hGabRRFw82_hdHYwxVdKWFv-XZP9E-zag02lyFzGJQ4T=w1000-h640-k-no", "address": "Noboriojicho, Nara, 630-8213, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.6849219, "lng": 135.8328735, "placeId": "", "reason": ""}, {"id": "2-4-nara-park", "name": "Nara Park", "kind": "park", "category": "Park", "rating": 4.6, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnSN0b4Icd4HDmbfBuhzNOeV4jT2KBN4M_l9ZaJFrS56gMSc3O5RaoA8n3-lNLwXM-ONAhRoM0oaUg-vNcBsFxQ4gbQDIeRTewJu8G_22pwgvVGsesr8taxB3AHZNQQFXKgCz80bg6JLYIf=w1000-h640-k-no", "address": "Nara, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 34.685047, "lng": 135.843012, "placeId": "", "reason": ""}]}, {"index": 3, "label": "Kyoto", "stops": [{"id": "3-0-senbon-torii-thousand-torii-gates", "name": "Senbon Torii (Thousand Torii Gates)", "kind": "shrine", "category": "Shinto shrine", "rating": 4.7, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnvyVwc52_ZwrVEc3adeNNYyjdZWiG6fPzL1mQiDPSXisTe3pMYTjuAXWgseVceWFB3IHFF8xYhhK6tbPsGCiLAPyPvs3WSmpiRbVw5HhLXoz6wJAcZcDgqgZHxQ6MnKClVJWE=w1000-h640-k-no", "address": "68番地 Fukakusa Yabunouchicho, Fushimi Ward, Kyoto, 612-0882, Japan", "note": "", "editorial": "", "hours": [], "lat": 34.9670429, "lng": 135.7746595, "placeId": "", "reason": ""}, {"id": "3-1-animate-kyoto-avanti", "name": "Animate - Kyoto Avanti", "kind": "shop", "category": "Comic book store", "rating": 3.9, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWk_B5veQwHUSwaea-N4Jepqu_vwvUWPyazmHs1sS12Ht_iVAkQ4MsLet5cHnRTR8er9se51a_ticvSnA2TZz6Qlt_CcpMP2hz6XgTR13lzsMuCzrlrvSu2dZlRuFd7awcepnDZc=w1000-h640-k-no", "address": "Japan, 〒601-8003 Kyoto, Minami Ward, Higashikujo Nishisannocho, 31 京都アバンティ 6F", "note": "", "editorial": "", "hours": [], "lat": 34.9836255, "lng": 135.7603642, "placeId": "", "reason": ""}, {"id": "3-2-katsukura-kyoto-porta", "name": "Katsukura - Kyoto Porta", "kind": "restaurant", "category": "Tonkatsu restaurant", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWllxWNJ6AsfITcdBjHHPoInF9uveQThfXlQR33LBSyIzkXoZLgPUq0cGryHux40OFb_oqTT9fsex48rEqrxwPLXG0EMDOtQGHrGpJFy95SVrMPfMD6GOg_l-TuPpa8hN1D8EbFvMA=w1000-h640-k-no", "address": "Japan, 〒600-8216 Kyoto, Shimogyo Ward, Higashishiokojicho, 901 京都ポルタ 11F", "note": "", "editorial": "", "hours": [], "lat": 34.9856948, "lng": 135.7575095, "placeId": "", "reason": ""}, {"id": "3-3-nishiki-market", "name": "Nishiki Market", "kind": "market", "category": "Market", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnDg7NuN4oQ4rAypG0FfetqLXFMbAD4egdkPE-WtbkVMDsyXWMm3AdKlL7nWCjdAyxo46Crj6n9_6K_9Er9ZUV36TL5TFwg1oEj9QPH6kKZaOK8UXKsvldKIWy4zwc5iCf3tdRUEXC3EjE=w1000-h640-k-no", "address": "Nakagyo Ward, Kyoto, 604-8055, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.0050258, "lng": 135.764723, "placeId": "", "reason": ""}, {"id": "3-4-philosopher-s-path-tetsugaku-no-michi-no", "name": "Philosopher's Path (Tetsugaku no Michi), North End", "kind": "viewpoint", "category": "Scenic spot", "rating": 4.6, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlGEbw5XVDgG6ELQF-ASq4ysa2fhYGIRMYWMerCio6Jjcqw2t878Jc4DdAhsikaSHKIv_I_wCiSDlDsjzKuqtqmBZxhg0Q6ZbsDtuCgXC82OSn3fq-5w_lHXrhjewZgFxU09EFJ=w1000-h640-k-no", "address": "Shishigatani Teranomaecho, Sakyo Ward, Kyoto, 606-8426, Japan", "note": "(dopo pausa pranzo) (dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.0266194, "lng": 135.795457, "placeId": "", "reason": ""}, {"id": "3-5-arashiyama-bamboo-forest", "name": "Arashiyama Bamboo Forest", "kind": "viewpoint", "category": "Scenic spot", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlDomv6an-BzYH35BILwIxi4oeH4qFzukZgRiMUuF4Ix7FdaUPTp5GYZekxq103xOcPEs2yVI7FTzTLPnmPYZV1W9jYochTEJcI8CywnR2qoIS8Fjt4zNvbvfKoacZeOa8Q-NxPYw=w1000-h640-k-no", "address": "Sagaogurayama Tabuchiyamacho, Ukyo Ward, Kyoto, 616-8394, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.0168187, "lng": 135.6713013, "placeId": "", "reason": ""}]}, {"index": 4, "label": "Fuji / Fujiyoshida", "stops": [{"id": "4-0-chureito-pagoda", "name": "Chureito Pagoda", "kind": "landmark", "category": "Memorial", "rating": 4.7, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkKIl8Qa-HM1NAJVQv15tMU1ZhgDv3foPY9URJ_x_b2KPsORXsW20067TU59FduMLQsdbiGEyCzuB-En_5P4Zp7ad7MpSakIMaiSYg6hDVm6TGCWDFwpF7Lt1ROPXLPkPOYYstolg=w1000-h640-k-no", "address": "2-chome-4-1 Asama, Fujiyoshida, Yamanashi 403-0011, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.5012626, "lng": 138.8013852, "placeId": "", "reason": ""}]}, {"index": 5, "label": "Tokyo", "stops": [{"id": "5-0-enoshima", "name": "Enoshima", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm2_bzVwMjMKgDns1dXVh7hqFhUcCbaNcwMtHYwzSVE3By6xfR1YKvMK_6gsqI7K1NSK0dnOMWaB_bDZz9v3WLp-ykvd_yCO0x74u3hROhhWZiR3qW2cx9BM7Oqa3CBIVVR2r7E2w=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.2990992, "lng": 139.4809269, "placeId": "", "reason": "generic"}, {"id": "5-1-tokyo-city-flea-market", "name": "Tokyo City Flea Market", "kind": "market", "category": "Flea market", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWklhQKzg6InuhdiF5ioclF64fB6z9LIDEBq9-PKJBa9F2XIKkbu2XkLM8ejXOBgyCKGfpriyh3MRO4bnYAG4z4Tc_-f_e851VDyIb7hg9rWPz6iLY3JXtwel8AY0xO7qN0Glo3TrqxHVN-B=w1000-h640-k-no", "address": "2 Chome-1-1 Katsushima, Shinagawa City, Tokyo 140-0012, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.5949798, "lng": 139.7430414, "placeId": "", "reason": ""}, {"id": "5-2-divercity-tokyo-plaza", "name": "DiverCity Tokyo Plaza", "kind": "mall", "category": "Shopping mall", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlO1NWOi7mZWMD_JenqzHCVTy2fI-joqMGjlQCqz82Ojlw1eWDjwOf4BunRlbG_iHPU1SYmikuerzk9M9K6jj2FRpeVx0UiCUrZdsBU6wnHB90yBc-JXzCV1SYH6cautEmJrfkeaQ=w1000-h640-k-no", "address": "1 Chome-1-10 Aomi, Koto City, Tokyo 135-0064, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6247851, "lng": 139.7758551, "placeId": "", "reason": ""}, {"id": "5-3-statue-of-liberty", "name": "Statue of Liberty", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.5, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmLs7G1FuJadLypTKjuR3jgEeWkcCzfqfRISlSCp9Kn9XWN9aXBAF6DEtRS_YDEMrMBLElp2G3YFZ_mrRT5UFWfCjh_fF1KRpOayL_O1ED7CALKB8D1w5l5960cU_WRFsVKC3fI=w1000-h640-k-no", "address": "1 Chome-4-2 Daiba, Minato City, Tokyo 135-0091, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6278727, "lng": 139.7718346, "placeId": "", "reason": ""}]}, {"index": 6, "label": "Tokyo", "stops": [{"id": "6-0-unicorn-gundam", "name": "Unicorn Gundam", "kind": "default", "category": "", "rating": 4.6, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlJ4kQLFABWgVOhQREMWdG4y_tEj8_ymzArymaha1MUsf72FmVW7Pvq0GoSkPlShiobgWz0weU57PDEbxCi7zIxLoO321rV794ZOCREWqHwqVjf3oJiCoDcciRZ-233YRYK9218RqlVosc=w1000-h640-k-no", "address": "Japan, 〒135-0064 Tokyo, Koto City, Aomi, 1 Chome−1−10 ダイバーシティ東京プラザ内 2Fフェスティバル広場", "note": "", "editorial": "", "hours": [], "lat": 35.624451, "lng": 139.7754917, "placeId": "", "reason": "closed"}, {"id": "6-1-ginza", "name": "Ginza", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWklfggk6Sw1BDjVxWD1Yz2swjqbDvcGvBbDzbhXMtw4bujEDERfXR_hEFB5-J56UcinhwQckTfJZMqA0h05yXBEcs71mSzi-hDmAIbawd9wCybwNbYiiFMyDN8OCrbbA1AcktX5=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.6712228, "lng": 139.7664859, "placeId": "", "reason": "generic"}, {"id": "6-2-akihabara-radio-kaikan", "name": "Akihabara Radio Kaikan", "kind": "mall", "category": "Shopping mall", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmeGwIL4aqmFr3tCMY9zgFckUXikrekCHupW9TI9rfmTtna57uq0zhRBeqZyu0__P6kSimXWC3CacxmjnOd37tjgecmOc0d0dzvkPcCE3opzVHsELPKz7_1bOg6dx4jyuLN6SidAaMB5FQ=w1000-h640-k-no", "address": "1 Chome-15-16 Sotokanda, Chiyoda City, Tokyo 101-0021, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6979149, "lng": 139.7719571, "placeId": "", "reason": ""}, {"id": "6-3-amiami-akihabara-figure-tower", "name": "amiami Akihabara Figure Tower", "kind": "shop", "category": "Hobby store", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmiaR9RQtRhJ-iAYct7C0Ap_echE3gxx5UEgOCB97X2N7Jq0J8kfLz-WQtffIVQJyTEJ1UNyodVMtyJ3VL90mYUE3wcLq7iTn0NmYHA39ATLfhS11bcbkOQxR3shronN3SbcYN-BmTjjcY=w1000-h640-k-no", "address": "1 Chome-15-3 Sotokanda, Chiyoda City, Tokyo 101-0021, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.6979497, "lng": 139.7714597, "placeId": "", "reason": ""}, {"id": "6-4-hie-shrine", "name": "Hie Shrine", "kind": "shrine", "category": "Shinto shrine", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlyuLqCyRylcVtfJkoko27yxvtuQEZ3-AU9oiao09HYopIJ6AsXYQpvB7izlsHNi0xfbEyczh-cHUV1eJixZJtroGSKJWXvdJ9AZdfCe9Jhazp-SBrSyNQZZ9pnDvATvE-ncADBGA=w1000-h640-k-no", "address": "2 Chome-10-5 Nagatachō, Chiyoda City, Tokyo 100-0014, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6747136, "lng": 139.7396621, "placeId": "", "reason": ""}, {"id": "6-5-shibuya-crossing", "name": "Shibuya Crossing", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.5, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkTC9fFkQUowmI6zhObjLyrfBwxo7egaUsFJSfPMbvZdUhnAQOGe5-HSHPvpWkpfjo06O2vIw9oArjNnA2Dppq9tAMBPX9gHsHMwYEyNoXIixHL4siNEpa6EaoJZ1CwwXtL_kjJ=w1000-h640-k-no", "address": "Shibuya, Tokyo, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.659482, "lng": 139.7005596, "placeId": "", "reason": ""}]}, {"index": 7, "label": "Tokyo", "stops": [{"id": "7-0-yoyogi-park", "name": "Yoyogi Park", "kind": "park", "category": "Park", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlu1BRld7m3TL2vUJ6XOvIsBBhxptThYzVNAtyc3su2kHWwm5h1kBu7MiDdotOl2tQv1zLib4AJGk5XoczzQUjXQToBUuW3W0KUFS3DTEgiJPNdoTbhfsPfnfNiDBbqEx4UTPBPDQ=w1000-h640-k-no", "address": "2-1 Yoyogikamizonocho, Shibuya, Tokyo 151-0052, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6700649, "lng": 139.6949656, "placeId": "", "reason": ""}, {"id": "7-1-shimokitazawa", "name": "Shimokitazawa", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWk6_F9Qw-mV7TC4xljjwjpgZqunyKOdUCawnckOfL6rOGA4-HqUZ6uHOfFH-UQwYvYHmUamnqzcHajUqYsakE-T1MV_91-RbA1aX-HxFlCRdp29DX0OZWxbTK7VVCj9jvAUAnuZ=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.665786, "lng": 139.6698627, "placeId": "", "reason": "generic"}, {"id": "7-2-omoide-yokocho-memory-lane", "name": "Omoide Yokocho Memory Lane", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkNXsBjKiobu-j9sQ7HdyugxrcPB4h5y-ekGlLZrWZBq3EwbblENGP7yLEyVqQijeYLdVLn6u3_om-lExTMt1sXD62oKagU0FqCzEUCm-VKoJ37-WFfKy6PEQjMsAq2p_Pbpaz2=w1000-h640-k-no", "address": "1 Chome-2-2 Nishishinjuku, Shinjuku City, Tokyo 160-0023, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6927037, "lng": 139.6995778, "placeId": "", "reason": ""}, {"id": "7-3-shinjuku-batting-center", "name": "Shinjuku Batting Center", "kind": "default", "category": "Batting cage center", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmJbD33Gws5XB7F4oCBuYOThbhphSzUeqcI3fcbFLKWjWvk1VlZpwRk8wyaYJ1PTAucRIoew0VA9s5rFdaudvJM32rCnpHDrL2EXle9wDIl-QYMpXoAJJsMi8ihyIRvcqEsXQAc=w1000-h640-k-no", "address": "2 Chome-21-13 Kabukicho, Shinjuku City, Tokyo 160-0021, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6966733, "lng": 139.7044587, "placeId": "", "reason": ""}, {"id": "7-4-shinjuku-golden-gai", "name": "Shinjuku Golden-Gai", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWksoLSxnoJhb_Wf3j9rVvDyG8TqJLOuxoyo_CEtSJv7R3RQRwBSLv7HkAuck4see-pQ_4vhdczQvSBLGV8uorqELo23vSSD0arNrBrhRdMrHi6qQ5cJpv51V0nH3c4h3yMV96Qi=w1000-h640-k-no", "address": "Japan, 〒160-0021 Tokyo, Shinjuku City, Kabukicho, 1 Chome−1−6 あかるい花園 五番街", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.6941118, "lng": 139.7047611, "placeId": "", "reason": ""}, {"id": "7-5-takeshita-st", "name": "Takeshita St", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlSrAbL70G43543M0fJ3qWUdEHWK5-3O_Rk41G7tma6pfLzLN6a6T4yadabhR2rOg7cVenT5eBAxvk8kOqXsDyv6iIQu60nFpp8Iql5XPfp3RK9wBknKeA6v3JfYTu51qehZECh=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.6710335, "lng": 139.7051821, "placeId": "", "reason": "generic"}, {"id": "7-6-ura-harajuku", "name": "Ura-Harajuku", "kind": "default", "category": "", "rating": null, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm0kkHfFVBQm3gzCqUn-Aku_FD12AGOuVZlevg5XhVuEv9MMKNC1KWoSCt7tPbFaM77JQRrQv97l9AEsGaEAEMhFzDtfemVRG3ijiCYW-dgdm9pPKHJej8a0HgRr2r1LJFh3j2M=w1000-h640-k-no", "address": "", "note": "", "editorial": "", "hours": [], "lat": 35.6693868, "lng": 139.7111154, "placeId": "", "reason": "generic"}, {"id": "7-7-roppongi-hills", "name": "Roppongi Hills", "kind": "neighborhood", "category": "Business park", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkwGi2cmvGad21lf889DDZEoKhGz5SpjztRLmjKXsZezLEYIgG48Nua-aXkCK7WQtyuhtdR7_ox3DabuG8E2dg-quHFF1NGbB8Cv6JKCVV8RdKGznyljClmG7WvkWnFr50wpTtkqBphDbh=w1000-h640-k-no", "address": "6 Chome-10-1 Roppongi, Minato City, Tokyo 106-6108, Japan", "note": "(dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.6607397, "lng": 139.7292319, "placeId": "", "reason": ""}, {"id": "7-8-meguro-river", "name": "Meguro River", "kind": "viewpoint", "category": "River", "rating": 4.5, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlo8hty50DAqqTqSNgLhNbsO9oMYBkFGx9_zXKCjfoFWbOr1dFo45tFUbHidzD4T5qBm1q-nQ_u0y9vT4D0CgFVAgR_zhZqigbB5-Ulm2gDKzOWfcetEhxYhstXQWfVJpOhSp3a=w1000-h640-k-no", "address": "Tokyo, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6299045, "lng": 139.7141956, "placeId": "", "reason": ""}]}, {"index": 8, "label": "Tokyo", "stops": [{"id": "8-0-nakano-broadway", "name": "Nakano Broadway", "kind": "mall", "category": "Shopping mall", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlll3kmbcEtUrPqNiZCQTgNrGLI_aIfjuceKFPZjYBDH07lgKkO8Hk5NdHAKC2uoScFtBYp9bKI1G-HsYmynXxyqNOeGZXyW_OL3HhniiG80TJj4Vw4v9A7FU-n3F0H2HtiTENAN76ZeQ8=w1000-h640-k-no", "address": "5 Chome-52-15 Nakano, Nakano City, Tokyo 164-0001, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7092475, "lng": 139.6656524, "placeId": "", "reason": ""}, {"id": "8-1-animate-ikebukuro-flagship-store", "name": "animate Ikebukuro Flagship Store", "kind": "shop", "category": "Comic book store", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl8TegdpxlG0mZvQsYbeaiPaF6yD2XzgNa84Ja-Kj2I2f_lkpB0NBxnSVsMcoRgW9pTj9zOSEskBKGaZzHOr8MmXIsPH7PNdH_PYIOHfo92tj5z2l8p4VHNUjp0T4rXmHuohPzW1tOf4-w=w1000-h640-k-no", "address": "1 Chome-20-7 Higashiikebukuro, Toshima City, Tokyo 170-0013, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7311443, "lng": 139.7154592, "placeId": "", "reason": ""}, {"id": "8-2-biccamera-ikebukuro-main-store", "name": "BicCamera Ikebukuro Main Store", "kind": "shop", "category": "Electronics store", "rating": 3.8, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlt3YUvPb81B-xrxRPE1QdfaqwSXyHR_vpGPSnMGqoMEuIQD72DDNg7JCBXmuPRv_pFbEg8ym7bkrVG7EbtJ6b6MUv8dhseFkw0rrHs-uvcecGE8O1Kl63H1doG3XU0TWLH8lGk-o653Rwy=w1000-h640-k-no", "address": "1 Chome-41-5 Higashiikebukuro, Toshima City, Tokyo 170-0013, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7317044, "lng": 139.7128781, "placeId": "", "reason": ""}, {"id": "8-3-ikebukuro-nishi-guchi-park", "name": "Ikebukuro Nishi-guchi Park", "kind": "park", "category": "Park", "rating": 3.8, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm4SjOZ3YLEXeZiQtjDHtMddJ-U9V3Vntxss8CskcUK28bsPc68nLDBpLPoxSDzANHlGPA8TQRAY5oaHnA-rVyhT9a51lyp2gCYwPBmWjGMtAk6fQhSK3s4W67lLnrYCwHgMJ9d=w1000-h640-k-no", "address": "1 Chome-8-26 Nishiikebukuro, Toshima City, Tokyo 171-0021, Japan", "note": "(dopo pausa pranzo) (dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.7301469, "lng": 139.7089269, "placeId": "", "reason": ""}, {"id": "8-4-harmonica-yokocho", "name": "Harmonica Yokocho", "kind": "neighborhood", "category": "Business park", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkV-ZpeKX-15PGQIwq37WPnHHopCIpcdcd6k1eKBpnPVd93qsNphQZjHh6QZd3ra5PqVlZuU4cyH7m01gDjHtb3lyJ2jAH2LH2VAb7itiX91koE7ifNdhdTpcGOXFIhd2ocm7E8OR5YRch7=w1000-h640-k-no", "address": "1 Chome-1-3 Kichijoji Honcho, Musashino, Tokyo 180-0004, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7035959, "lng": 139.5790815, "placeId": "", "reason": ""}, {"id": "8-5-inokashira-park", "name": "Inokashira Park", "kind": "park", "category": "Park", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWljPOSgzR-h1mfyXBw23AnRwjaYIiZvJW6Xh9emCEyFkTALtJym1grODv5LeUffr4XXocDmaGxZv-rir23J2NvD3cRWfzYpQHyi4cQwQ-iTEpCI0RdYPqfb-Df8-NgN03ouXVFH=w1000-h640-k-no", "address": "1 Chome-18-31 Gotenyama, Musashino, Tokyo 180-0005, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.6997476, "lng": 139.5737018, "placeId": "", "reason": ""}]}, {"index": 9, "label": "Tokyo", "stops": [{"id": "9-0-yanaka-ginza", "name": "Yanaka Ginza", "kind": "photo_spot", "category": "Tourist attraction", "rating": 4.1, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmLVq3DXNRZblEXOUJCKEKkV1qDiR8jrQrjBO5FXUd_hLoP5E41Y8csxruuh85aBxJu444nboBb_si4RjT5q4WuPCZXRbYgcPhB7hHyA7V-pXaIm0bO8jEGRjrgD2BrH_aE2GNh=w1000-h640-k-no", "address": "3 Chome-13-1 Yanaka, Taito City, Tokyo 110-0001, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7276965, "lng": 139.7657226, "placeId": "", "reason": ""}, {"id": "9-1-gojo-ten-shrine", "name": "Gojo-ten Shrine", "kind": "shrine", "category": "Shinto shrine", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWnLQxEPDcDJjQLDmz84bVOHNRE7u2ngH5Cnfig_hX0U4XrV6y6lykvW7aU7qJywIzZlB448QWq9B710u3CVwxUj8YXN7nTKkGPu1jFyOxyFYTfpraFFQ_-dtfbEo-hBgHWLXrUZ=w1000-h640-k-no", "address": "4-１７ Uenokoen, Taito City, Tokyo 110-0007, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7136973, "lng": 139.7722533, "placeId": "", "reason": ""}, {"id": "9-2-ueno-park", "name": "Ueno Park", "kind": "park", "category": "Park", "rating": 4.4, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkY_riTXuhOmiX5Ihxiah7dDoRww1DyeTt_k0tuYI-526TH0y7JrCtLuvpP5vK-q6EbsgUfJntB7-hEMR3HoKC642zE0j-Xb0K8rcph8qt5l6be7JeS7PF5--iGEW4JrxPLbAO8lg=w1000-h640-k-no", "address": "Uenokoen, Taito City, Tokyo 110-0007, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7147557, "lng": 139.7734312, "placeId": "", "reason": ""}, {"id": "9-3-kappabashi-kitchen-supply-town", "name": "Kappabashi Kitchen Supply Town", "kind": "neighborhood", "category": "Business park", "rating": 4.3, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmaEvqdwVCkJLzu2fo5go96_vI4zOLybX-j-6IeVJx33X_cn3yRXzAEYQPTdI7vKPFafNTODwyoEP6n2rMwOkOi7YUh7fa2qRP3-ImMQi-XXLeh3ksYBBtB6rexX3wc-KxPkOakRWlboD_U=w1000-h640-k-no", "address": "3 Chome-18-2 Matsugaya, Taito City, Tokyo 110-0036, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7163612, "lng": 139.7886804, "placeId": "", "reason": ""}, {"id": "9-4-nakamise-dori-shopping-street", "name": "Nakamise Dori shopping street", "kind": "shop", "category": "Grocery store", "rating": 4.8, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWk7DgwfE4FyiwGsoIyVMQI2X28b74Zw6cvqH8jI4ThZI8sEPTuxM4-sO6wFTbc679KfhyHqdMnwnBPTqVUmnFlH_vYiyBfJuknJ-jZIXi7xkiwXahshzi_WYdRkPb0F8J_ATlgyGZaBtdx9=w1000-h640-k-no", "address": "2 Chome-3-1 Asakusa, Taito City, Tokyo 111-0032, Japan", "note": "(dopo pausa pranzo) (dopo pausa pranzo)", "editorial": "", "hours": [], "lat": 35.7134284, "lng": 139.796664, "placeId": "", "reason": ""}, {"id": "9-5-tokyo-solamachi", "name": "Tokyo Solamachi", "kind": "mall", "category": "Shopping mall", "rating": 4.2, "reviews": null, "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmixQBQh4hBhbN_mDGlP-LB2ozmdEIdCaJaWvpvrmKmEZeSjJa571PgPvqW70zuRxm6bBxd-SM-_DgSuvVnE2jnTX_wm3ieb7TBpIv1xVjJlFlAWQ9M8qK_9RLDww63yRWfGCAOQG8g5IMv=w1000-h640-k-no", "address": "1 Chome-1-2 Oshiage, Sumida City, Tokyo 131-0045, Japan", "note": "", "editorial": "", "hours": [], "lat": 35.7102333, "lng": 139.8115747, "placeId": "", "reason": ""}]}]}</script><script>
 "use strict";
-const D = JSON.parse(document.getElementById("ITIN").textContent);
-const CFG = D.cfg, SPEED = CFG.speeds;
-const KEY = D.stateKey;
+const SEED = JSON.parse(document.getElementById("ITIN").textContent);
+const STORE_KEY = "mli:store:v2";
 
-const DEFAULT_STATE = {
-  showGeneric:false, showClosed:false,
-  globalStart:CFG.dayStart,
-  perStop:{},            // id -> {off,on,arrive,reoptFrom}
-  dayCfg:{},             // dayIndex -> {start,end}
-  added:[],              // {id,name,lat,lng,kind,url,day}  day: 0 = auto
-  order:{}               // dayIndex -> [id,...]  (custom order after reoptimise / add)
-};
-let S = load();
-
-function load(){
-  try{ const j = JSON.parse(localStorage.getItem(KEY)); if(j) return Object.assign({}, DEFAULT_STATE, j); }catch(e){}
-  return JSON.parse(JSON.stringify(DEFAULT_STATE));
+/* ---- multi-itinerary store: many lists, each with its own edit state ---- */
+function loadStore(){
+  try{
+    const j = JSON.parse(localStorage.getItem(STORE_KEY));
+    if(j && j.itins && j.itins.length) return j;
+  }catch(e){}
+  return {current:"default", itins:[{id:"default", data:SEED, state:null}]};
 }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function saveStore(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(STORE)); }catch(e){} }
+let STORE = loadStore();
+// keep the built-in itinerary's data in sync with this file
+const def = STORE.itins.find(i=>i.id==="default");
+if(def) def.data = SEED; else STORE.itins.unshift({id:"default", data:SEED, state:null});
+
+let D, CFG, SPEED, S;
+function freshState(){
+  return {showGeneric:false, showClosed:false, globalStart:CFG.dayStart, globalEnd:"",
+          perStop:{}, dayCfg:{}, added:[], order:{}};
+}
+function selectItin(id){
+  const it = STORE.itins.find(i=>i.id===id) || STORE.itins[0];
+  STORE.current = it.id;
+  D = it.data; CFG = D.cfg; SPEED = CFG.speeds;
+  S = it.state ? Object.assign(freshState(), it.state) : freshState();
+  it.state = S;                       // bind so save() persists into the slot
+  rebuildHome();
+}
+function save(){ saveStore(); }
 function ps(id){ return S.perStop[id] || (S.perStop[id] = {}); }
 
 /* ---------- geometry ---------- */
@@ -118,8 +159,8 @@ const minLabel = m => { m=Math.round(m); const h=Math.floor(m/60), x=m%60; retur
 const MODE = {walking:["A piedi","🚶"],transit:["Mezzi","🚆"],driving:["Auto","🚗"]};
 
 /* ---------- per-day model ---------- */
-const HOME = {};                                   // stop id -> its original day
-D.days.forEach(d => d.stops.forEach(s => { HOME[s.id] = d.index; }));
+let HOME = {};                                      // stop id -> its original day
+function rebuildHome(){ HOME = {}; D.days.forEach(d => d.stops.forEach(s => { HOME[s.id] = d.index; })); }
 const dayOf = (id, fallback) => {
   const ov = (S.perStop[id] || {}).day;
   return ov != null ? ov : (HOME[id] != null ? HOME[id] : fallback);
@@ -174,7 +215,8 @@ function schedule(day){
   let on = all.filter(enabled);
   const dc = S.dayCfg[day.index] || {};
   const start = toMin(dc.start || S.globalStart);
-  const endLimit = dc.end ? toMin(dc.end) : null;
+  const endStr = dc.end || S.globalEnd;
+  const endLimit = endStr ? toMin(endStr) : null;
 
   // optional re-optimise of the tail after a stop with a recorded arrival
   const anchorId = Object.keys(S.perStop).find(id => (S.perStop[id]||{}).reoptFrom && on.some(s=>s.id===id));
@@ -210,7 +252,7 @@ function schedule(day){
     t += dw;
     prev = s;
   });
-  return {rows, end:t, endLimit, count:on.length,
+  return {rows, end:t, endLimit, endStr, count:on.length,
           hidden: all.filter(s => !enabled(s) && !(S.perStop[s.id]||{}).off),
           travel: rows.filter(r=>r.type==="leg").reduce((a,r)=>a+r.min,0),
           visit: rows.filter(r=>r.type==="stop").reduce((a,r)=>a+r.dwell,0)};
@@ -323,21 +365,46 @@ function daySection(day){
     : r.type==="lunch" ? `<div class="leg"><span class="ico">🍱</span><span>Pausa pranzo &middot; ${CFG.lunchMin} min</span></div>`
     : stopCard(r)     // "stop" and "stopoff"
   ).join("");
+  const slack = sc.endLimit ? sc.endLimit - sc.end : 0;
   return `<section class="day" id="g${day.index}">
     <div class="day-head">
       <h2>Giorno ${day.index}</h2><span class="place">${esc(day.label)}</span>
       <span class="spacer"></span>
       <label class="hint">inizio <input type="time" data-act="daystart" data-day="${day.index}" value="${dc.start||S.globalStart}"></label>
-      <label class="hint">fine <input type="time" data-act="dayend" data-day="${day.index}" value="${dc.end||""}"></label>
+      <label class="hint">fine <input type="time" data-act="dayend" data-day="${day.index}" value="${dc.end||""}" placeholder="${S.globalEnd||"--:--"}"></label>
       <button class="mini" data-act="reoptday" data-day="${day.index}">Riottimizza giorno</button>
     </div>
     <p class="day-head tot">${sc.count} tappe &middot; visite ~${minLabel(sc.visit)} &middot; spostamenti ~${minLabel(sc.travel)} &middot;
-       fine prevista <b>${hhmm(sc.end)}</b> ${over?`<span class="warn">oltre le ${dc.end}</span>`:""}</p>
+       fine prevista <b>${hhmm(sc.end)}</b> ${over?`<span class="warn">oltre le ${sc.endStr}</span>`:""}</p>
     ${body}
     ${sc.hidden.length ? `<div class="hiddenrow"><span class="hint">Nascoste in questo giorno:</span>
       ${sc.hidden.map(s=>`<button class="pill" data-act="show" data-id="${esc(s.id)}">${esc(s.name)} <b>+</b></button>`).join("")}</div>` : ""}
+    ${slack > 40 ? fillPanel(day, sc, slack) : ""}
     ${addBox(day.index)}
   </section>`;
+}
+
+function fillPanel(day, sc, slack){
+  const anchor = sc.rows.filter(r=>r.type==="stop").map(r=>r.stop).pop()
+               || {lat:day.stops[0]?.lat, lng:day.stops[0]?.lng};
+  // enabled stops from later days, nearest first, with the time each would add
+  const cands = [];
+  D.days.filter(d=>d.index>day.index).forEach(d=>{
+    baseStops(d).filter(enabled).forEach(s=>{
+      const lg = legInfo(anchor, s);
+      cands.push({s, add: lg.min + (S.perStop[s.id]?.dwell ?? dwell(s.kind)), km: lg.km, from:d.index});
+    });
+  });
+  cands.sort((a,b)=>a.km-b.km);
+  // only offer places actually near this day's area and that fit the free time
+  const fit = cands.filter(c=>c.km <= 18 && c.add <= slack + 20).slice(0,8);
+  if(!fit.length) return "";
+  return `<div class="fillpanel">
+    <span class="hint">La giornata finisce alle <b>${hhmm(sc.end)}</b>, ${minLabel(slack)} liberi fino alle ${sc.endStr}.
+      Sposta qui una tappa dai giorni successivi:</span>
+    ${fit.map(c=>`<button class="pill" data-act="pullin" data-id="${esc(c.s.id)}" data-day="${day.index}">
+      ${esc(c.s.name)} <span class="hint">(da G${c.from}, +${minLabel(c.add)})</span> <b>+</b></button>`).join("")}
+  </div>`;
 }
 
 function addBox(dayIndex){
@@ -355,9 +422,37 @@ function addBox(dayIndex){
   </div>`;
 }
 
+function itinBar(){
+  return `<div class="itinbar">
+    <label>Itinerario
+      <select data-act="pickitin">
+        ${STORE.itins.map(i=>`<option value="${esc(i.id)}" ${i.id===STORE.current?"selected":""}>${esc(i.data.title)}</option>`).join("")}
+      </select>
+    </label>
+    <button class="mini" data-act="newitin">＋ Nuovo itinerario</button>
+    ${STORE.current!=="default" ? `<button class="mini" data-act="delitin">Elimina questo</button>` : ""}
+    <div class="newitin" hidden>
+      <input type="text" data-new="title" placeholder="Titolo (es. Portogallo 2027)">
+      <textarea data-new="urls" rows="5" placeholder="Incolla i link di Google Maps dei posti, uno per riga (URL completi con /maps/place/... o con @lat,lng)"></textarea>
+      <div class="r"><button class="go" data-act="createitin">Crea itinerario</button>
+        <span class="hint" data-new="msg"></span></div>
+      <p class="hint">I posti aggiunti così non hanno foto/categoria (il browser non può interrogare Google): avrai comunque un piano ordinato e modificabile.</p>
+    </div>
+  </div>`;
+}
+
 function render(){
   const n = D.days.reduce((a,d)=>a+schedule(d).count,0);
   document.getElementById("app").innerHTML = `
+  <aside class="rail">
+    <div class="railinner">
+      <span class="raillabel">${esc(D.title)}</span>
+      ${D.days.map(d=>`<a class="raillink" href="#g${d.index}" data-day="${d.index}">
+        <b>G${d.index}</b><span>${esc(d.label)}</span></a>`).join("")}
+    </div>
+  </aside>
+  <div class="content">
+  ${itinBar()}
   <header>
     <h1>${esc(D.title)}</h1>
     <p class="sub">${D.days.length} giorni &middot; ${n} tappe attive &middot; spostamenti stimati in linea d'aria${D.enriched?"":" &middot; orari non verificati"}</p>
@@ -366,16 +461,90 @@ function render(){
     <label><span class="sw"><input type="checkbox" data-act="showGeneric" ${S.showGeneric?"checked":""}><span></span></span> Mostra aree generiche</label>
     <label><span class="sw"><input type="checkbox" data-act="showClosed" ${S.showClosed?"checked":""}><span></span></span> Mostra luoghi chiusi / ad accesso limitato</label>
     <label>Partenza predefinita <input type="time" data-act="globalStart" value="${S.globalStart}"></label>
+    <label>Fine predefinita <input type="time" data-act="globalEnd" value="${S.globalEnd}"></label>
     <button class="mini" data-act="reset">Ripristina tutto</button>
-  </div>
-  <nav>${D.days.map(d=>`<a href="#g${d.index}">G${d.index} · ${esc(d.label)}</a>`).join("")}</nav>
-  </div>
+  </div></div>
   <main>${D.days.map(daySection).join("")}
     ${D.skippedNoCoords && D.skippedNoCoords.length ? `<div class="dropped"><b>Senza coordinate (non pianificabili):</b> ${D.skippedNoCoords.map(esc).join(", ")}</div>`:""}
   </main>
-  <footer>Generato da <code>maps-list-to-itinerary</code> &middot;
-    <a href="${esc(D.sourceUrl)}" target="_blank" rel="noopener">lista di origine</a> &middot;
-    le modifiche restano su questo browser</footer>`;
+  <footer>Generato da <code>maps-list-to-itinerary</code>
+    ${D.sourceUrl?` &middot; <a href="${esc(D.sourceUrl)}" target="_blank" rel="noopener">lista di origine</a>`:""}
+    &middot; le modifiche restano su questo browser</footer>
+  </div>`;
+  spyDays();
+}
+
+let _spyObs = null;
+function spyDays(){
+  if(_spyObs) _spyObs.disconnect();
+  const links = {};
+  document.querySelectorAll(".raillink").forEach(a=>{ links[a.dataset.day] = a; });
+  _spyObs = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        Object.values(links).forEach(a=>a.classList.remove("here"));
+        const idx = en.target.id.slice(1);
+        if(links[idx]) links[idx].classList.add("here");
+      }
+    });
+  }, {rootMargin:"-10% 0px -80% 0px"});
+  document.querySelectorAll("section.day").forEach(s=>_spyObs.observe(s));
+}
+
+/* ---------- build an itinerary from pasted Maps links (client side) ---------- */
+function regionsOf(pts, gapKm){
+  const par = pts.map((_,i)=>i);
+  const find = a => { while(par[a]!==a){ par[a]=par[par[a]]; a=par[a]; } return a; };
+  for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++)
+    if(hav(pts[i],pts[j])<=gapKm) par[find(i)]=find(j);
+  const b={}; pts.forEach((p,i)=>{ (b[find(i)]=b[find(i)]||[]).push(p); });
+  return Object.values(b);
+}
+function kSplit(list, k){
+  if(k<=1 || list.length<=k) return k<=1 ? [list] : list.map(p=>[p]);
+  const cx = p => p.lng*Math.cos(p.lat*Math.PI/180);
+  let cen = list.slice(0,k).map(p=>({x:cx(p),y:p.lat}));
+  let groups;
+  for(let it=0;it<40;it++){
+    groups = cen.map(()=>[]);
+    list.forEach(p=>{
+      let bi=0,bd=1e9; cen.forEach((c,i)=>{ const d=(cx(p)-c.x)**2+(p.lat-c.y)**2; if(d<bd){bd=d;bi=i;} });
+      groups[bi].push(p);
+    });
+    const nc = groups.map((g,i)=> g.length ? {x:g.reduce((a,p)=>a+cx(p),0)/g.length, y:g.reduce((a,p)=>a+p.lat,0)/g.length} : cen[i]);
+    if(nc.every((c,i)=>c.x===cen[i].x && c.y===cen[i].y)) break;
+    cen = nc;
+  }
+  return groups.filter(g=>g.length);
+}
+function areaLabel(pts){
+  const c = {lat:pts.reduce((a,p)=>a+p.lat,0)/pts.length, lng:pts.reduce((a,p)=>a+p.lng,0)/pts.length};
+  let best="", bd=1e9;
+  (SEED.knownAreas||[]).forEach(([n,la,lo])=>{ const d=hav(c,{lat:la,lng:lo}); if(d<bd){bd=d;best=n;} });
+  return bd<70 ? best : `${c.lat.toFixed(2)}, ${c.lng.toFixed(2)}`;
+}
+function buildItin(title, pts){
+  const days = [];
+  const regions = regionsOf(pts, 40);
+  regions.sort((a,b)=>{
+    const ca={lat:a.reduce((s,p)=>s+p.lat,0)/a.length}, cb={lat:b.reduce((s,p)=>s+p.lat,0)/b.length};
+    return ca.lat - cb.lat;
+  });
+  regions.forEach(r=>{
+    kSplit(r, Math.max(1, Math.ceil(r.length/6))).forEach(chunk=>{
+      const ordered = nnOrder(chunk);
+      const di = days.length+1;
+      days.push({index:di, label:areaLabel(ordered), stops: ordered.map((p,i)=>({
+        id:`c${di}-${i}-${(p.name||"x").toLowerCase().replace(/[^a-z0-9]+/g,"-").slice(0,28)}`,
+        name:p.name||"Tappa", kind:"default", category:"", rating:null, reviews:null,
+        photo:"", address:"", note:"", editorial:"", hours:[],
+        lat:p.lat, lng:p.lng, placeId:"", reason:"", url:p.url||""
+      }))});
+    });
+  });
+  return {title:title||"Nuovo itinerario", sourceUrl:"", enriched:false, mode:SEED.mode,
+          cfg:SEED.cfg, kindLabels:SEED.kindLabels, kindEmoji:SEED.kindEmoji,
+          knownAreas:SEED.knownAreas, skippedNoCoords:[], days};
 }
 
 /* ---------- events ---------- */
@@ -384,16 +553,27 @@ document.addEventListener("change", e=>{
   if(act==="showGeneric"){ S.showGeneric = el.checked; }
   else if(act==="showClosed"){ S.showClosed = el.checked; }
   else if(act==="globalStart"){ S.globalStart = el.value || CFG.dayStart; }
+  else if(act==="globalEnd"){ S.globalEnd = el.value; }
   else if(act==="daystart"){ (S.dayCfg[el.dataset.day] ||= {}).start = el.value; }
   else if(act==="dayend"){ (S.dayCfg[el.dataset.day] ||= {}).end = el.value; }
   else if(act==="arrive"){ ps(el.dataset.id).arrive = el.value; }
   else if(act==="note"){ const v=el.value.trim(); if(v) ps(el.dataset.id).note=v; else delete ps(el.dataset.id).note; }
   else if(act==="moveday"){ moveToDay(el.dataset.id, Number(el.value)); clearReopt(); }
+  else if(act==="pickitin"){ selectItin(el.value); render(); return; }
   else return;
   save(); render();
 });
 
 document.addEventListener("click", e=>{
+  const rl = e.target.closest(".raillink");
+  if(rl){
+    e.preventDefault();
+    const t = document.getElementById("g"+rl.dataset.day);
+    if(t) t.scrollIntoView({behavior:"smooth", block:"start"});
+    document.querySelectorAll(".raillink").forEach(a=>a.classList.remove("here"));
+    rl.classList.add("here");
+    return;
+  }
   const b = e.target.closest("button"); if(!b) return;
   const act = b.dataset.act;
   if(act==="toggle"){
@@ -414,6 +594,13 @@ document.addEventListener("click", e=>{
   else if(act==="up"){ reorder(Number(b.dataset.day), b.dataset.id, -1); }
   else if(act==="down"){ reorder(Number(b.dataset.day), b.dataset.id, +1); }
   else if(act==="show"){ ps(b.dataset.id).on = true; delete ps(b.dataset.id).off; }
+  else if(act==="pullin"){
+    const toDay = Number(b.dataset.day);
+    const cur = baseStops(D.days.find(d=>d.index===toDay)).map(s=>s.id);
+    moveToDay(b.dataset.id, toDay);
+    S.order[toDay] = cur.concat([b.dataset.id]);
+    clearReopt();
+  }
   else if(act==="reopt"){ clearReopt(); ps(b.dataset.id).reoptFrom = true; }
   else if(act==="reoptday"){
     const day = D.days.find(d=>d.index==b.dataset.day);
@@ -425,7 +612,30 @@ document.addEventListener("click", e=>{
     S.added = S.added.filter(a=>a.id!==b.dataset.id);
     for(const k in S.order) S.order[k] = S.order[k].filter(id=>id!==b.dataset.id);
   }
-  else if(act==="reset"){ if(confirm("Ripristinare l'itinerario originale?")){ S = JSON.parse(JSON.stringify(DEFAULT_STATE)); } }
+  else if(act==="reset"){
+    if(confirm("Ripristinare questo itinerario alle impostazioni originali?")){
+      const it = STORE.itins.find(i=>i.id===STORE.current);
+      it.state = null; selectItin(STORE.current);
+    }
+  }
+  else if(act==="newitin"){ const nb=b.closest(".itinbar").querySelector(".newitin"); nb.hidden=!nb.hidden; return; }
+  else if(act==="createitin"){
+    const box = b.closest(".newitin");
+    const title = box.querySelector('[data-new="title"]').value.trim();
+    const lines = box.querySelector('[data-new="urls"]').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+    const msg = box.querySelector('[data-new="msg"]');
+    const pts = lines.map(parseMapsUrl).filter(Boolean);
+    if(pts.length < 2){ msg.textContent = `Servono almeno 2 link validi (trovati ${pts.length}). Usa URL completi con @lat,lng.`; return; }
+    const id = "it-" + Date.now().toString(36);
+    STORE.itins.push({id, data:buildItin(title, pts), state:null});
+    saveStore(); selectItin(id); render(); return;
+  }
+  else if(act==="delitin"){
+    if(STORE.current==="default") return;
+    if(!confirm("Eliminare questo itinerario?")) return;
+    STORE.itins = STORE.itins.filter(i=>i.id!==STORE.current);
+    saveStore(); selectItin("default"); render(); return;
+  }
   else if(act==="add"){
     const di = b.dataset.day;
     const url = (document.querySelector(`[data-add="url-${di}"]`)||{}).value || "";
@@ -454,5 +664,6 @@ document.addEventListener("click", e=>{
 function allStops(){ return D.days.flatMap(d=>baseStops(d)); }
 function clearReopt(){ for(const k in S.perStop) delete S.perStop[k].reoptFrom; }
 
+selectItin(STORE.current);
 render();
 </script></body></html>

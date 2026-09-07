@@ -24,7 +24,15 @@ browser as you change things. All edits are saved to that browser's
   or one with `@lat,lng`); choose a day, or let it drop into whichever day the
   route detour is smallest.
 - **Per day**: editable start time, optional end time (warns if the plan runs
-  past it), "Riottimizza giorno".
+  past it); if a day ends well before its end time, a panel offers nearby
+  stops from later days to pull in. "Riottimizza giorno" re-orders it.
+- **Global**: default start + default end time for every day.
+- **Left rail**: sticky day index; click to jump, current day highlights.
+- **Multiple itineraries**: the switcher at the top holds more than one trip.
+  "＋ Nuovo itinerario" takes a title + a list of Google Maps place links
+  (one per line) and builds a fresh plan client-side — those places have no
+  photo/category (the browser can't query Google) but you get an ordered,
+  editable multi-day itinerary. Each trip keeps its own edits.
 
 Travel times on this page are straight-line estimates; the `.md` / `.json` use
 the real matrix (Routes API) when a key is set.

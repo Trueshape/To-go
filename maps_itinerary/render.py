@@ -61,6 +61,16 @@ _DWELL = {
 }
 
 
+_KNOWN_AREAS_JS = [
+    ["Tokyo", 35.68, 139.75], ["Yokohama", 35.44, 139.64],
+    ["Kamakura / Enoshima", 35.31, 139.49], ["Fuji / Fujiyoshida", 35.49, 138.80],
+    ["Nikko", 36.75, 139.60], ["Hakone", 35.23, 139.02],
+    ["Kyoto", 35.01, 135.76], ["Osaka", 34.69, 135.50], ["Nara", 34.685, 135.83],
+    ["Kobe", 34.69, 135.20], ["Hiroshima", 34.39, 132.45], ["Kanazawa", 36.56, 136.65],
+    ["Sapporo", 43.06, 141.35], ["Fukuoka", 33.59, 130.40],
+]
+
+
 def _slug(s: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", s.lower()).strip("-")[:40] or "x"
 
@@ -88,6 +98,7 @@ def to_html(it: Itinerary) -> str:
         },
         "kindLabels": _KIND_IT,
         "kindEmoji": _KIND_EMOJI,
+        "knownAreas": _KNOWN_AREAS_JS,
         "skippedNoCoords": it.skipped_no_coords,
         "days": [],
     }
@@ -129,12 +140,39 @@ def to_html(it: Itinerary) -> str:
 
 
 _APP_CSS = r"""
-:root{--bg:#f6f5f2;--card:#fff;--ink:#1c1b18;--mut:#6b675f;--line:#e7e3db;--accent:#b4472e;--ok:#2e7d5b}
+:root{--bg:#f6f5f2;--card:#fff;--ink:#1c1b18;--mut:#6b675f;--line:#e7e3db;--accent:#b4472e;--ok:#2e7d5b;--rail:210px}
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
 a{color:var(--accent)}
 button{font:inherit;cursor:pointer}
-header{padding:24px 20px 10px;max-width:820px;margin:0 auto}
+#app{display:flex;align-items:flex-start}
+.rail{flex:0 0 var(--rail);position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--line);background:var(--card)}
+.railinner{padding:16px 10px;display:flex;flex-direction:column;gap:3px}
+.raillabel{font-weight:700;font-size:13px;padding:2px 8px 8px;color:var(--mut)}
+.raillink{display:flex;flex-direction:column;gap:1px;text-decoration:none;color:var(--ink);padding:7px 9px;border-radius:8px;line-height:1.2}
+.raillink b{font-size:13px}
+.raillink span{font-size:11px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.raillink:hover{background:var(--bg)}
+.raillink.here{background:var(--accent);color:#fff}
+.raillink.here span{color:#fde7e1}
+.content{flex:1;min-width:0}
+section.day{scroll-margin-top:8px}
+@media(max-width:720px){
+  #app{display:block}
+  .rail{position:sticky;top:0;height:auto;width:100%;flex-basis:auto;border-right:0;border-bottom:1px solid var(--line);z-index:20}
+  .railinner{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:8px 12px}
+  .raillabel{display:none}
+  .raillink{flex-direction:row;gap:5px;align-items:baseline;border:1px solid var(--line);white-space:nowrap}
+  .raillink span{max-width:90px}
+}
+.itinbar{max-width:820px;margin:0 auto;padding:14px 20px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.itinbar select{font:inherit;padding:4px 6px;border:1px solid var(--line);border-radius:7px;max-width:60vw}
+.itinbar .newitin{flex-basis:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-top:6px}
+.itinbar .newitin input,.itinbar .newitin textarea{width:100%;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:7px;margin:5px 0}
+.itinbar .newitin .r{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.itinbar .newitin .go{background:var(--accent);color:#fff;border:0;border-radius:7px;padding:6px 12px}
+header{padding:16px 20px 10px;max-width:820px;margin:0 auto}
 header h1{margin:0 0 4px;font-size:26px}
 .sub{margin:0 0 12px;color:var(--mut);font-size:14px}
 .panel{max-width:820px;margin:0 auto;padding:0 20px}
@@ -185,7 +223,9 @@ main{max-width:820px;margin:0 auto;padding:6px 20px 70px}
 .stoprow input[type=time],.stoprow select{font:inherit;padding:2px 4px;border:1px solid var(--line);border-radius:6px}
 .usernote{display:block;font-size:12px;color:var(--mut);margin-top:8px}
 .usernote input{display:block;width:100%;font:inherit;color:var(--ink);padding:5px 7px;border:1px solid var(--line);border-radius:7px;margin-top:3px;background:#fffdf7}
-.hiddenrow{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.hiddenrow,.fillpanel{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.fillpanel{background:#eef3ec;border:1px solid #d3e0cf;border-radius:12px;padding:9px 11px}
+.fillpanel .hint{flex-basis:100%}
 .pill{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:12px;color:var(--ink)}
 .pill b{color:var(--accent)}
 .leg{display:flex;align-items:center;gap:9px;margin:1px 0 1px 18px;color:var(--mut);font-size:13px}
@@ -206,25 +246,37 @@ footer{max-width:820px;margin:0 auto;padding:20px;color:var(--mut);font-size:12p
 
 _APP_JS = r"""
 "use strict";
-const D = JSON.parse(document.getElementById("ITIN").textContent);
-const CFG = D.cfg, SPEED = CFG.speeds;
-const KEY = D.stateKey;
+const SEED = JSON.parse(document.getElementById("ITIN").textContent);
+const STORE_KEY = "mli:store:v2";
 
-const DEFAULT_STATE = {
-  showGeneric:false, showClosed:false,
-  globalStart:CFG.dayStart,
-  perStop:{},            // id -> {off,on,arrive,reoptFrom}
-  dayCfg:{},             // dayIndex -> {start,end}
-  added:[],              // {id,name,lat,lng,kind,url,day}  day: 0 = auto
-  order:{}               // dayIndex -> [id,...]  (custom order after reoptimise / add)
-};
-let S = load();
-
-function load(){
-  try{ const j = JSON.parse(localStorage.getItem(KEY)); if(j) return Object.assign({}, DEFAULT_STATE, j); }catch(e){}
-  return JSON.parse(JSON.stringify(DEFAULT_STATE));
+/* ---- multi-itinerary store: many lists, each with its own edit state ---- */
+function loadStore(){
+  try{
+    const j = JSON.parse(localStorage.getItem(STORE_KEY));
+    if(j && j.itins && j.itins.length) return j;
+  }catch(e){}
+  return {current:"default", itins:[{id:"default", data:SEED, state:null}]};
 }
-function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function saveStore(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(STORE)); }catch(e){} }
+let STORE = loadStore();
+// keep the built-in itinerary's data in sync with this file
+const def = STORE.itins.find(i=>i.id==="default");
+if(def) def.data = SEED; else STORE.itins.unshift({id:"default", data:SEED, state:null});
+
+let D, CFG, SPEED, S;
+function freshState(){
+  return {showGeneric:false, showClosed:false, globalStart:CFG.dayStart, globalEnd:"",
+          perStop:{}, dayCfg:{}, added:[], order:{}};
+}
+function selectItin(id){
+  const it = STORE.itins.find(i=>i.id===id) || STORE.itins[0];
+  STORE.current = it.id;
+  D = it.data; CFG = D.cfg; SPEED = CFG.speeds;
+  S = it.state ? Object.assign(freshState(), it.state) : freshState();
+  it.state = S;                       // bind so save() persists into the slot
+  rebuildHome();
+}
+function save(){ saveStore(); }
 function ps(id){ return S.perStop[id] || (S.perStop[id] = {}); }
 
 /* ---------- geometry ---------- */
@@ -250,8 +302,8 @@ const minLabel = m => { m=Math.round(m); const h=Math.floor(m/60), x=m%60; retur
 const MODE = {walking:["A piedi","🚶"],transit:["Mezzi","🚆"],driving:["Auto","🚗"]};
 
 /* ---------- per-day model ---------- */
-const HOME = {};                                   // stop id -> its original day
-D.days.forEach(d => d.stops.forEach(s => { HOME[s.id] = d.index; }));
+let HOME = {};                                      // stop id -> its original day
+function rebuildHome(){ HOME = {}; D.days.forEach(d => d.stops.forEach(s => { HOME[s.id] = d.index; })); }
 const dayOf = (id, fallback) => {
   const ov = (S.perStop[id] || {}).day;
   return ov != null ? ov : (HOME[id] != null ? HOME[id] : fallback);
@@ -306,7 +358,8 @@ function schedule(day){
   let on = all.filter(enabled);
   const dc = S.dayCfg[day.index] || {};
   const start = toMin(dc.start || S.globalStart);
-  const endLimit = dc.end ? toMin(dc.end) : null;
+  const endStr = dc.end || S.globalEnd;
+  const endLimit = endStr ? toMin(endStr) : null;
 
   // optional re-optimise of the tail after a stop with a recorded arrival
   const anchorId = Object.keys(S.perStop).find(id => (S.perStop[id]||{}).reoptFrom && on.some(s=>s.id===id));
@@ -342,7 +395,7 @@ function schedule(day){
     t += dw;
     prev = s;
   });
-  return {rows, end:t, endLimit, count:on.length,
+  return {rows, end:t, endLimit, endStr, count:on.length,
           hidden: all.filter(s => !enabled(s) && !(S.perStop[s.id]||{}).off),
           travel: rows.filter(r=>r.type==="leg").reduce((a,r)=>a+r.min,0),
           visit: rows.filter(r=>r.type==="stop").reduce((a,r)=>a+r.dwell,0)};
@@ -455,21 +508,46 @@ function daySection(day){
     : r.type==="lunch" ? `<div class="leg"><span class="ico">🍱</span><span>Pausa pranzo &middot; ${CFG.lunchMin} min</span></div>`
     : stopCard(r)     // "stop" and "stopoff"
   ).join("");
+  const slack = sc.endLimit ? sc.endLimit - sc.end : 0;
   return `<section class="day" id="g${day.index}">
     <div class="day-head">
       <h2>Giorno ${day.index}</h2><span class="place">${esc(day.label)}</span>
       <span class="spacer"></span>
       <label class="hint">inizio <input type="time" data-act="daystart" data-day="${day.index}" value="${dc.start||S.globalStart}"></label>
-      <label class="hint">fine <input type="time" data-act="dayend" data-day="${day.index}" value="${dc.end||""}"></label>
+      <label class="hint">fine <input type="time" data-act="dayend" data-day="${day.index}" value="${dc.end||""}" placeholder="${S.globalEnd||"--:--"}"></label>
       <button class="mini" data-act="reoptday" data-day="${day.index}">Riottimizza giorno</button>
     </div>
     <p class="day-head tot">${sc.count} tappe &middot; visite ~${minLabel(sc.visit)} &middot; spostamenti ~${minLabel(sc.travel)} &middot;
-       fine prevista <b>${hhmm(sc.end)}</b> ${over?`<span class="warn">oltre le ${dc.end}</span>`:""}</p>
+       fine prevista <b>${hhmm(sc.end)}</b> ${over?`<span class="warn">oltre le ${sc.endStr}</span>`:""}</p>
     ${body}
     ${sc.hidden.length ? `<div class="hiddenrow"><span class="hint">Nascoste in questo giorno:</span>
       ${sc.hidden.map(s=>`<button class="pill" data-act="show" data-id="${esc(s.id)}">${esc(s.name)} <b>+</b></button>`).join("")}</div>` : ""}
+    ${slack > 40 ? fillPanel(day, sc, slack) : ""}
     ${addBox(day.index)}
   </section>`;
+}
+
+function fillPanel(day, sc, slack){
+  const anchor = sc.rows.filter(r=>r.type==="stop").map(r=>r.stop).pop()
+               || {lat:day.stops[0]?.lat, lng:day.stops[0]?.lng};
+  // enabled stops from later days, nearest first, with the time each would add
+  const cands = [];
+  D.days.filter(d=>d.index>day.index).forEach(d=>{
+    baseStops(d).filter(enabled).forEach(s=>{
+      const lg = legInfo(anchor, s);
+      cands.push({s, add: lg.min + (S.perStop[s.id]?.dwell ?? dwell(s.kind)), km: lg.km, from:d.index});
+    });
+  });
+  cands.sort((a,b)=>a.km-b.km);
+  // only offer places actually near this day's area and that fit the free time
+  const fit = cands.filter(c=>c.km <= 18 && c.add <= slack + 20).slice(0,8);
+  if(!fit.length) return "";
+  return `<div class="fillpanel">
+    <span class="hint">La giornata finisce alle <b>${hhmm(sc.end)}</b>, ${minLabel(slack)} liberi fino alle ${sc.endStr}.
+      Sposta qui una tappa dai giorni successivi:</span>
+    ${fit.map(c=>`<button class="pill" data-act="pullin" data-id="${esc(c.s.id)}" data-day="${day.index}">
+      ${esc(c.s.name)} <span class="hint">(da G${c.from}, +${minLabel(c.add)})</span> <b>+</b></button>`).join("")}
+  </div>`;
 }
 
 function addBox(dayIndex){
@@ -487,9 +565,37 @@ function addBox(dayIndex){
   </div>`;
 }
 
+function itinBar(){
+  return `<div class="itinbar">
+    <label>Itinerario
+      <select data-act="pickitin">
+        ${STORE.itins.map(i=>`<option value="${esc(i.id)}" ${i.id===STORE.current?"selected":""}>${esc(i.data.title)}</option>`).join("")}
+      </select>
+    </label>
+    <button class="mini" data-act="newitin">＋ Nuovo itinerario</button>
+    ${STORE.current!=="default" ? `<button class="mini" data-act="delitin">Elimina questo</button>` : ""}
+    <div class="newitin" hidden>
+      <input type="text" data-new="title" placeholder="Titolo (es. Portogallo 2027)">
+      <textarea data-new="urls" rows="5" placeholder="Incolla i link di Google Maps dei posti, uno per riga (URL completi con /maps/place/... o con @lat,lng)"></textarea>
+      <div class="r"><button class="go" data-act="createitin">Crea itinerario</button>
+        <span class="hint" data-new="msg"></span></div>
+      <p class="hint">I posti aggiunti così non hanno foto/categoria (il browser non può interrogare Google): avrai comunque un piano ordinato e modificabile.</p>
+    </div>
+  </div>`;
+}
+
 function render(){
   const n = D.days.reduce((a,d)=>a+schedule(d).count,0);
   document.getElementById("app").innerHTML = `
+  <aside class="rail">
+    <div class="railinner">
+      <span class="raillabel">${esc(D.title)}</span>
+      ${D.days.map(d=>`<a class="raillink" href="#g${d.index}" data-day="${d.index}">
+        <b>G${d.index}</b><span>${esc(d.label)}</span></a>`).join("")}
+    </div>
+  </aside>
+  <div class="content">
+  ${itinBar()}
   <header>
     <h1>${esc(D.title)}</h1>
     <p class="sub">${D.days.length} giorni &middot; ${n} tappe attive &middot; spostamenti stimati in linea d'aria${D.enriched?"":" &middot; orari non verificati"}</p>
@@ -498,16 +604,90 @@ function render(){
     <label><span class="sw"><input type="checkbox" data-act="showGeneric" ${S.showGeneric?"checked":""}><span></span></span> Mostra aree generiche</label>
     <label><span class="sw"><input type="checkbox" data-act="showClosed" ${S.showClosed?"checked":""}><span></span></span> Mostra luoghi chiusi / ad accesso limitato</label>
     <label>Partenza predefinita <input type="time" data-act="globalStart" value="${S.globalStart}"></label>
+    <label>Fine predefinita <input type="time" data-act="globalEnd" value="${S.globalEnd}"></label>
     <button class="mini" data-act="reset">Ripristina tutto</button>
-  </div>
-  <nav>${D.days.map(d=>`<a href="#g${d.index}">G${d.index} · ${esc(d.label)}</a>`).join("")}</nav>
-  </div>
+  </div></div>
   <main>${D.days.map(daySection).join("")}
     ${D.skippedNoCoords && D.skippedNoCoords.length ? `<div class="dropped"><b>Senza coordinate (non pianificabili):</b> ${D.skippedNoCoords.map(esc).join(", ")}</div>`:""}
   </main>
-  <footer>Generato da <code>maps-list-to-itinerary</code> &middot;
-    <a href="${esc(D.sourceUrl)}" target="_blank" rel="noopener">lista di origine</a> &middot;
-    le modifiche restano su questo browser</footer>`;
+  <footer>Generato da <code>maps-list-to-itinerary</code>
+    ${D.sourceUrl?` &middot; <a href="${esc(D.sourceUrl)}" target="_blank" rel="noopener">lista di origine</a>`:""}
+    &middot; le modifiche restano su questo browser</footer>
+  </div>`;
+  spyDays();
+}
+
+let _spyObs = null;
+function spyDays(){
+  if(_spyObs) _spyObs.disconnect();
+  const links = {};
+  document.querySelectorAll(".raillink").forEach(a=>{ links[a.dataset.day] = a; });
+  _spyObs = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        Object.values(links).forEach(a=>a.classList.remove("here"));
+        const idx = en.target.id.slice(1);
+        if(links[idx]) links[idx].classList.add("here");
+      }
+    });
+  }, {rootMargin:"-10% 0px -80% 0px"});
+  document.querySelectorAll("section.day").forEach(s=>_spyObs.observe(s));
+}
+
+/* ---------- build an itinerary from pasted Maps links (client side) ---------- */
+function regionsOf(pts, gapKm){
+  const par = pts.map((_,i)=>i);
+  const find = a => { while(par[a]!==a){ par[a]=par[par[a]]; a=par[a]; } return a; };
+  for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++)
+    if(hav(pts[i],pts[j])<=gapKm) par[find(i)]=find(j);
+  const b={}; pts.forEach((p,i)=>{ (b[find(i)]=b[find(i)]||[]).push(p); });
+  return Object.values(b);
+}
+function kSplit(list, k){
+  if(k<=1 || list.length<=k) return k<=1 ? [list] : list.map(p=>[p]);
+  const cx = p => p.lng*Math.cos(p.lat*Math.PI/180);
+  let cen = list.slice(0,k).map(p=>({x:cx(p),y:p.lat}));
+  let groups;
+  for(let it=0;it<40;it++){
+    groups = cen.map(()=>[]);
+    list.forEach(p=>{
+      let bi=0,bd=1e9; cen.forEach((c,i)=>{ const d=(cx(p)-c.x)**2+(p.lat-c.y)**2; if(d<bd){bd=d;bi=i;} });
+      groups[bi].push(p);
+    });
+    const nc = groups.map((g,i)=> g.length ? {x:g.reduce((a,p)=>a+cx(p),0)/g.length, y:g.reduce((a,p)=>a+p.lat,0)/g.length} : cen[i]);
+    if(nc.every((c,i)=>c.x===cen[i].x && c.y===cen[i].y)) break;
+    cen = nc;
+  }
+  return groups.filter(g=>g.length);
+}
+function areaLabel(pts){
+  const c = {lat:pts.reduce((a,p)=>a+p.lat,0)/pts.length, lng:pts.reduce((a,p)=>a+p.lng,0)/pts.length};
+  let best="", bd=1e9;
+  (SEED.knownAreas||[]).forEach(([n,la,lo])=>{ const d=hav(c,{lat:la,lng:lo}); if(d<bd){bd=d;best=n;} });
+  return bd<70 ? best : `${c.lat.toFixed(2)}, ${c.lng.toFixed(2)}`;
+}
+function buildItin(title, pts){
+  const days = [];
+  const regions = regionsOf(pts, 40);
+  regions.sort((a,b)=>{
+    const ca={lat:a.reduce((s,p)=>s+p.lat,0)/a.length}, cb={lat:b.reduce((s,p)=>s+p.lat,0)/b.length};
+    return ca.lat - cb.lat;
+  });
+  regions.forEach(r=>{
+    kSplit(r, Math.max(1, Math.ceil(r.length/6))).forEach(chunk=>{
+      const ordered = nnOrder(chunk);
+      const di = days.length+1;
+      days.push({index:di, label:areaLabel(ordered), stops: ordered.map((p,i)=>({
+        id:`c${di}-${i}-${(p.name||"x").toLowerCase().replace(/[^a-z0-9]+/g,"-").slice(0,28)}`,
+        name:p.name||"Tappa", kind:"default", category:"", rating:null, reviews:null,
+        photo:"", address:"", note:"", editorial:"", hours:[],
+        lat:p.lat, lng:p.lng, placeId:"", reason:"", url:p.url||""
+      }))});
+    });
+  });
+  return {title:title||"Nuovo itinerario", sourceUrl:"", enriched:false, mode:SEED.mode,
+          cfg:SEED.cfg, kindLabels:SEED.kindLabels, kindEmoji:SEED.kindEmoji,
+          knownAreas:SEED.knownAreas, skippedNoCoords:[], days};
 }
 
 /* ---------- events ---------- */
@@ -516,16 +696,27 @@ document.addEventListener("change", e=>{
   if(act==="showGeneric"){ S.showGeneric = el.checked; }
   else if(act==="showClosed"){ S.showClosed = el.checked; }
   else if(act==="globalStart"){ S.globalStart = el.value || CFG.dayStart; }
+  else if(act==="globalEnd"){ S.globalEnd = el.value; }
   else if(act==="daystart"){ (S.dayCfg[el.dataset.day] ||= {}).start = el.value; }
   else if(act==="dayend"){ (S.dayCfg[el.dataset.day] ||= {}).end = el.value; }
   else if(act==="arrive"){ ps(el.dataset.id).arrive = el.value; }
   else if(act==="note"){ const v=el.value.trim(); if(v) ps(el.dataset.id).note=v; else delete ps(el.dataset.id).note; }
   else if(act==="moveday"){ moveToDay(el.dataset.id, Number(el.value)); clearReopt(); }
+  else if(act==="pickitin"){ selectItin(el.value); render(); return; }
   else return;
   save(); render();
 });
 
 document.addEventListener("click", e=>{
+  const rl = e.target.closest(".raillink");
+  if(rl){
+    e.preventDefault();
+    const t = document.getElementById("g"+rl.dataset.day);
+    if(t) t.scrollIntoView({behavior:"smooth", block:"start"});
+    document.querySelectorAll(".raillink").forEach(a=>a.classList.remove("here"));
+    rl.classList.add("here");
+    return;
+  }
   const b = e.target.closest("button"); if(!b) return;
   const act = b.dataset.act;
   if(act==="toggle"){
@@ -546,6 +737,13 @@ document.addEventListener("click", e=>{
   else if(act==="up"){ reorder(Number(b.dataset.day), b.dataset.id, -1); }
   else if(act==="down"){ reorder(Number(b.dataset.day), b.dataset.id, +1); }
   else if(act==="show"){ ps(b.dataset.id).on = true; delete ps(b.dataset.id).off; }
+  else if(act==="pullin"){
+    const toDay = Number(b.dataset.day);
+    const cur = baseStops(D.days.find(d=>d.index===toDay)).map(s=>s.id);
+    moveToDay(b.dataset.id, toDay);
+    S.order[toDay] = cur.concat([b.dataset.id]);
+    clearReopt();
+  }
   else if(act==="reopt"){ clearReopt(); ps(b.dataset.id).reoptFrom = true; }
   else if(act==="reoptday"){
     const day = D.days.find(d=>d.index==b.dataset.day);
@@ -557,7 +755,30 @@ document.addEventListener("click", e=>{
     S.added = S.added.filter(a=>a.id!==b.dataset.id);
     for(const k in S.order) S.order[k] = S.order[k].filter(id=>id!==b.dataset.id);
   }
-  else if(act==="reset"){ if(confirm("Ripristinare l'itinerario originale?")){ S = JSON.parse(JSON.stringify(DEFAULT_STATE)); } }
+  else if(act==="reset"){
+    if(confirm("Ripristinare questo itinerario alle impostazioni originali?")){
+      const it = STORE.itins.find(i=>i.id===STORE.current);
+      it.state = null; selectItin(STORE.current);
+    }
+  }
+  else if(act==="newitin"){ const nb=b.closest(".itinbar").querySelector(".newitin"); nb.hidden=!nb.hidden; return; }
+  else if(act==="createitin"){
+    const box = b.closest(".newitin");
+    const title = box.querySelector('[data-new="title"]').value.trim();
+    const lines = box.querySelector('[data-new="urls"]').value.split(/\r?\n/).map(x=>x.trim()).filter(Boolean);
+    const msg = box.querySelector('[data-new="msg"]');
+    const pts = lines.map(parseMapsUrl).filter(Boolean);
+    if(pts.length < 2){ msg.textContent = `Servono almeno 2 link validi (trovati ${pts.length}). Usa URL completi con @lat,lng.`; return; }
+    const id = "it-" + Date.now().toString(36);
+    STORE.itins.push({id, data:buildItin(title, pts), state:null});
+    saveStore(); selectItin(id); render(); return;
+  }
+  else if(act==="delitin"){
+    if(STORE.current==="default") return;
+    if(!confirm("Eliminare questo itinerario?")) return;
+    STORE.itins = STORE.itins.filter(i=>i.id!==STORE.current);
+    saveStore(); selectItin("default"); render(); return;
+  }
   else if(act==="add"){
     const di = b.dataset.day;
     const url = (document.querySelector(`[data-add="url-${di}"]`)||{}).value || "";
@@ -586,6 +807,7 @@ document.addEventListener("click", e=>{
 function allStops(){ return D.days.flatMap(d=>baseStops(d)); }
 function clearReopt(){ for(const k in S.perStop) delete S.perStop[k].reoptFrom; }
 
+selectItin(STORE.current);
 render();
 """
 
