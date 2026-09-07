@@ -58,6 +58,7 @@ def build_parser() -> argparse.ArgumentParser:
     pl.add_argument("--travel-mode", choices=["walking", "transit", "driving"], default="transit")
     pl.add_argument("--start", metavar="LAT,LNG", help="anchor point for day 1 (e.g. your hotel)")
     pl.add_argument("--day-start", default="09:30")
+    pl.add_argument("--day-end", default="20:00", help="target end of a day (default 20:00)")
 
     out = ap.add_argument_group("output")
     out.add_argument("--out", default="out", help="output directory (default: ./out)")
@@ -138,6 +139,7 @@ def main(argv: list[str] | None = None) -> int:
         travel_mode=args.travel_mode,
         start=start,
         day_start=args.day_start,
+        day_end=args.day_end,
         api_key=None if args.no_enrich else os.environ.get("GOOGLE_MAPS_API_KEY"),
     )
     from . import extract as _extract

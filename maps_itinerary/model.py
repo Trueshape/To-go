@@ -196,6 +196,7 @@ class Itinerary:
     travel_mode: str = "transit"
     pace_factor: float = 1.0
     day_start: str = "09:30"
+    day_end: str = "20:00"
     lunch_at: str = "13:00"
     lunch_minutes: int = 60
     walk_threshold_km: float = 1.1

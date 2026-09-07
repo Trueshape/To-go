@@ -89,6 +89,7 @@ def to_html(it: Itinerary) -> str:
         ).hexdigest()[:12],
         "cfg": {
             "dayStart": it.day_start,
+            "dayEnd": it.day_end,
             "lunchAt": it.lunch_at,
             "lunchMin": it.lunch_minutes,
             "pace": it.pace_factor,
@@ -265,7 +266,7 @@ if(def) def.data = SEED; else STORE.itins.unshift({id:"default", data:SEED, stat
 
 let D, CFG, SPEED, S;
 function freshState(){
-  return {showGeneric:false, showClosed:false, globalStart:CFG.dayStart, globalEnd:"",
+  return {showGeneric:false, showClosed:false, globalStart:CFG.dayStart, globalEnd:CFG.dayEnd||"20:00",
           perStop:{}, dayCfg:{}, added:[], order:{}};
 }
 function selectItin(id){

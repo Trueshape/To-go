@@ -1249,6 +1249,7 @@
   "travel_mode": "transit",
   "pace_factor": 1.0,
   "day_start": "09:30",
+  "day_end": "20:00",
   "lunch_at": "13:00",
   "lunch_minutes": 60,
   "walk_threshold_km": 1.1

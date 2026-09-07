@@ -90,7 +90,7 @@ disappears silently.
 | `--pace relaxed\|normal\|packed` | scales visit durations and day length |
 | `--travel-mode walking\|transit\|driving` | default `transit` |
 | `--start "LAT,LNG"` | anchor for day 1 (e.g. your hotel) — also sets which city you start in |
-| `--day-start HH:MM` | default `09:30` |
+| `--day-start HH:MM` / `--day-end HH:MM` | day window, default `09:30`–`20:00` (drives how full each day is packed) |
 
 The planner first splits places into **regions** (things >40 km apart are
 treated as different bases — Tokyo vs Kyoto vs a Mt. Fuji day trip), shares the

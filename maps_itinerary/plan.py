@@ -29,6 +29,7 @@ class PlanConfig:
     travel_mode: str = "transit"
     start: tuple[float, float] | None = None
     day_start: str = "09:30"
+    day_end: str = "20:00"
     lunch_at: str = "13:00"
     lunch_minutes: int = 60
     region_gap_km: float = 40.0    # places farther apart than this = different bases
@@ -38,8 +39,12 @@ class PlanConfig:
 
 
 _PACE_FACTOR = {"relaxed": 1.25, "normal": 1.0, "packed": 0.8}
-# how many minutes of touring a day should hold, by pace (visits + hopping)
-_PACE_DAY_MINUTES = {"relaxed": 450, "normal": 540, "packed": 630}
+
+
+def _day_budget(cfg: "PlanConfig") -> float:
+    """Wall-clock minutes available for touring on a normal day."""
+    span = _to_min(cfg.day_end) - _to_min(cfg.day_start) - cfg.lunch_minutes
+    return max(180.0, span)
 
 
 def build_itinerary(
@@ -97,6 +102,7 @@ def build_itinerary(
         travel_mode=cfg.travel_mode,
         pace_factor=pace,
         day_start=cfg.day_start,
+        day_end=cfg.day_end,
         lunch_at=cfg.lunch_at,
         lunch_minutes=cfg.lunch_minutes,
     )
@@ -116,7 +122,7 @@ def build_itinerary(
 # day count + clustering
 # --------------------------------------------------------------------------- #
 def _auto_days(places: list[Place], cfg: PlanConfig, pace: float) -> int:
-    budget = _PACE_DAY_MINUTES.get(cfg.pace, 480)
+    budget = _day_budget(cfg)
     total = sum(p.visit_minutes(pace) for p in places)
     total += 35 * max(0, len(places) - 1)  # rough inter-stop travel allowance
     by_time = math.ceil(total / budget)
@@ -207,7 +213,7 @@ def _merge_thin_days(
     """Fold a day into its neighbour when both are short and close enough that
     combining them still fits a full touring day. Keeps trips from having a
     string of half-empty days."""
-    budget = _PACE_DAY_MINUTES.get(cfg.pace, 540)
+    budget = _day_budget(cfg)
     out = [list(c) for c in clusters]
     changed = True
     while changed and len(out) > 1:
@@ -220,8 +226,8 @@ def _merge_thin_days(
             transfer_min = transfer_km * 1.4 / 16.0 * 60
             combined = _day_minutes(a, pace) + _day_minutes(b, pace) + transfer_min
             # merge only if each day alone is light and the sum still fits
-            light = _day_minutes(a, pace) < budget * 0.72 and _day_minutes(b, pace) < budget * 0.72
-            if light and combined <= budget * 1.08:
+            light = _day_minutes(a, pace) < budget * 0.7 and _day_minutes(b, pace) < budget * 0.7
+            if light and combined <= budget * 1.02:
                 out[i] = a + b
                 del out[i + 1]
                 changed = True
