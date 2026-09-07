@@ -1,0 +1,4 @@
+requests>=2.31
+
+[browser]
+playwright>=1.40

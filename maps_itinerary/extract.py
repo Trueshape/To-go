@@ -22,6 +22,9 @@ import requests
 from .model import Place, CLOSED_MARKERS
 
 CONSENT_COOKIE = "CONSENT=YES+cb.20211029-17-p0.en+F+cb; SOCS=CAI"
+
+# Set by extract_from_browser so the CLI can title the itinerary after the list.
+LAST_LIST_TITLE = ""
 UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
@@ -37,17 +40,41 @@ _RATING = re.compile(r"^\s*([0-5][.,]\d)\s*\(\s*([\d.,]+)\s*\)\s*$")
 # public entry points
 # --------------------------------------------------------------------------- #
 def resolve_list_url(url: str) -> str:
-    """Follow a maps.app.goo.gl short link to the real URL."""
+    """Follow a maps.app.goo.gl short link to the real Google Maps URL.
+
+    Unwraps the consent.google.com interstitial and appends ``ucbcb=1`` which,
+    together with the SOCS cookie, tells Google to skip the cookie banner.
+    """
+    from urllib.parse import parse_qs, urlparse, urlsplit, urlunsplit
+
     r = requests.get(
         url,
         headers={"User-Agent": UA, "Cookie": CONSENT_COOKIE},
         allow_redirects=True,
         timeout=30,
     )
-    return r.url
+    final = r.url
+    host = urlparse(final).netloc
+    if "consent.google" in host:
+        cont = parse_qs(urlparse(final).query).get("continue", [])
+        if cont:
+            final = cont[0]
+
+    parts = urlsplit(final)
+    if "ucbcb=1" not in parts.query:
+        q = (parts.query + "&" if parts.query else "") + "ucbcb=1"
+        final = urlunsplit((parts.scheme, parts.netloc, parts.path, q, parts.fragment))
+    return final
 
 
-def extract_from_browser(url: str, *, headful: bool = False, max_scrolls: int = 120) -> list[Place]:
+_ITEM_SEL = "button.SMP2wb"
+_HEAD_SEL = ".fontHeadlineSmall"
+_STEALTH = "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})"
+
+
+def extract_from_browser(
+    url: str, *, headful: bool = False, max_scrolls: int = 60, resolve_coords: bool = True
+) -> list[Place]:
     try:
         from playwright.sync_api import sync_playwright
     except ImportError as e:  # pragma: no cover - env dependent
@@ -58,41 +85,99 @@ def extract_from_browser(url: str, *, headful: bool = False, max_scrolls: int = 
             "Or extract by hand and pass --from-html / --from-json."
         ) from e
 
+    # Force English UI + the cookie-banner bypass; the list panel only renders
+    # reliably from the full ...!3m1!4b1!4m3... form of the URL.
+    if "hl=" not in url:
+        url += ("&" if "?" in url else "?") + "hl=en"
+
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=not headful)
-        ctx = browser.new_context(user_agent=UA, locale="en-US")
+        browser = p.chromium.launch(
+            headless=not headful,
+            args=["--disable-blink-features=AutomationControlled", "--lang=en-US"],
+        )
+        ctx = browser.new_context(
+            user_agent=UA, locale="en-US", viewport={"width": 1360, "height": 950}
+        )
         ctx.add_cookies(_consent_cookies())
         page = ctx.new_page()
+        page.add_init_script(_STEALTH)
         page.goto(url, wait_until="domcontentloaded", timeout=60000)
-        _dismiss_consent(page)
-        page.wait_for_timeout(2500)
+        _clear_consent(page)
+        page.wait_for_selector(_ITEM_SEL, timeout=30000)
 
-        panel = _find_scroll_panel(page)
-        seen = 0
-        stable = 0
-        for _ in range(max_scrolls):
-            raw = page.evaluate(_JS_EXTRACT)
-            if len(raw) == seen:
-                stable += 1
-                if stable >= 4:
-                    break
-            else:
-                stable = 0
-            seen = len(raw)
-            if panel:
-                page.evaluate("el => el.scrollBy(0, el.clientHeight * 0.9)", panel)
-            else:
-                page.mouse.wheel(0, 1200)
-            page.wait_for_timeout(700)
+        global LAST_LIST_TITLE
+        LAST_LIST_TITLE = re.sub(r"\s*-\s*Google Maps\s*$", "", page.title() or "").strip()
 
-        raw = page.evaluate(_JS_EXTRACT)
-        title = page.evaluate(
-            "() => (document.querySelector('h1')||{}).textContent || document.title"
-        )
+        _scroll_list(page, max_scrolls)
+        raw = page.evaluate(_JS_LIST)
+        places = [_raw_to_place(r) for r in raw]
+        places = _dedupe([p for p in places if p.name])
+        print(f"  found {len(places)} places in the list")
+
+        if resolve_coords:
+            _resolve_coords(page, places)
+
         browser.close()
 
-    places = [_raw_to_place(r) for r in raw]
-    return _dedupe([p for p in places if p.name])
+    return places
+
+
+def _scroll_list(page, max_scrolls: int) -> None:
+    handle = page.evaluate_handle(
+        """() => {
+          let e = document.querySelector('""" + _ITEM_SEL + """');
+          while (e) { if (e.scrollHeight > e.clientHeight + 50) return e; e = e.parentElement; }
+          return document.scrollingElement;
+        }"""
+    )
+    last, stable = -1, 0
+    for _ in range(max_scrolls):
+        n = page.eval_on_selector_all(_ITEM_SEL, "e => e.length")
+        page.evaluate("el => el.scrollBy(0, el.clientHeight)", handle)
+        page.wait_for_timeout(550)
+        stable = stable + 1 if n == last else 0
+        last = n
+        if stable >= 4:
+            break
+
+
+def _resolve_coords(page, places: list[Place]) -> None:
+    """Click each list item, read lat/lng + feature id off the resulting URL."""
+    total = len(places)
+    for i, place in enumerate(places):
+        try:
+            items = page.query_selector_all(_ITEM_SEL)
+            if i >= len(items):
+                _scroll_list(page, 20)
+                items = page.query_selector_all(_ITEM_SEL)
+            if i >= len(items):
+                continue
+            items[i].scroll_into_view_if_needed(timeout=4000)
+            items[i].click(timeout=5000)
+            page.wait_for_url(re.compile(r"/maps/place/"), timeout=12000)
+            page.wait_for_timeout(600)
+            _fill_from_url(place, page.url)
+        except Exception as e:  # noqa: BLE001 - keep going, coords are best-effort
+            print(f"  ! no coords for {place.name}: {str(e).splitlines()[0]}")
+        finally:
+            try:
+                page.go_back(wait_until="domcontentloaded", timeout=12000)
+                page.wait_for_selector(_ITEM_SEL, timeout=10000)
+                page.wait_for_timeout(400)
+            except Exception:
+                pass
+        if (i + 1) % 10 == 0:
+            print(f"  ... {i + 1}/{total}")
+
+
+def _fill_from_url(place: Place, url: str) -> None:
+    place.source_href = url
+    mc = _COORDS_3D4D.search(url) or _COORDS_AT.search(url)
+    if mc:
+        place.lat, place.lng = float(mc.group(1)), float(mc.group(2))
+    mf = _FTID.search(url)
+    if mf:
+        place.ftid = mf.group(1)
 
 
 def extract_from_html(path: str) -> list[Place]:
@@ -115,8 +200,10 @@ def extract_from_html(path: str) -> list[Place]:
 
 
 def load_from_json(path: str) -> list[Place]:
+    global LAST_LIST_TITLE
     data = json.load(open(path, encoding="utf-8"))
     if isinstance(data, dict):
+        LAST_LIST_TITLE = data.get("title", "") or LAST_LIST_TITLE
         data = data.get("places", [])
     return [Place.from_dict(d) for d in data]
 
@@ -124,28 +211,25 @@ def load_from_json(path: str) -> list[Place]:
 # --------------------------------------------------------------------------- #
 # helpers
 # --------------------------------------------------------------------------- #
-_JS_EXTRACT = r"""
+_JS_LIST = r"""
 () => {
-  const seen = new Map();
-  document.querySelectorAll('a[href*="/maps/place/"]').forEach(a => {
-    const href = a.href;
-    if (seen.has(href)) return;
-    // climb to the card container that also holds the rating/category text
-    let box = a;
-    for (let i = 0; i < 6 && box.parentElement; i++) {
-      box = box.parentElement;
-      if (box.querySelector('[role="img"][aria-label*="star"], [aria-label*="stelle"]')) break;
-    }
-    const lines = Array.from(box.querySelectorAll('div,span'))
+  const out = [];
+  document.querySelectorAll('button.SMP2wb').forEach(b => {
+    const head = b.querySelector('.fontHeadlineSmall');
+    if (!head) return;
+    const name = head.textContent.trim();
+    const star = b.querySelector('[role="img"][aria-label*="star"], [role="img"][aria-label*="stelle"]');
+    const lines = Array.from(b.querySelectorAll('div,span'))
       .map(el => (el.childElementCount === 0 ? el.textContent.trim() : ''))
       .filter(Boolean);
-    seen.set(href, {
-      name: (a.getAttribute('aria-label') || a.textContent || '').trim(),
-      href,
-      lines: Array.from(new Set(lines)).slice(0, 12),
+    out.push({
+      name,
+      href: '',
+      aria: star ? star.getAttribute('aria-label') : '',
+      lines: Array.from(new Set(lines)).slice(0, 14),
     });
   });
-  return Array.from(seen.values());
+  return out;
 }
 """
 
@@ -153,26 +237,47 @@ _JS_EXTRACT = r"""
 def _consent_cookies():
     return [
         {"name": "CONSENT", "value": "YES+cb", "domain": ".google.com", "path": "/"},
-        {"name": "SOCS", "value": "CAI", "domain": ".google.com", "path": "/"},
+        {"name": "SOCS", "value": "CAISNQgQEitib3VuZGVkX2ZsaWdodHM", "domain": ".google.com", "path": "/"},
+        {"name": "SOCS", "value": "CAISNQgQEitib3VuZGVkX2ZsaWdodHM", "domain": ".consent.google.com", "path": "/"},
     ]
 
 
-def _dismiss_consent(page) -> None:
-    for sel in (
-        'button[aria-label*="Reject all"]',
-        'button[aria-label*="Rifiuta tutto"]',
-        'form[action*="consent"] button',
-        'button:has-text("Reject all")',
-        'button:has-text("Rifiuta tutto")',
-    ):
+_CONSENT_BUTTON_RE = "Reject all|Rifiuta tutto|Alle ablehnen|Tout refuser|Accept all|Accetta tutto"
+
+
+def _clear_consent(page) -> None:
+    """Get past consent.google.com by rejecting, then wait for the real page."""
+    import re as _re
+
+    for _ in range(4):
+        if "consent.google" not in page.url:
+            return
+        clicked = False
         try:
-            el = page.query_selector(sel)
-            if el:
-                el.click()
-                page.wait_for_timeout(1500)
-                return
+            btn = page.get_by_role("button", name=_re.compile(_CONSENT_BUTTON_RE, _re.I))
+            if btn.count():
+                btn.first.click(timeout=5000)
+                clicked = True
         except Exception:
             pass
+        if not clicked:
+            for sel in (
+                'form[action*="consent"] button[type="submit"]',
+                'form[action*="save"] button',
+                'button[aria-label*="Reject"]',
+                'button[aria-label*="Rifiuta"]',
+            ):
+                try:
+                    page.click(sel, timeout=3000)
+                    clicked = True
+                    break
+                except Exception:
+                    continue
+        try:
+            page.wait_for_load_state("domcontentloaded", timeout=15000)
+        except Exception:
+            pass
+        page.wait_for_timeout(1500)
 
 
 def _find_scroll_panel(page):
@@ -190,6 +295,10 @@ def _raw_to_place(r: dict) -> Place:
     p = _new_place(name=(r.get("name") or "").strip(), href=r.get("href", ""))
     for line in r.get("lines", []):
         _absorb_line(p, line)
+    if p.rating is None:
+        m = re.search(r"([0-5][.,]\d)\s*(?:stars?|stelle)", r.get("aria", ""))
+        if m:
+            p.rating = float(m.group(1).replace(",", "."))
     return p
 
 
@@ -204,14 +313,24 @@ def _new_place(*, name: str, href: str) -> Place:
     return p
 
 
+_ADDRESS_TAIL = re.compile(
+    r",\s*(?:tokyo|osaka|kyoto|nara|japan|giappone|kanagawa|[A-Z][a-z]+ (?:City|Ward|Prefecture))"
+    r"|(?:City|Ward|Prefecture|Kanagawa|Setagaya)\b",
+    re.I,
+)
+
+
 def _absorb_line(p: Place, line: str) -> None:
+    line = (line or "").strip()
     low = line.lower()
     if not line or line == p.name:
         return
     if any(m in low for m in CLOSED_MARKERS):
         p.permanently_closed = True
-        if not p.category:
-            p.category = line
+        return
+    # bare rating ("4.2") or rating with review count ("4.4(12,904)")
+    if re.match(r"^[0-5][.,]\d$", line):
+        p.rating = p.rating or float(line.replace(",", "."))
         return
     mr = _RATING.match(line)
     if mr:
@@ -221,10 +340,23 @@ def _absorb_line(p: Place, line: str) -> None:
         except ValueError:
             pass
         return
-    # a short, non-numeric line right after the name is the category
-    if not p.category and 2 <= len(line) <= 48 and not re.search(r"\d{3,}", line):
-        if not any(tok in low for tok in ("giappone", "japan", "·", "salva", "condividi")):
-            p.category = line
+    if any(tok in low for tok in ("giappone", "japan", "·", "salva ", "share", "condividi")):
+        return
+    if re.search(r"\d", line) or _ADDRESS_TAIL.search(line) or "," in line:
+        return
+    known_single = {
+        "memorial", "market", "river", "park", "garden", "mall", "museum", "shrine",
+        "temple", "castle", "landmark", "monument", "neighborhood", "hotel", "cafe",
+        "restaurant", "bar", "izakaya", "station",
+    }
+    words = line.split()
+    prose = {"di", "e", "con", "del", "della", "the", "of", "per", "in", "a", "da", "un"}
+    is_prose = len(words) > 3 or any(w.lower() in prose for w in words)
+    looks_like_category = not is_prose and (" " in line or line.lower() in known_single)
+    if not p.category and looks_like_category and 2 <= len(line) <= 40 and line[0].isupper():
+        p.category = line
+    elif len(line) > 12 and not p.note:
+        p.note = line  # the list author's own annotation, e.g. "Equivalente di Akihabara"
 
 
 def _name_from_href(href: str) -> str:

@@ -172,8 +172,6 @@ def _rebalance(clusters: list[list[Place]], max_per_day: int) -> list[list[Place
         clusters.sort(key=len, reverse=True)
         for ci, c in enumerate(clusters):
             while len(c) > max_per_day:
-                cen = _centroid(c)
-                victim = max(c, key=lambda p: haversine_km((p.lat, p.lng), cen))
                 targets = [
                     (cj, d)
                     for cj, d in enumerate(clusters)
@@ -182,13 +180,50 @@ def _rebalance(clusters: list[list[Place]], max_per_day: int) -> list[list[Place
                 if not targets:
                     clusters.append([])
                     targets = [(len(clusters) - 1, clusters[-1])]
-                cj, dst = min(
-                    targets,
-                    key=lambda t: haversine_km((victim.lat, victim.lng), _centroid(t[1]) or (victim.lat, victim.lng)),
+                # move the member that fits some other day best (least disruptive),
+                # not just the one farthest from this day's centre
+                victim, cj, dst = min(
+                    (
+                        (p, cj, d)
+                        for p in c
+                        for cj, d in targets
+                    ),
+                    key=lambda t: haversine_km(
+                        (t[0].lat, t[0].lng), _centroid(t[2]) or (t[0].lat, t[0].lng)
+                    ),
                 )
                 c.remove(victim)
                 dst.append(victim)
                 changed = True
+    clusters = _polish([c for c in clusters if c], max_per_day)
+    return clusters
+
+
+def _polish(clusters: list[list[Place]], max_per_day: int) -> list[list[Place]]:
+    """k-means-style clean-up: send each place to the nearest day that has room."""
+    for _ in range(20):
+        centers = [_centroid(c) for c in clusters]
+        moved = False
+        for ci, c in enumerate(clusters):
+            if len(c) <= 1:
+                continue
+            for p in list(c):
+                here = haversine_km((p.lat, p.lng), centers[ci])
+                best = min(
+                    (
+                        (cj, haversine_km((p.lat, p.lng), centers[cj]))
+                        for cj in range(len(clusters))
+                        if cj != ci and len(clusters[cj]) < max_per_day
+                    ),
+                    key=lambda t: t[1],
+                    default=None,
+                )
+                if best and best[1] + 0.3 < here:
+                    c.remove(p)
+                    clusters[best[0]].append(p)
+                    moved = True
+        if not moved:
+            break
     return [c for c in clusters if c]
 
 

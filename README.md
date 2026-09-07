@@ -95,9 +95,9 @@ Get a key: <https://console.cloud.google.com/> → enable *Places API (New)* and
 }
 ```
 
-`examples/japan-2028.places.json` is the "Japan 2028" list (49 places).
-Coordinates there are approximate placeholders — run with an API key, or scrape
-the live list, for exact ones.
+`examples/japan-2028.places.json` is the "Japan 2028" list (49 places), scraped
+live — real coordinates and feature ids. A top-level `{"title": ..., "places":
+[...]}` wrapper is optional; a bare array works too.
 
 ## Limitations
 

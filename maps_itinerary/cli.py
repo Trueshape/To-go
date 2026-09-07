@@ -140,7 +140,9 @@ def main(argv: list[str] | None = None) -> int:
         day_start=args.day_start,
         api_key=None if args.no_enrich else os.environ.get("GOOGLE_MAPS_API_KEY"),
     )
-    title = _guess_title(source_url)
+    from . import extract as _extract
+
+    title = _extract.LAST_LIST_TITLE or _guess_title(source_url)
     it = build_itinerary(
         fr.kept, title=title, source_url=source_url, cfg=pcfg, enriched=enricher.enabled
     )

@@ -51,6 +51,9 @@ CATEGORY_HINTS = [
     ("chiesa", "church"), ("church", "church"),
     ("castello", "castle"), ("castle", "castle"),
     ("monumento", "landmark"), ("monument", "landmark"), ("landmark", "landmark"),
+    ("memorial", "landmark"), ("memoriale", "landmark"),
+    ("flea market", "market"), ("mercatino", "market"),
+    ("business park", "neighborhood"), ("centro direzionale", "neighborhood"),
     ("punto d'interesse", "landmark"), ("point of interest", "landmark"),
     ("punto panoramico", "viewpoint"), ("observation deck", "viewpoint"),
     ("scenic", "viewpoint"), ("lookout", "viewpoint"),
@@ -101,19 +104,26 @@ class Place:
     @property
     def kind(self) -> str:
         cat = (self.category or "").lower()
-        for needle, kind in CATEGORY_HINTS:
+        # longer, more specific needles win ("business park" before "park")
+        for needle, kind in sorted(CATEGORY_HINTS, key=lambda h: -len(h[0])):
             if needle in cat:
                 return kind
         return "default"
 
     @property
     def is_generic_area(self) -> bool:
-        """True when the entry is a city/neighborhood rather than a specific POI."""
+        """True when the entry is a city/neighborhood rather than a specific POI.
+
+        Maps shows administrative areas with no rating and no real category
+        (just an address line like "Kitazawa, Setagaya City, Tokyo").
+        """
         cat = (self.category or "").strip().lower()
-        if not cat:
-            # No category line AND no rating is how Maps shows bare places/cities.
-            return self.rating is None
-        return any(m in cat for m in GENERIC_CATEGORY_MARKERS)
+        if any(m in cat for m in GENERIC_CATEGORY_MARKERS):
+            return True
+        if self.rating is not None:
+            return False
+        # no rating: it's a real POI only if it carries a recognisable category
+        return self.kind == "default"
 
     @property
     def has_coords(self) -> bool:
