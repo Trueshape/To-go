@@ -396,8 +396,8 @@ function fillPanel(day, sc, slack){
     });
   });
   cands.sort((a,b)=>a.km-b.km);
-  // radius grows with how much free time there is (a wide-open day can justify a longer hop)
-  const maxKm = slack > 200 ? 55 : slack > 120 ? 32 : 18;
+  // a day with lots of free time can justify a hop to another city
+  const maxKm = slack > 240 ? 90 : slack > 150 ? 55 : slack > 80 ? 30 : 16;
   const fit = cands.filter(c=>c.km <= maxKm && c.add <= slack + 25).slice(0,8);
   if(!fit.length) return "";
   return `<div class="fillpanel">

@@ -33,7 +33,7 @@ class PlanConfig:
     lunch_at: str = "13:00"
     lunch_minutes: int = 60
     region_gap_km: float = 40.0    # places farther apart than this = different bases
-    merge_gap_km: float = 60.0     # thin adjacent days closer than this get merged
+    merge_gap_km: float = 75.0     # adjacent days closer than this may share one day
     api_key: str | None = None
     seed: int = 7
 
@@ -210,14 +210,16 @@ def _day_minutes(group: list[Place], pace: float) -> float:
 def _merge_thin_days(
     clusters: list[list[Place]], cfg: PlanConfig, pace: float
 ) -> list[list[Place]]:
-    """Fold a day into its neighbour when both are short and close enough that
-    combining them still fits a full touring day. Keeps trips from having a
-    string of half-empty days."""
+    """Combine two consecutive days - even in different cities - whenever the
+    transfer between them is short enough that seeing both in one day still fits
+    the day window. Stops a trip from being a string of half-empty days.
+    """
     budget = _day_budget(cfg)
     out = [list(c) for c in clusters]
     changed = True
     while changed and len(out) > 1:
         changed = False
+        best = None
         for i in range(len(out) - 1):
             a, b = out[i], out[i + 1]
             transfer_km = haversine_km(_centroid(a), _centroid(b))
@@ -225,13 +227,13 @@ def _merge_thin_days(
                 continue
             transfer_min = transfer_km * 1.4 / 16.0 * 60
             combined = _day_minutes(a, pace) + _day_minutes(b, pace) + transfer_min
-            # merge only if each day alone is light and the sum still fits
-            light = _day_minutes(a, pace) < budget * 0.7 and _day_minutes(b, pace) < budget * 0.7
-            if light and combined <= budget * 1.02:
-                out[i] = a + b
-                del out[i + 1]
-                changed = True
-                break
+            if combined <= budget * 1.02 and (best is None or combined < best[1]):
+                best = (i, combined)
+        if best is not None:
+            i = best[0]
+            out[i] = out[i] + out[i + 1]
+            del out[i + 1]
+            changed = True
     return out
 
 
