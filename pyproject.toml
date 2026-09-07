@@ -1,0 +1,22 @@
+[project]
+name = "maps-list-to-itinerary"
+version = "0.1.0"
+description = "Turn a public Google Maps list into a day-by-day itinerary."
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+# Needed only for scraping a live list URL. Not needed with --from-html / --from-json.
+browser = ["playwright>=1.40"]
+
+[project.scripts]
+maps-itinerary = "maps_itinerary.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["maps_itinerary"]
