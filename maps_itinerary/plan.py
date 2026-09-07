@@ -32,12 +32,14 @@ class PlanConfig:
     lunch_at: str = "13:00"
     lunch_minutes: int = 60
     region_gap_km: float = 40.0    # places farther apart than this = different bases
+    merge_gap_km: float = 60.0     # thin adjacent days closer than this get merged
     api_key: str | None = None
     seed: int = 7
 
 
 _PACE_FACTOR = {"relaxed": 1.25, "normal": 1.0, "packed": 0.8}
-_PACE_DAY_MINUTES = {"relaxed": 390, "normal": 480, "packed": 570}
+# how many minutes of touring a day should hold, by pace (visits + hopping)
+_PACE_DAY_MINUTES = {"relaxed": 450, "normal": 540, "packed": 630}
 
 
 def build_itinerary(
@@ -78,6 +80,10 @@ def build_itinerary(
         sub = _cluster(region, min(share, len(region)), cfg)
         sub = _rebalance(sub, cfg.max_per_day)
         clusters.extend(_order_clusters(sub, cfg.start))
+
+    # 2b. merge adjacent days that would each finish well short of a full day
+    if cfg.days is None:
+        clusters = _merge_thin_days(clusters, cfg, pace)
 
     # 3. drop the extras into the nearest day
     for p in extras:
@@ -181,6 +187,46 @@ def _cluster(places: list[Place], k: int, cfg: PlanConfig) -> list[list[Place]]:
             break
         centers = new_centers
     return [[places[i] for i in g] for g in groups if g]
+
+
+def _day_minutes(group: list[Place], pace: float) -> float:
+    """Rough active minutes for a day: visits + a hop between each stop."""
+    if not group:
+        return 0.0
+    visit = sum(p.visit_minutes(pace) for p in group)
+    hop = 0.0
+    for a, b in zip(group, group[1:]):
+        d = haversine_km((a.lat, a.lng), (b.lat, b.lng)) * 1.4
+        hop += d / 16.0 * 60 + 4
+    return visit + hop
+
+
+def _merge_thin_days(
+    clusters: list[list[Place]], cfg: PlanConfig, pace: float
+) -> list[list[Place]]:
+    """Fold a day into its neighbour when both are short and close enough that
+    combining them still fits a full touring day. Keeps trips from having a
+    string of half-empty days."""
+    budget = _PACE_DAY_MINUTES.get(cfg.pace, 540)
+    out = [list(c) for c in clusters]
+    changed = True
+    while changed and len(out) > 1:
+        changed = False
+        for i in range(len(out) - 1):
+            a, b = out[i], out[i + 1]
+            transfer_km = haversine_km(_centroid(a), _centroid(b))
+            if transfer_km > cfg.merge_gap_km:
+                continue
+            transfer_min = transfer_km * 1.4 / 16.0 * 60
+            combined = _day_minutes(a, pace) + _day_minutes(b, pace) + transfer_min
+            # merge only if each day alone is light and the sum still fits
+            light = _day_minutes(a, pace) < budget * 0.72 and _day_minutes(b, pace) < budget * 0.72
+            if light and combined <= budget * 1.08:
+                out[i] = a + b
+                del out[i + 1]
+                changed = True
+                break
+    return out
 
 
 def _rebalance(clusters: list[list[Place]], max_per_day: int) -> list[list[Place]]:

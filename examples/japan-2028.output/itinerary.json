@@ -30,47 +30,25 @@
         },
         {
           "place": {
-            "name": "Kuromon Market",
-            "lat": 34.6653511,
-            "lng": 135.5062417,
-            "category": "Tourist attraction",
+            "name": "Dotonbori Hotel",
+            "lat": 34.6685423,
+            "lng": 135.4987916,
+            "category": "",
             "rating": 4.1,
             "reviews": null,
-            "address": "2 Chome-4-1 Nipponbashi, Chuo Ward, Osaka, 542-0073, Japan",
+            "address": "2 Chome-3-25 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan",
             "place_id": "",
-            "ftid": "0x6000e741e541225d:0xac1d2c78be23c141",
+            "ftid": "0x6000e712485bdf59:0xb94a441dae2947ff",
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
             "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn7nPCy5jr76zlE5SRGsO1GiijvQ0ouxzwZwmqyT6uTVFr6lj5cqz-X0FIY_0jSgGaxwfTTNmc_COd1GjM6dqaLAzCkfaur1-og4ykabUWe6MeGBV-fbHABf6gBIi-jc8v5LuY=w1000-h640-k-no",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkibxtcTLa-2-DyPAxy-nKInMf9QCrFH9LjfRvaVpOWKH0S4iBA9WcZ-2ESWC4n28VlmxeOq1O7hkoZa5hyvspWAAsCaWZgRnQoBPqQgZ6IM2OUydWV7UCnl7vkH2lXL7GaWzMZmg=w1000-h640-k-no",
             "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Kuromon+Market/@35.659482,137.3934307,8z/data=!3m1!5s0x600108ad98c0be39:0x6f5f2cc8cd103297!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6000e741e541225d:0xac1d2c78be23c141!8m2!3d34.6653511!4d135.5062417?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+            "source_href": "https://www.google.com/maps/place/Dotonbori+Hotel/@34.6653511,133.1991128,8z/data=!3m1!5s0x600108ad98c0be39:0x6f5f2cc8cd103297!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6000e712485bdf59:0xb94a441dae2947ff!8m2!3d34.6685423!4d135.4987916?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "10:01",
-          "depart": "10:21"
-        },
-        {
-          "place": {
-            "name": "FamilyMart Ebisubashi",
-            "lat": 34.6686393,
-            "lng": 135.5012014,
-            "category": "Convenience store",
-            "rating": 2.2,
-            "reviews": null,
-            "address": "1 Chome-9-1 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan",
-            "place_id": "",
-            "ftid": "0x6000e76a553a58e1:0x6077466ad0c160c0",
-            "permanently_closed": false,
-            "opening_hours": [],
-            "editorial": "",
-            "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkPir8a8roI6KqH-dm0MdiHIKgQmXsjfsGnw0W3DX7wudPCs3FHF3Ysx5YrcIpoZtnU_Z80jpzYtnQjHiKDEeJu9lzF8EGcSOd_MZAwH2GE9TAj30hRVhd3hiy-z7OcrLuug7ru9vKE46cR=w1000-h640-k-no",
-            "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/FamilyMart+Ebisubashi/@35.659482,137.3934307,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6000e76a553a58e1:0x6077466ad0c160c0!8m2!3d34.6686393!4d135.5012014?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
-          },
-          "arrive": "10:37",
-          "depart": "10:47"
+          "arrive": "10:03",
+          "depart": "10:48"
         },
         {
           "place": {
@@ -91,71 +69,53 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/Glico+Sign+Dotonbori/@34.6536555,133.1984762,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6000e71493ce71e9:0x5b59203ed8fd29bf!8m2!3d34.6689339!4d135.5010679?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "10:50",
-          "depart": "11:20"
+          "arrive": "10:56",
+          "depart": "11:26"
         },
         {
           "place": {
-            "name": "Dotonbori Hotel",
-            "lat": 34.6685423,
-            "lng": 135.4987916,
-            "category": "",
-            "rating": 4.1,
+            "name": "FamilyMart Ebisubashi",
+            "lat": 34.6686393,
+            "lng": 135.5012014,
+            "category": "Convenience store",
+            "rating": 2.2,
             "reviews": null,
-            "address": "2 Chome-3-25 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan",
+            "address": "1 Chome-9-1 Dotonbori, Chuo Ward, Osaka, 542-0071, Japan",
             "place_id": "",
-            "ftid": "0x6000e712485bdf59:0xb94a441dae2947ff",
+            "ftid": "0x6000e76a553a58e1:0x6077466ad0c160c0",
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
             "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkibxtcTLa-2-DyPAxy-nKInMf9QCrFH9LjfRvaVpOWKH0S4iBA9WcZ-2ESWC4n28VlmxeOq1O7hkoZa5hyvspWAAsCaWZgRnQoBPqQgZ6IM2OUydWV7UCnl7vkH2lXL7GaWzMZmg=w1000-h640-k-no",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkPir8a8roI6KqH-dm0MdiHIKgQmXsjfsGnw0W3DX7wudPCs3FHF3Ysx5YrcIpoZtnU_Z80jpzYtnQjHiKDEeJu9lzF8EGcSOd_MZAwH2GE9TAj30hRVhd3hiy-z7OcrLuug7ru9vKE46cR=w1000-h640-k-no",
             "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Dotonbori+Hotel/@34.6653511,133.1991128,8z/data=!3m1!5s0x600108ad98c0be39:0x6f5f2cc8cd103297!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6000e712485bdf59:0xb94a441dae2947ff!8m2!3d34.6685423!4d135.4987916?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+            "source_href": "https://www.google.com/maps/place/FamilyMart+Ebisubashi/@35.659482,137.3934307,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6000e76a553a58e1:0x6077466ad0c160c0!8m2!3d34.6686393!4d135.5012014?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "11:27",
-          "depart": "12:12"
-        }
-      ],
-      "legs": [
-        {
-          "from_place": "Shinsekai Market",
-          "to_place": "Kuromon Market",
-          "minutes": 11,
-          "distance_km": 1.8,
-          "mode": "transit",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=34.6536555,135.5056051&destination=34.6653511,135.5062417&travelmode=transit"
+          "arrive": "11:28",
+          "depart": "11:38"
         },
         {
-          "from_place": "Kuromon Market",
-          "to_place": "FamilyMart Ebisubashi",
-          "minutes": 16,
-          "distance_km": 0.8,
-          "mode": "walking",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=34.6653511,135.5062417&destination=34.6686393,135.5012014&travelmode=walking"
+          "place": {
+            "name": "Kuromon Market",
+            "lat": 34.6653511,
+            "lng": 135.5062417,
+            "category": "Tourist attraction",
+            "rating": 4.1,
+            "reviews": null,
+            "address": "2 Chome-4-1 Nipponbashi, Chuo Ward, Osaka, 542-0073, Japan",
+            "place_id": "",
+            "ftid": "0x6000e741e541225d:0xac1d2c78be23c141",
+            "permanently_closed": false,
+            "opening_hours": [],
+            "editorial": "",
+            "note": "",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWn7nPCy5jr76zlE5SRGsO1GiijvQ0ouxzwZwmqyT6uTVFr6lj5cqz-X0FIY_0jSgGaxwfTTNmc_COd1GjM6dqaLAzCkfaur1-og4ykabUWe6MeGBV-fbHABf6gBIi-jc8v5LuY=w1000-h640-k-no",
+            "disabled_reason": "",
+            "source_href": "https://www.google.com/maps/place/Kuromon+Market/@35.659482,137.3934307,8z/data=!3m1!5s0x600108ad98c0be39:0x6f5f2cc8cd103297!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6000e741e541225d:0xac1d2c78be23c141!8m2!3d34.6653511!4d135.5062417?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+          },
+          "arrive": "11:55",
+          "depart": "12:15"
         },
-        {
-          "from_place": "FamilyMart Ebisubashi",
-          "to_place": "Glico Sign Dotonbori",
-          "minutes": 3,
-          "distance_km": 0.1,
-          "mode": "walking",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=34.6686393,135.5012014&destination=34.6689339,135.5010679&travelmode=walking"
-        },
-        {
-          "from_place": "Glico Sign Dotonbori",
-          "to_place": "Dotonbori Hotel",
-          "minutes": 7,
-          "distance_km": 0.3,
-          "mode": "walking",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=34.6689339,135.5010679&destination=34.6685423,135.4987916&travelmode=walking"
-        }
-      ]
-    },
-    {
-      "index": 2,
-      "label": "Nara",
-      "stops": [
         {
           "place": {
             "name": "Nara Station",
@@ -170,13 +130,13 @@
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
-            "note": "",
+            "note": "(dopo pausa pranzo)",
             "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkMN9fqUJkA7g7mISXFxWD9o7CvW6UHxOo-S6DxDB0SyIAlLx8JtD2SEFKnuDorENF7pitki5M-COAEDZfYjSTBbd75hXDYpxvoEXvWFLV1lC2oYWiaXlAfkIuFSnB2CYJRRfzPlg=w1000-h640-k-no",
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/Nara+Station/@35.659482,137.3934307,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60013a2e385f520f:0xb7582b14784ae674!8m2!3d34.6808126!4d135.8189522?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "09:30",
-          "depart": "09:45"
+          "arrive": "15:49",
+          "depart": "16:04"
         },
         {
           "place": {
@@ -197,8 +157,8 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/%E3%83%A1%E3%83%B3%E3%82%BA%E3%82%B7%E3%83%A7%E3%83%84%E3%83%97%E3%82%A8%E3%83%93%E3%82%B9%E3%83%A4%26%E9%9B%91%E8%B2%A8/@34.6686393,134.182842,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60013a2871a94091:0xe898d95e73ef4a01!8m2!3d34.6819141!4d135.8264081?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "10:04",
-          "depart": "10:49"
+          "arrive": "16:23",
+          "depart": "17:08"
         },
         {
           "place": {
@@ -219,8 +179,8 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/%E5%A5%88%E8%89%AF%E7%9C%8C%E5%BA%81%E5%89%8D%E5%99%B4%E6%B0%B4/@35.659482,137.3934307,8z/data=!3m1!5s0x6000e71377d10cb9:0x4ff5f07ec4cd5149!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x600139002930e45f:0x9e203ad0ca0c2032!8m2!3d34.6849219!4d135.8328735?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "11:07",
-          "depart": "11:27"
+          "arrive": "17:26",
+          "depart": "17:46"
         },
         {
           "place": {
@@ -241,11 +201,51 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/Nara+Park/@34.6808126,133.5118233,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60013996bd8c6061:0xf96cacf357447456!8m2!3d34.685047!4d135.843012?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "11:36",
-          "depart": "12:36"
+          "arrive": "17:55",
+          "depart": "18:55"
         }
       ],
       "legs": [
+        {
+          "from_place": "Shinsekai Market",
+          "to_place": "Dotonbori Hotel",
+          "minutes": 13,
+          "distance_km": 2.5,
+          "mode": "transit",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=34.6536555,135.5056051&destination=34.6685423,135.4987916&travelmode=transit"
+        },
+        {
+          "from_place": "Dotonbori Hotel",
+          "to_place": "Glico Sign Dotonbori",
+          "minutes": 7,
+          "distance_km": 0.3,
+          "mode": "walking",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=34.6685423,135.4987916&destination=34.6689339,135.5010679&travelmode=walking"
+        },
+        {
+          "from_place": "Glico Sign Dotonbori",
+          "to_place": "FamilyMart Ebisubashi",
+          "minutes": 3,
+          "distance_km": 0.1,
+          "mode": "walking",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=34.6689339,135.5010679&destination=34.6686393,135.5012014&travelmode=walking"
+        },
+        {
+          "from_place": "FamilyMart Ebisubashi",
+          "to_place": "Kuromon Market",
+          "minutes": 16,
+          "distance_km": 0.8,
+          "mode": "walking",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=34.6686393,135.5012014&destination=34.6653511,135.5062417&travelmode=walking"
+        },
+        {
+          "from_place": "Kuromon Market",
+          "to_place": "Nara Station",
+          "minutes": 154,
+          "distance_km": 40.1,
+          "mode": "transit",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=34.6653511,135.5062417&destination=34.6808126,135.8189522&travelmode=transit"
+        },
         {
           "from_place": "Nara Station",
           "to_place": "メンズショツプエビスヤ&雑貨",
@@ -273,7 +273,7 @@
       ]
     },
     {
-      "index": 3,
+      "index": 2,
       "label": "Kyoto",
       "stops": [
         {
@@ -453,7 +453,7 @@
       ]
     },
     {
-      "index": 4,
+      "index": 3,
       "label": "Fuji / Fujiyoshida",
       "stops": [
         {
@@ -482,99 +482,31 @@
       "legs": []
     },
     {
-      "index": 5,
+      "index": 4,
       "label": "Tokyo",
       "stops": [
         {
           "place": {
-            "name": "Tokyo City Flea Market",
-            "lat": 35.5949798,
-            "lng": 139.7430414,
-            "category": "Flea market",
-            "rating": 4.2,
-            "reviews": null,
-            "address": "2 Chome-1-1 Katsushima, Shinagawa City, Tokyo 140-0012, Japan",
-            "place_id": "",
-            "ftid": "0x60186100092777c3:0xfdcb6cb658a5f045",
-            "permanently_closed": false,
-            "opening_hours": [],
-            "editorial": "",
-            "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWklhQKzg6InuhdiF5ioclF64fB6z9LIDEBq9-PKJBa9F2XIKkbu2XkLM8ejXOBgyCKGfpriyh3MRO4bnYAG4z4Tc_-f_e851VDyIb7hg9rWPz6iLY3JXtwel8AY0xO7qN0Glo3TrqxHVN-B=w1000-h640-k-no",
-            "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Tokyo+City+Flea+Market/@35.1944538,136.3368355,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60186100092777c3:0xfdcb6cb658a5f045!8m2!3d35.5949798!4d139.7430414?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
-          },
-          "arrive": "09:30",
-          "depart": "10:30"
-        },
-        {
-          "place": {
-            "name": "DiverCity Tokyo Plaza",
-            "lat": 35.6247851,
-            "lng": 139.7758551,
-            "category": "Shopping mall",
-            "rating": 4.2,
-            "reviews": null,
-            "address": "1 Chome-1-10 Aomi, Koto City, Tokyo 135-0064, Japan",
-            "place_id": "",
-            "ftid": "0x601889f9d36ebaa5:0x67f4219bfa09db77",
-            "permanently_closed": false,
-            "opening_hours": [],
-            "editorial": "",
-            "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlO1NWOi7mZWMD_JenqzHCVTy2fI-joqMGjlQCqz82Ojlw1eWDjwOf4BunRlbG_iHPU1SYmikuerzk9M9K6jj2FRpeVx0UiCUrZdsBU6wnHB90yBc-JXzCV1SYH6cautEmJrfkeaQ=w1000-h640-k-no",
-            "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/DiverCity+Tokyo+Plaza/@35.659482,137.3934307,8z/data=!3m1!5s0x60188c1d4ec7e8c5:0x9989080d519c68c4!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x601889f9d36ebaa5:0x67f4219bfa09db77!8m2!3d35.6247851!4d139.7758551?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
-          },
-          "arrive": "10:57",
-          "depart": "12:27"
-        },
-        {
-          "place": {
-            "name": "Statue of Liberty",
-            "lat": 35.6278727,
-            "lng": 139.7718346,
+            "name": "Shibuya Crossing",
+            "lat": 35.659482,
+            "lng": 139.7005596,
             "category": "Tourist attraction",
             "rating": 4.5,
             "reviews": null,
-            "address": "1 Chome-4-2 Daiba, Minato City, Tokyo 135-0091, Japan",
+            "address": "Shibuya, Tokyo, Japan",
             "place_id": "",
-            "ftid": "0x60188be32451f7a7:0xbc7e67300e8691a3",
+            "ftid": "0x60188bcaeb0cd12b:0x20e563a2e0aec969",
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
             "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmLs7G1FuJadLypTKjuR3jgEeWkcCzfqfRISlSCp9Kn9XWN9aXBAF6DEtRS_YDEMrMBLElp2G3YFZ_mrRT5UFWfCjh_fF1KRpOayL_O1ED7CALKB8D1w5l5960cU_WRFsVKC3fI=w1000-h640-k-no",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkTC9fFkQUowmI6zhObjLyrfBwxo7egaUsFJSfPMbvZdUhnAQOGe5-HSHPvpWkpfjo06O2vIw9oArjNnA2Dppq9tAMBPX9gHsHMwYEyNoXIixHL4siNEpa6EaoJZ1CwwXtL_kjJ=w1000-h640-k-no",
             "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Statue+of+Liberty/@35.665786,137.3627338,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188be32451f7a7:0xbc7e67300e8691a3!8m2!3d35.6278727!4d139.7718346?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+            "source_href": "https://www.google.com/maps/place/Shibuya+Crossing/@34.6919529,133.3933903,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188bcaeb0cd12b:0x20e563a2e0aec969!8m2!3d35.659482!4d139.7005596?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "12:42",
-          "depart": "13:02"
-        }
-      ],
-      "legs": [
-        {
-          "from_place": "Tokyo City Flea Market",
-          "to_place": "DiverCity Tokyo Plaza",
-          "minutes": 27,
-          "distance_km": 6.2,
-          "mode": "transit",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.5949798,139.7430414&destination=35.6247851,139.7758551&travelmode=transit"
+          "arrive": "09:30",
+          "depart": "09:50"
         },
-        {
-          "from_place": "DiverCity Tokyo Plaza",
-          "to_place": "Statue of Liberty",
-          "minutes": 14,
-          "distance_km": 0.7,
-          "mode": "walking",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6247851,139.7758551&destination=35.6278727,139.7718346&travelmode=walking"
-        }
-      ]
-    },
-    {
-      "index": 6,
-      "label": "Tokyo",
-      "stops": [
         {
           "place": {
             "name": "Hie Shrine",
@@ -594,30 +526,8 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/Hie+Shrine/@35.1944538,136.3368355,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x601fa6c4e4114317:0xef431afda2747c8f!8m2!3d35.6747136!4d139.7396621?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "09:30",
-          "depart": "10:15"
-        },
-        {
-          "place": {
-            "name": "Akihabara Radio Kaikan",
-            "lat": 35.6979149,
-            "lng": 139.7719571,
-            "category": "Shopping mall",
-            "rating": 4.3,
-            "reviews": null,
-            "address": "1 Chome-15-16 Sotokanda, Chiyoda City, Tokyo 101-0021, Japan",
-            "place_id": "",
-            "ftid": "0x60188eac7580ffff:0x30cd29f7c28f41e8",
-            "permanently_closed": false,
-            "opening_hours": [],
-            "editorial": "",
-            "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmeGwIL4aqmFr3tCMY9zgFckUXikrekCHupW9TI9rfmTtna57uq0zhRBeqZyu0__P6kSimXWC3CacxmjnOd37tjgecmOc0d0dzvkPcCE3opzVHsELPKz7_1bOg6dx4jyuLN6SidAaMB5FQ=w1000-h640-k-no",
-            "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Akihabara+Radio+Kaikan/@35.659482,137.3934307,8z/data=!3m1!5s0x6018f2974cf916e3:0x565f08916ebefb15!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188eac7580ffff:0x30cd29f7c28f41e8!8m2!3d35.6979149!4d139.7719571?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
-          },
-          "arrive": "10:39",
-          "depart": "12:09"
+          "arrive": "10:15",
+          "depart": "11:00"
         },
         {
           "place": {
@@ -638,63 +548,197 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/amiami+Akihabara+Figure+Tower/@35.659482,137.3934307,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188c1da7cc1d3d:0xb9f7632ec6b29c97!8m2!3d35.6979497!4d139.7714597?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "12:12",
-          "depart": "12:57"
+          "arrive": "11:24",
+          "depart": "12:09"
         },
         {
           "place": {
-            "name": "Shibuya Crossing",
-            "lat": 35.659482,
-            "lng": 139.7005596,
+            "name": "Akihabara Radio Kaikan",
+            "lat": 35.6979149,
+            "lng": 139.7719571,
+            "category": "Shopping mall",
+            "rating": 4.3,
+            "reviews": null,
+            "address": "1 Chome-15-16 Sotokanda, Chiyoda City, Tokyo 101-0021, Japan",
+            "place_id": "",
+            "ftid": "0x60188eac7580ffff:0x30cd29f7c28f41e8",
+            "permanently_closed": false,
+            "opening_hours": [],
+            "editorial": "",
+            "note": "",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmeGwIL4aqmFr3tCMY9zgFckUXikrekCHupW9TI9rfmTtna57uq0zhRBeqZyu0__P6kSimXWC3CacxmjnOd37tjgecmOc0d0dzvkPcCE3opzVHsELPKz7_1bOg6dx4jyuLN6SidAaMB5FQ=w1000-h640-k-no",
+            "disabled_reason": "",
+            "source_href": "https://www.google.com/maps/place/Akihabara+Radio+Kaikan/@35.659482,137.3934307,8z/data=!3m1!5s0x6018f2974cf916e3:0x565f08916ebefb15!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188eac7580ffff:0x30cd29f7c28f41e8!8m2!3d35.6979149!4d139.7719571?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+          },
+          "arrive": "12:12",
+          "depart": "13:42"
+        },
+        {
+          "place": {
+            "name": "Statue of Liberty",
+            "lat": 35.6278727,
+            "lng": 139.7718346,
             "category": "Tourist attraction",
             "rating": 4.5,
             "reviews": null,
-            "address": "Shibuya, Tokyo, Japan",
+            "address": "1 Chome-4-2 Daiba, Minato City, Tokyo 135-0091, Japan",
             "place_id": "",
-            "ftid": "0x60188bcaeb0cd12b:0x20e563a2e0aec969",
+            "ftid": "0x60188be32451f7a7:0xbc7e67300e8691a3",
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
             "note": "(dopo pausa pranzo)",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkTC9fFkQUowmI6zhObjLyrfBwxo7egaUsFJSfPMbvZdUhnAQOGe5-HSHPvpWkpfjo06O2vIw9oArjNnA2Dppq9tAMBPX9gHsHMwYEyNoXIixHL4siNEpa6EaoJZ1CwwXtL_kjJ=w1000-h640-k-no",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmLs7G1FuJadLypTKjuR3jgEeWkcCzfqfRISlSCp9Kn9XWN9aXBAF6DEtRS_YDEMrMBLElp2G3YFZ_mrRT5UFWfCjh_fF1KRpOayL_O1ED7CALKB8D1w5l5960cU_WRFsVKC3fI=w1000-h640-k-no",
             "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Shibuya+Crossing/@34.6919529,133.3933903,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188bcaeb0cd12b:0x20e563a2e0aec969!8m2!3d35.659482!4d139.7005596?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+            "source_href": "https://www.google.com/maps/place/Statue+of+Liberty/@35.665786,137.3627338,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188be32451f7a7:0xbc7e67300e8691a3!8m2!3d35.6278727!4d139.7718346?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "14:42",
-          "depart": "15:02"
+          "arrive": "15:27",
+          "depart": "15:47"
+        },
+        {
+          "place": {
+            "name": "DiverCity Tokyo Plaza",
+            "lat": 35.6247851,
+            "lng": 139.7758551,
+            "category": "Shopping mall",
+            "rating": 4.2,
+            "reviews": null,
+            "address": "1 Chome-1-10 Aomi, Koto City, Tokyo 135-0064, Japan",
+            "place_id": "",
+            "ftid": "0x601889f9d36ebaa5:0x67f4219bfa09db77",
+            "permanently_closed": false,
+            "opening_hours": [],
+            "editorial": "",
+            "note": "",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlO1NWOi7mZWMD_JenqzHCVTy2fI-joqMGjlQCqz82Ojlw1eWDjwOf4BunRlbG_iHPU1SYmikuerzk9M9K6jj2FRpeVx0UiCUrZdsBU6wnHB90yBc-JXzCV1SYH6cautEmJrfkeaQ=w1000-h640-k-no",
+            "disabled_reason": "",
+            "source_href": "https://www.google.com/maps/place/DiverCity+Tokyo+Plaza/@35.659482,137.3934307,8z/data=!3m1!5s0x60188c1d4ec7e8c5:0x9989080d519c68c4!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x601889f9d36ebaa5:0x67f4219bfa09db77!8m2!3d35.6247851!4d139.7758551?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+          },
+          "arrive": "16:01",
+          "depart": "17:31"
+        },
+        {
+          "place": {
+            "name": "Tokyo City Flea Market",
+            "lat": 35.5949798,
+            "lng": 139.7430414,
+            "category": "Flea market",
+            "rating": 4.2,
+            "reviews": null,
+            "address": "2 Chome-1-1 Katsushima, Shinagawa City, Tokyo 140-0012, Japan",
+            "place_id": "",
+            "ftid": "0x60186100092777c3:0xfdcb6cb658a5f045",
+            "permanently_closed": false,
+            "opening_hours": [],
+            "editorial": "",
+            "note": "",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWklhQKzg6InuhdiF5ioclF64fB6z9LIDEBq9-PKJBa9F2XIKkbu2XkLM8ejXOBgyCKGfpriyh3MRO4bnYAG4z4Tc_-f_e851VDyIb7hg9rWPz6iLY3JXtwel8AY0xO7qN0Glo3TrqxHVN-B=w1000-h640-k-no",
+            "disabled_reason": "",
+            "source_href": "https://www.google.com/maps/place/Tokyo+City+Flea+Market/@35.1944538,136.3368355,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60186100092777c3:0xfdcb6cb658a5f045!8m2!3d35.5949798!4d139.7430414?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+          },
+          "arrive": "17:58",
+          "depart": "18:58"
         }
       ],
       "legs": [
         {
-          "from_place": "Hie Shrine",
-          "to_place": "Akihabara Radio Kaikan",
-          "minutes": 24,
+          "from_place": "Shibuya Crossing",
+          "to_place": "Hie Shrine",
+          "minutes": 25,
           "distance_km": 5.5,
           "mode": "transit",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6747136,139.7396621&destination=35.6979149,139.7719571&travelmode=transit"
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.659482,139.7005596&destination=35.6747136,139.7396621&travelmode=transit"
         },
         {
-          "from_place": "Akihabara Radio Kaikan",
+          "from_place": "Hie Shrine",
           "to_place": "amiami Akihabara Figure Tower",
-          "minutes": 3,
-          "distance_km": 0.1,
-          "mode": "walking",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6979149,139.7719571&destination=35.6979497,139.7714597&travelmode=walking"
+          "minutes": 24,
+          "distance_km": 5.4,
+          "mode": "transit",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6747136,139.7396621&destination=35.6979497,139.7714597&travelmode=transit"
         },
         {
           "from_place": "amiami Akihabara Figure Tower",
-          "to_place": "Shibuya Crossing",
-          "minutes": 44,
-          "distance_km": 10.8,
+          "to_place": "Akihabara Radio Kaikan",
+          "minutes": 3,
+          "distance_km": 0.1,
+          "mode": "walking",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6979497,139.7714597&destination=35.6979149,139.7719571&travelmode=walking"
+        },
+        {
+          "from_place": "Akihabara Radio Kaikan",
+          "to_place": "Statue of Liberty",
+          "minutes": 45,
+          "distance_km": 10.9,
           "mode": "transit",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6979497,139.7714597&destination=35.659482,139.7005596&travelmode=transit"
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6979149,139.7719571&destination=35.6278727,139.7718346&travelmode=transit"
+        },
+        {
+          "from_place": "Statue of Liberty",
+          "to_place": "DiverCity Tokyo Plaza",
+          "minutes": 14,
+          "distance_km": 0.7,
+          "mode": "walking",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6278727,139.7718346&destination=35.6247851,139.7758551&travelmode=walking"
+        },
+        {
+          "from_place": "DiverCity Tokyo Plaza",
+          "to_place": "Tokyo City Flea Market",
+          "minutes": 27,
+          "distance_km": 6.2,
+          "mode": "transit",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6247851,139.7758551&destination=35.5949798,139.7430414&travelmode=transit"
         }
       ]
     },
     {
-      "index": 7,
+      "index": 5,
       "label": "Tokyo",
       "stops": [
+        {
+          "place": {
+            "name": "Meguro River",
+            "lat": 35.6299045,
+            "lng": 139.7141956,
+            "category": "River",
+            "rating": 4.5,
+            "reviews": null,
+            "address": "Tokyo, Japan",
+            "place_id": "",
+            "ftid": "0x60188b22d7336a5b:0x50f2e54b55d6b096",
+            "permanently_closed": false,
+            "opening_hours": [],
+            "editorial": "",
+            "note": "",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlo8hty50DAqqTqSNgLhNbsO9oMYBkFGx9_zXKCjfoFWbOr1dFo45tFUbHidzD4T5qBm1q-nQ_u0y9vT4D0CgFVAgR_zhZqigbB5-Ulm2gDKzOWfcetEhxYhstXQWfVJpOhSp3a=w1000-h640-k-no",
+            "disabled_reason": "",
+            "source_href": "https://www.google.com/maps/place/Meguro+River/@35.665786,137.3627338,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188b22d7336a5b:0x50f2e54b55d6b096!8m2!3d35.6299045!4d139.7141956?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+          },
+          "arrive": "09:30",
+          "depart": "10:00"
+        },
+        {
+          "place": {
+            "name": "Roppongi Hills",
+            "lat": 35.6607397,
+            "lng": 139.7292319,
+            "category": "Business park",
+            "rating": 4.2,
+            "reviews": null,
+            "address": "6 Chome-10-1 Roppongi, Minato City, Tokyo 106-6108, Japan",
+            "place_id": "",
+            "ftid": "0x60188b771049dc33:0x5bfe0248594cc802",
+            "permanently_closed": false,
+            "opening_hours": [],
+            "editorial": "",
+            "note": "",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkwGi2cmvGad21lf889DDZEoKhGz5SpjztRLmjKXsZezLEYIgG48Nua-aXkCK7WQtyuhtdR7_ox3DabuG8E2dg-quHFF1NGbB8Cv6JKCVV8RdKGznyljClmG7WvkWnFr50wpTtkqBphDbh=w1000-h640-k-no",
+            "disabled_reason": "",
+            "source_href": "https://www.google.com/maps/place/Roppongi+Hills/@35.665786,137.3627338,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188b771049dc33:0x5bfe0248594cc802!8m2!3d35.6607397!4d139.7292319?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+          },
+          "arrive": "10:23",
+          "depart": "11:53"
+        },
         {
           "place": {
             "name": "Yoyogi Park",
@@ -714,8 +758,8 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/Yoyogi+Park/@34.6919529,133.3933903,8z/data=!3m1!5s0x60188ebc2bf13601:0xe80f92d3bd6447fe!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188cb479620a33:0x34bcc78ce7f8bf3e!8m2!3d35.6700649!4d139.6949656?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "09:30",
-          "depart": "10:30"
+          "arrive": "12:14",
+          "depart": "13:14"
         },
         {
           "place": {
@@ -731,35 +775,13 @@
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
-            "note": "",
+            "note": "(dopo pausa pranzo)",
             "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkNXsBjKiobu-j9sQ7HdyugxrcPB4h5y-ekGlLZrWZBq3EwbblENGP7yLEyVqQijeYLdVLn6u3_om-lExTMt1sXD62oKagU0FqCzEUCm-VKoJ37-WFfKy6PEQjMsAq2p_Pbpaz2=w1000-h640-k-no",
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/Omoide+Yokocho+Memory+Lane/@35.659482,137.3934307,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188cd7058ad73f:0x908f55935cc13cd3!8m2!3d35.6927037!4d139.6995778?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "10:47",
-          "depart": "11:07"
-        },
-        {
-          "place": {
-            "name": "Shinjuku Batting Center",
-            "lat": 35.6966733,
-            "lng": 139.7044587,
-            "category": "Batting cage center",
-            "rating": 4.2,
-            "reviews": null,
-            "address": "2 Chome-21-13 Kabukicho, Shinjuku City, Tokyo 160-0021, Japan",
-            "place_id": "",
-            "ftid": "0x60188cd8f24c3437:0xdb6fa0874171921b",
-            "permanently_closed": false,
-            "opening_hours": [],
-            "editorial": "",
-            "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmJbD33Gws5XB7F4oCBuYOThbhphSzUeqcI3fcbFLKWjWvk1VlZpwRk8wyaYJ1PTAucRIoew0VA9s5rFdaudvJM32rCnpHDrL2EXle9wDIl-QYMpXoAJJsMi8ihyIRvcqEsXQAc=w1000-h640-k-no",
-            "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Shinjuku+Batting+Center/@35.659482,137.3934307,8z/data=!3m1!5s0x60188b57f546295f:0x486cece41a7b21b0!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188cd8f24c3437:0xdb6fa0874171921b!8m2!3d35.6966733!4d139.7044587?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
-          },
-          "arrive": "11:24",
-          "depart": "12:10"
+          "arrive": "14:32",
+          "depart": "14:52"
         },
         {
           "place": {
@@ -780,55 +802,49 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/Shinjuku+Golden-Gai/@35.659482,137.3934307,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188cd96586b9af:0x71a5c0e1150c1a8f!8m2!3d35.6941118!4d139.7047611?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "12:18",
-          "depart": "12:38"
+          "arrive": "15:06",
+          "depart": "15:26"
         },
         {
           "place": {
-            "name": "Roppongi Hills",
-            "lat": 35.6607397,
-            "lng": 139.7292319,
-            "category": "Business park",
+            "name": "Shinjuku Batting Center",
+            "lat": 35.6966733,
+            "lng": 139.7044587,
+            "category": "Batting cage center",
             "rating": 4.2,
             "reviews": null,
-            "address": "6 Chome-10-1 Roppongi, Minato City, Tokyo 106-6108, Japan",
+            "address": "2 Chome-21-13 Kabukicho, Shinjuku City, Tokyo 160-0021, Japan",
             "place_id": "",
-            "ftid": "0x60188b771049dc33:0x5bfe0248594cc802",
-            "permanently_closed": false,
-            "opening_hours": [],
-            "editorial": "",
-            "note": "(dopo pausa pranzo)",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmkwGi2cmvGad21lf889DDZEoKhGz5SpjztRLmjKXsZezLEYIgG48Nua-aXkCK7WQtyuhtdR7_ox3DabuG8E2dg-quHFF1NGbB8Cv6JKCVV8RdKGznyljClmG7WvkWnFr50wpTtkqBphDbh=w1000-h640-k-no",
-            "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Roppongi+Hills/@35.665786,137.3627338,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188b771049dc33:0x5bfe0248594cc802!8m2!3d35.6607397!4d139.7292319?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
-          },
-          "arrive": "14:05",
-          "depart": "15:35"
-        },
-        {
-          "place": {
-            "name": "Meguro River",
-            "lat": 35.6299045,
-            "lng": 139.7141956,
-            "category": "River",
-            "rating": 4.5,
-            "reviews": null,
-            "address": "Tokyo, Japan",
-            "place_id": "",
-            "ftid": "0x60188b22d7336a5b:0x50f2e54b55d6b096",
+            "ftid": "0x60188cd8f24c3437:0xdb6fa0874171921b",
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
             "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlo8hty50DAqqTqSNgLhNbsO9oMYBkFGx9_zXKCjfoFWbOr1dFo45tFUbHidzD4T5qBm1q-nQ_u0y9vT4D0CgFVAgR_zhZqigbB5-Ulm2gDKzOWfcetEhxYhstXQWfVJpOhSp3a=w1000-h640-k-no",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWmJbD33Gws5XB7F4oCBuYOThbhphSzUeqcI3fcbFLKWjWvk1VlZpwRk8wyaYJ1PTAucRIoew0VA9s5rFdaudvJM32rCnpHDrL2EXle9wDIl-QYMpXoAJJsMi8ihyIRvcqEsXQAc=w1000-h640-k-no",
             "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Meguro+River/@35.665786,137.3627338,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188b22d7336a5b:0x50f2e54b55d6b096!8m2!3d35.6299045!4d139.7141956?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+            "source_href": "https://www.google.com/maps/place/Shinjuku+Batting+Center/@35.659482,137.3934307,8z/data=!3m1!5s0x60188b57f546295f:0x486cece41a7b21b0!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188cd8f24c3437:0xdb6fa0874171921b!8m2!3d35.6966733!4d139.7044587?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "15:58",
-          "depart": "16:28"
+          "arrive": "15:35",
+          "depart": "16:20"
         }
       ],
       "legs": [
+        {
+          "from_place": "Meguro River",
+          "to_place": "Roppongi Hills",
+          "minutes": 23,
+          "distance_km": 5.2,
+          "mode": "transit",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6299045,139.7141956&destination=35.6607397,139.7292319&travelmode=transit"
+        },
+        {
+          "from_place": "Roppongi Hills",
+          "to_place": "Yoyogi Park",
+          "minutes": 21,
+          "distance_km": 4.6,
+          "mode": "transit",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6607397,139.7292319&destination=35.6700649,139.6949656&travelmode=transit"
+        },
         {
           "from_place": "Yoyogi Park",
           "to_place": "Omoide Yokocho Memory Lane",
@@ -839,85 +855,47 @@
         },
         {
           "from_place": "Omoide Yokocho Memory Lane",
-          "to_place": "Shinjuku Batting Center",
-          "minutes": 17,
-          "distance_km": 0.9,
-          "mode": "walking",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6927037,139.6995778&destination=35.6966733,139.7044587&travelmode=walking"
-        },
-        {
-          "from_place": "Shinjuku Batting Center",
           "to_place": "Shinjuku Golden-Gai",
-          "minutes": 9,
-          "distance_km": 0.4,
+          "minutes": 14,
+          "distance_km": 0.7,
           "mode": "walking",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6966733,139.7044587&destination=35.6941118,139.7047611&travelmode=walking"
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6927037,139.6995778&destination=35.6941118,139.7047611&travelmode=walking"
         },
         {
           "from_place": "Shinjuku Golden-Gai",
-          "to_place": "Roppongi Hills",
-          "minutes": 27,
-          "distance_km": 6.0,
-          "mode": "transit",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6941118,139.7047611&destination=35.6607397,139.7292319&travelmode=transit"
-        },
-        {
-          "from_place": "Roppongi Hills",
-          "to_place": "Meguro River",
-          "minutes": 23,
-          "distance_km": 5.2,
-          "mode": "transit",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6607397,139.7292319&destination=35.6299045,139.7141956&travelmode=transit"
+          "to_place": "Shinjuku Batting Center",
+          "minutes": 9,
+          "distance_km": 0.4,
+          "mode": "walking",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.6941118,139.7047611&destination=35.6966733,139.7044587&travelmode=walking"
         }
       ]
     },
     {
-      "index": 8,
+      "index": 6,
       "label": "Tokyo",
       "stops": [
         {
           "place": {
-            "name": "Nakano Broadway",
-            "lat": 35.7092475,
-            "lng": 139.6656524,
-            "category": "Shopping mall",
-            "rating": 4.2,
+            "name": "Ikebukuro Nishi-guchi Park",
+            "lat": 35.7301469,
+            "lng": 139.7089269,
+            "category": "Park",
+            "rating": 3.8,
             "reviews": null,
-            "address": "5 Chome-52-15 Nakano, Nakano City, Tokyo 164-0001, Japan",
+            "address": "1 Chome-8-26 Nishiikebukuro, Toshima City, Tokyo 171-0021, Japan",
             "place_id": "",
-            "ftid": "0x6018f290b2ddee83:0xe1b67e4ee0eff0be",
+            "ftid": "0x60188d5c4d489531:0x25d752954313d248",
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
             "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlll3kmbcEtUrPqNiZCQTgNrGLI_aIfjuceKFPZjYBDH07lgKkO8Hk5NdHAKC2uoScFtBYp9bKI1G-HsYmynXxyqNOeGZXyW_OL3HhniiG80TJj4Vw4v9A7FU-n3F0H2HtiTENAN76ZeQ8=w1000-h640-k-no",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm4SjOZ3YLEXeZiQtjDHtMddJ-U9V3Vntxss8CskcUK28bsPc68nLDBpLPoxSDzANHlGPA8TQRAY5oaHnA-rVyhT9a51lyp2gCYwPBmWjGMtAk6fQhSK3s4W67lLnrYCwHgMJ9d=w1000-h640-k-no",
             "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Nakano+Broadway/@35.659482,137.3934307,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6018f290b2ddee83:0xe1b67e4ee0eff0be!8m2!3d35.7092475!4d139.6656524?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+            "source_href": "https://www.google.com/maps/place/Ikebukuro+Nishi-guchi+Park/@35.665786,137.3627338,8z/data=!3m1!5s0x60188a1dec01238b:0xd6b1486c9dbf4159!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188d5c4d489531:0x25d752954313d248!8m2!3d35.7301469!4d139.7089269?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
           "arrive": "09:30",
-          "depart": "11:00"
-        },
-        {
-          "place": {
-            "name": "animate Ikebukuro Flagship Store",
-            "lat": 35.7311443,
-            "lng": 139.7154592,
-            "category": "Comic book store",
-            "rating": 4.2,
-            "reviews": null,
-            "address": "1 Chome-20-7 Higashiikebukuro, Toshima City, Tokyo 170-0013, Japan",
-            "place_id": "",
-            "ftid": "0x60188d6f4361458b:0x503df2e68ddac61a",
-            "permanently_closed": false,
-            "opening_hours": [],
-            "editorial": "",
-            "note": "",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl8TegdpxlG0mZvQsYbeaiPaF6yD2XzgNa84Ja-Kj2I2f_lkpB0NBxnSVsMcoRgW9pTj9zOSEskBKGaZzHOr8MmXIsPH7PNdH_PYIOHfo92tj5z2l8p4VHNUjp0T4rXmHuohPzW1tOf4-w=w1000-h640-k-no",
-            "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/animate+Ikebukuro+Flagship+Store/@35.1944538,136.3368355,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188d6f4361458b:0x503df2e68ddac61a!8m2!3d35.7311443!4d139.7154592?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
-          },
-          "arrive": "11:31",
-          "depart": "12:16"
+          "depart": "10:30"
         },
         {
           "place": {
@@ -938,30 +916,52 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/BicCamera+Ikebukuro+Main+Store/@35.1944538,136.3368355,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188d670d1a305f:0x70a1288e7cf0f33f!8m2!3d35.7317044!4d139.7128781?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "12:24",
-          "depart": "13:09"
+          "arrive": "10:42",
+          "depart": "11:27"
         },
         {
           "place": {
-            "name": "Ikebukuro Nishi-guchi Park",
-            "lat": 35.7301469,
-            "lng": 139.7089269,
-            "category": "Park",
-            "rating": 3.8,
+            "name": "animate Ikebukuro Flagship Store",
+            "lat": 35.7311443,
+            "lng": 139.7154592,
+            "category": "Comic book store",
+            "rating": 4.2,
             "reviews": null,
-            "address": "1 Chome-8-26 Nishiikebukuro, Toshima City, Tokyo 171-0021, Japan",
+            "address": "1 Chome-20-7 Higashiikebukuro, Toshima City, Tokyo 170-0013, Japan",
             "place_id": "",
-            "ftid": "0x60188d5c4d489531:0x25d752954313d248",
+            "ftid": "0x60188d6f4361458b:0x503df2e68ddac61a",
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
-            "note": "(dopo pausa pranzo)",
-            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWm4SjOZ3YLEXeZiQtjDHtMddJ-U9V3Vntxss8CskcUK28bsPc68nLDBpLPoxSDzANHlGPA8TQRAY5oaHnA-rVyhT9a51lyp2gCYwPBmWjGMtAk6fQhSK3s4W67lLnrYCwHgMJ9d=w1000-h640-k-no",
+            "note": "",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWl8TegdpxlG0mZvQsYbeaiPaF6yD2XzgNa84Ja-Kj2I2f_lkpB0NBxnSVsMcoRgW9pTj9zOSEskBKGaZzHOr8MmXIsPH7PNdH_PYIOHfo92tj5z2l8p4VHNUjp0T4rXmHuohPzW1tOf4-w=w1000-h640-k-no",
             "disabled_reason": "",
-            "source_href": "https://www.google.com/maps/place/Ikebukuro+Nishi-guchi+Park/@35.665786,137.3627338,8z/data=!3m1!5s0x60188a1dec01238b:0xd6b1486c9dbf4159!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188d5c4d489531:0x25d752954313d248!8m2!3d35.7301469!4d139.7089269?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+            "source_href": "https://www.google.com/maps/place/animate+Ikebukuro+Flagship+Store/@35.1944538,136.3368355,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x60188d6f4361458b:0x503df2e68ddac61a!8m2!3d35.7311443!4d139.7154592?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "14:20",
-          "depart": "15:20"
+          "arrive": "11:35",
+          "depart": "12:20"
+        },
+        {
+          "place": {
+            "name": "Nakano Broadway",
+            "lat": 35.7092475,
+            "lng": 139.6656524,
+            "category": "Shopping mall",
+            "rating": 4.2,
+            "reviews": null,
+            "address": "5 Chome-52-15 Nakano, Nakano City, Tokyo 164-0001, Japan",
+            "place_id": "",
+            "ftid": "0x6018f290b2ddee83:0xe1b67e4ee0eff0be",
+            "permanently_closed": false,
+            "opening_hours": [],
+            "editorial": "",
+            "note": "",
+            "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWlll3kmbcEtUrPqNiZCQTgNrGLI_aIfjuceKFPZjYBDH07lgKkO8Hk5NdHAKC2uoScFtBYp9bKI1G-HsYmynXxyqNOeGZXyW_OL3HhniiG80TJj4Vw4v9A7FU-n3F0H2HtiTENAN76ZeQ8=w1000-h640-k-no",
+            "disabled_reason": "",
+            "source_href": "https://www.google.com/maps/place/Nakano+Broadway/@35.659482,137.3934307,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6018f290b2ddee83:0xe1b67e4ee0eff0be!8m2!3d35.7092475!4d139.6656524?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
+          },
+          "arrive": "12:50",
+          "depart": "14:20"
         },
         {
           "place": {
@@ -977,13 +977,13 @@
             "permanently_closed": false,
             "opening_hours": [],
             "editorial": "",
-            "note": "",
+            "note": "(dopo pausa pranzo)",
             "photo": "https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkV-ZpeKX-15PGQIwq37WPnHHopCIpcdcd6k1eKBpnPVd93qsNphQZjHh6QZd3ra5PqVlZuU4cyH7m01gDjHtb3lyJ2jAH2LH2VAb7itiX91koE7ifNdhdTpcGOXFIhd2ocm7E8OR5YRch7=w1000-h640-k-no",
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/Harmonica+Yokocho/@35.1944538,136.3368355,8z/data=!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6018ef15f5287765:0x8ffa948fa94d3463!8m2!3d35.7035959!4d139.5790815?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "16:28",
-          "depart": "17:58"
+          "arrive": "16:06",
+          "depart": "17:36"
         },
         {
           "place": {
@@ -1004,42 +1004,42 @@
             "disabled_reason": "",
             "source_href": "https://www.google.com/maps/place/Inokashira+Park/@35.659482,137.3934307,8z/data=!3m1!5s0x60188cd96fa71f47:0x17cc5dd6e0009ca!4m9!1m3!11m2!2syIjVBkWeJuUBJTRps1wpGg!3e3!3m4!1s0x6018ee357495662d:0x8067c21dd5e0f34f!8m2!3d35.6997476!4d139.5737018?ucbcb=1&hl=en&entry=ttu&g_ep=EgoyMDI2MDkwMi4wIKXMDSoASAFQAw%3D%3D"
           },
-          "arrive": "18:16",
-          "depart": "19:16"
+          "arrive": "17:53",
+          "depart": "18:53"
         }
       ],
       "legs": [
         {
-          "from_place": "Nakano Broadway",
-          "to_place": "animate Ikebukuro Flagship Store",
-          "minutes": 31,
-          "distance_km": 7.2,
-          "mode": "transit",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.7092475,139.6656524&destination=35.7311443,139.7154592&travelmode=transit"
-        },
-        {
-          "from_place": "animate Ikebukuro Flagship Store",
+          "from_place": "Ikebukuro Nishi-guchi Park",
           "to_place": "BicCamera Ikebukuro Main Store",
-          "minutes": 8,
-          "distance_km": 0.3,
-          "mode": "walking",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.7311443,139.7154592&destination=35.7317044,139.7128781&travelmode=walking"
-        },
-        {
-          "from_place": "BicCamera Ikebukuro Main Store",
-          "to_place": "Ikebukuro Nishi-guchi Park",
           "minutes": 12,
           "distance_km": 0.6,
           "mode": "walking",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.7317044,139.7128781&destination=35.7301469,139.7089269&travelmode=walking"
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.7301469,139.7089269&destination=35.7317044,139.7128781&travelmode=walking"
         },
         {
-          "from_place": "Ikebukuro Nishi-guchi Park",
-          "to_place": "Harmonica Yokocho",
-          "minutes": 68,
-          "distance_km": 16.9,
+          "from_place": "BicCamera Ikebukuro Main Store",
+          "to_place": "animate Ikebukuro Flagship Store",
+          "minutes": 8,
+          "distance_km": 0.3,
+          "mode": "walking",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.7317044,139.7128781&destination=35.7311443,139.7154592&travelmode=walking"
+        },
+        {
+          "from_place": "animate Ikebukuro Flagship Store",
+          "to_place": "Nakano Broadway",
+          "minutes": 31,
+          "distance_km": 7.2,
           "mode": "transit",
-          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.7301469,139.7089269&destination=35.7035959,139.5790815&travelmode=transit"
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.7311443,139.7154592&destination=35.7092475,139.6656524&travelmode=transit"
+        },
+        {
+          "from_place": "Nakano Broadway",
+          "to_place": "Harmonica Yokocho",
+          "minutes": 45,
+          "distance_km": 11.0,
+          "mode": "transit",
+          "directions_url": "https://www.google.com/maps/dir/?api=1&origin=35.7092475,139.6656524&destination=35.7035959,139.5790815&travelmode=transit"
         },
         {
           "from_place": "Harmonica Yokocho",
@@ -1052,7 +1052,7 @@
       ]
     },
     {
-      "index": 9,
+      "index": 7,
       "label": "Tokyo",
       "stops": [
         {

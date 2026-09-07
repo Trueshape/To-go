@@ -539,8 +539,9 @@ function fillPanel(day, sc, slack){
     });
   });
   cands.sort((a,b)=>a.km-b.km);
-  // only offer places actually near this day's area and that fit the free time
-  const fit = cands.filter(c=>c.km <= 18 && c.add <= slack + 20).slice(0,8);
+  // radius grows with how much free time there is (a wide-open day can justify a longer hop)
+  const maxKm = slack > 200 ? 55 : slack > 120 ? 32 : 18;
+  const fit = cands.filter(c=>c.km <= maxKm && c.add <= slack + 25).slice(0,8);
   if(!fit.length) return "";
   return `<div class="fillpanel">
     <span class="hint">La giornata finisce alle <b>${hhmm(sc.end)}</b>, ${minLabel(slack)} liberi fino alle ${sc.endStr}.

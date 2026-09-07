@@ -5,180 +5,178 @@
     <name>Shinsekai Market</name>
     <desc>Giorno 1 09:30-09:50. Tourist attraction</desc>
   </wpt>
-  <wpt lat="34.6653511" lon="135.5062417">
-    <name>Kuromon Market</name>
-    <desc>Giorno 1 10:01-10:21. Tourist attraction</desc>
-  </wpt>
-  <wpt lat="34.6686393" lon="135.5012014">
-    <name>FamilyMart Ebisubashi</name>
-    <desc>Giorno 1 10:37-10:47. Convenience store</desc>
+  <wpt lat="34.6685423" lon="135.4987916">
+    <name>Dotonbori Hotel</name>
+    <desc>Giorno 1 10:03-10:48. </desc>
   </wpt>
   <wpt lat="34.6689339" lon="135.5010679">
     <name>Glico Sign Dotonbori</name>
-    <desc>Giorno 1 10:50-11:20. Cultural landmark</desc>
+    <desc>Giorno 1 10:56-11:26. Cultural landmark</desc>
   </wpt>
-  <wpt lat="34.6685423" lon="135.4987916">
-    <name>Dotonbori Hotel</name>
-    <desc>Giorno 1 11:27-12:12. </desc>
+  <wpt lat="34.6686393" lon="135.5012014">
+    <name>FamilyMart Ebisubashi</name>
+    <desc>Giorno 1 11:28-11:38. Convenience store</desc>
+  </wpt>
+  <wpt lat="34.6653511" lon="135.5062417">
+    <name>Kuromon Market</name>
+    <desc>Giorno 1 11:55-12:15. Tourist attraction</desc>
   </wpt>
   <wpt lat="34.6808126" lon="135.8189522">
     <name>Nara Station</name>
-    <desc>Giorno 2 09:30-09:45. Train station</desc>
+    <desc>Giorno 1 15:49-16:04. Train station</desc>
   </wpt>
   <wpt lat="34.6819141" lon="135.8264081">
     <name>メンズショツプエビスヤ&amp;雑貨</name>
-    <desc>Giorno 2 10:04-10:49. Clothing store</desc>
+    <desc>Giorno 1 16:23-17:08. Clothing store</desc>
   </wpt>
   <wpt lat="34.6849219" lon="135.8328735">
     <name>奈良県庁前噴水</name>
-    <desc>Giorno 2 11:07-11:27. Tourist attraction</desc>
+    <desc>Giorno 1 17:26-17:46. Tourist attraction</desc>
   </wpt>
   <wpt lat="34.685047" lon="135.843012">
     <name>Nara Park</name>
-    <desc>Giorno 2 11:36-12:36. Park</desc>
+    <desc>Giorno 1 17:55-18:55. Park</desc>
   </wpt>
   <wpt lat="34.9670429" lon="135.7746595">
     <name>Senbon Torii (Thousand Torii Gates)</name>
-    <desc>Giorno 3 09:30-10:15. Shinto shrine</desc>
+    <desc>Giorno 2 09:30-10:15. Shinto shrine</desc>
   </wpt>
   <wpt lat="34.9836255" lon="135.7603642">
     <name>Animate - Kyoto Avanti</name>
-    <desc>Giorno 3 10:31-11:16. Comic book store</desc>
+    <desc>Giorno 2 10:31-11:16. Comic book store</desc>
   </wpt>
   <wpt lat="34.9856948" lon="135.7575095">
     <name>Katsukura - Kyoto Porta</name>
-    <desc>Giorno 3 11:26-12:41. Tonkatsu restaurant</desc>
+    <desc>Giorno 2 11:26-12:41. Tonkatsu restaurant</desc>
   </wpt>
   <wpt lat="35.0050258" lon="135.764723">
     <name>Nishiki Market</name>
-    <desc>Giorno 3 12:57-13:57. Market</desc>
+    <desc>Giorno 2 12:57-13:57. Market</desc>
   </wpt>
   <wpt lat="35.0266194" lon="135.795457">
     <name>Philosopher&#x27;s Path (Tetsugaku no Michi), North End</name>
-    <desc>Giorno 3 15:21-15:51. Scenic spot</desc>
+    <desc>Giorno 2 15:21-15:51. Scenic spot</desc>
   </wpt>
   <wpt lat="35.0168187" lon="135.6713013">
     <name>Arashiyama Bamboo Forest</name>
-    <desc>Giorno 3 16:54-17:24. Scenic spot</desc>
+    <desc>Giorno 2 16:54-17:24. Scenic spot</desc>
   </wpt>
   <wpt lat="35.5012626" lon="138.8013852">
     <name>Chureito Pagoda</name>
-    <desc>Giorno 4 09:30-10:00. Memorial</desc>
-  </wpt>
-  <wpt lat="35.5949798" lon="139.7430414">
-    <name>Tokyo City Flea Market</name>
-    <desc>Giorno 5 09:30-10:30. Flea market</desc>
-  </wpt>
-  <wpt lat="35.6247851" lon="139.7758551">
-    <name>DiverCity Tokyo Plaza</name>
-    <desc>Giorno 5 10:57-12:27. Shopping mall</desc>
-  </wpt>
-  <wpt lat="35.6278727" lon="139.7718346">
-    <name>Statue of Liberty</name>
-    <desc>Giorno 5 12:42-13:02. Tourist attraction</desc>
-  </wpt>
-  <wpt lat="35.6747136" lon="139.7396621">
-    <name>Hie Shrine</name>
-    <desc>Giorno 6 09:30-10:15. Shinto shrine</desc>
-  </wpt>
-  <wpt lat="35.6979149" lon="139.7719571">
-    <name>Akihabara Radio Kaikan</name>
-    <desc>Giorno 6 10:39-12:09. Shopping mall</desc>
-  </wpt>
-  <wpt lat="35.6979497" lon="139.7714597">
-    <name>amiami Akihabara Figure Tower</name>
-    <desc>Giorno 6 12:12-12:57. Hobby store</desc>
+    <desc>Giorno 3 09:30-10:00. Memorial</desc>
   </wpt>
   <wpt lat="35.659482" lon="139.7005596">
     <name>Shibuya Crossing</name>
-    <desc>Giorno 6 14:42-15:02. Tourist attraction</desc>
+    <desc>Giorno 4 09:30-09:50. Tourist attraction</desc>
   </wpt>
-  <wpt lat="35.6700649" lon="139.6949656">
-    <name>Yoyogi Park</name>
-    <desc>Giorno 7 09:30-10:30. Park</desc>
+  <wpt lat="35.6747136" lon="139.7396621">
+    <name>Hie Shrine</name>
+    <desc>Giorno 4 10:15-11:00. Shinto shrine</desc>
   </wpt>
-  <wpt lat="35.6927037" lon="139.6995778">
-    <name>Omoide Yokocho Memory Lane</name>
-    <desc>Giorno 7 10:47-11:07. Tourist attraction</desc>
+  <wpt lat="35.6979497" lon="139.7714597">
+    <name>amiami Akihabara Figure Tower</name>
+    <desc>Giorno 4 11:24-12:09. Hobby store</desc>
   </wpt>
-  <wpt lat="35.6966733" lon="139.7044587">
-    <name>Shinjuku Batting Center</name>
-    <desc>Giorno 7 11:24-12:10. Batting cage center</desc>
+  <wpt lat="35.6979149" lon="139.7719571">
+    <name>Akihabara Radio Kaikan</name>
+    <desc>Giorno 4 12:12-13:42. Shopping mall</desc>
   </wpt>
-  <wpt lat="35.6941118" lon="139.7047611">
-    <name>Shinjuku Golden-Gai</name>
-    <desc>Giorno 7 12:18-12:38. Tourist attraction</desc>
+  <wpt lat="35.6278727" lon="139.7718346">
+    <name>Statue of Liberty</name>
+    <desc>Giorno 4 15:27-15:47. Tourist attraction</desc>
   </wpt>
-  <wpt lat="35.6607397" lon="139.7292319">
-    <name>Roppongi Hills</name>
-    <desc>Giorno 7 14:05-15:35. Business park</desc>
+  <wpt lat="35.6247851" lon="139.7758551">
+    <name>DiverCity Tokyo Plaza</name>
+    <desc>Giorno 4 16:01-17:31. Shopping mall</desc>
+  </wpt>
+  <wpt lat="35.5949798" lon="139.7430414">
+    <name>Tokyo City Flea Market</name>
+    <desc>Giorno 4 17:58-18:58. Flea market</desc>
   </wpt>
   <wpt lat="35.6299045" lon="139.7141956">
     <name>Meguro River</name>
-    <desc>Giorno 7 15:58-16:28. River</desc>
+    <desc>Giorno 5 09:30-10:00. River</desc>
   </wpt>
-  <wpt lat="35.7092475" lon="139.6656524">
-    <name>Nakano Broadway</name>
-    <desc>Giorno 8 09:30-11:00. Shopping mall</desc>
+  <wpt lat="35.6607397" lon="139.7292319">
+    <name>Roppongi Hills</name>
+    <desc>Giorno 5 10:23-11:53. Business park</desc>
   </wpt>
-  <wpt lat="35.7311443" lon="139.7154592">
-    <name>animate Ikebukuro Flagship Store</name>
-    <desc>Giorno 8 11:31-12:16. Comic book store</desc>
+  <wpt lat="35.6700649" lon="139.6949656">
+    <name>Yoyogi Park</name>
+    <desc>Giorno 5 12:14-13:14. Park</desc>
   </wpt>
-  <wpt lat="35.7317044" lon="139.7128781">
-    <name>BicCamera Ikebukuro Main Store</name>
-    <desc>Giorno 8 12:24-13:09. Electronics store</desc>
+  <wpt lat="35.6927037" lon="139.6995778">
+    <name>Omoide Yokocho Memory Lane</name>
+    <desc>Giorno 5 14:32-14:52. Tourist attraction</desc>
+  </wpt>
+  <wpt lat="35.6941118" lon="139.7047611">
+    <name>Shinjuku Golden-Gai</name>
+    <desc>Giorno 5 15:06-15:26. Tourist attraction</desc>
+  </wpt>
+  <wpt lat="35.6966733" lon="139.7044587">
+    <name>Shinjuku Batting Center</name>
+    <desc>Giorno 5 15:35-16:20. Batting cage center</desc>
   </wpt>
   <wpt lat="35.7301469" lon="139.7089269">
     <name>Ikebukuro Nishi-guchi Park</name>
-    <desc>Giorno 8 14:20-15:20. Park</desc>
+    <desc>Giorno 6 09:30-10:30. Park</desc>
+  </wpt>
+  <wpt lat="35.7317044" lon="139.7128781">
+    <name>BicCamera Ikebukuro Main Store</name>
+    <desc>Giorno 6 10:42-11:27. Electronics store</desc>
+  </wpt>
+  <wpt lat="35.7311443" lon="139.7154592">
+    <name>animate Ikebukuro Flagship Store</name>
+    <desc>Giorno 6 11:35-12:20. Comic book store</desc>
+  </wpt>
+  <wpt lat="35.7092475" lon="139.6656524">
+    <name>Nakano Broadway</name>
+    <desc>Giorno 6 12:50-14:20. Shopping mall</desc>
   </wpt>
   <wpt lat="35.7035959" lon="139.5790815">
     <name>Harmonica Yokocho</name>
-    <desc>Giorno 8 16:28-17:58. Business park</desc>
+    <desc>Giorno 6 16:06-17:36. Business park</desc>
   </wpt>
   <wpt lat="35.6997476" lon="139.5737018">
     <name>Inokashira Park</name>
-    <desc>Giorno 8 18:16-19:16. Park</desc>
+    <desc>Giorno 6 17:53-18:53. Park</desc>
   </wpt>
   <wpt lat="35.7276965" lon="139.7657226">
     <name>Yanaka Ginza</name>
-    <desc>Giorno 9 09:30-09:50. Tourist attraction</desc>
+    <desc>Giorno 7 09:30-09:50. Tourist attraction</desc>
   </wpt>
   <wpt lat="35.7136973" lon="139.7722533">
     <name>Gojo-ten Shrine</name>
-    <desc>Giorno 9 10:03-10:48. Shinto shrine</desc>
+    <desc>Giorno 7 10:03-10:48. Shinto shrine</desc>
   </wpt>
   <wpt lat="35.7147557" lon="139.7734312">
     <name>Ueno Park</name>
-    <desc>Giorno 9 10:54-11:54. Park</desc>
+    <desc>Giorno 7 10:54-11:54. Park</desc>
   </wpt>
   <wpt lat="35.7163612" lon="139.7886804">
     <name>Kappabashi Kitchen Supply Town</name>
-    <desc>Giorno 9 12:05-13:35. Business park</desc>
+    <desc>Giorno 7 12:05-13:35. Business park</desc>
   </wpt>
   <wpt lat="35.7134284" lon="139.796664">
     <name>Nakamise Dori shopping street</name>
-    <desc>Giorno 9 14:43-15:28. Grocery store</desc>
+    <desc>Giorno 7 14:43-15:28. Grocery store</desc>
   </wpt>
   <wpt lat="35.7102333" lon="139.8115747">
     <name>Tokyo Solamachi</name>
-    <desc>Giorno 9 15:39-17:09. Shopping mall</desc>
+    <desc>Giorno 7 15:39-17:09. Shopping mall</desc>
   </wpt>
   <trk><name>Giorno 1 — Osaka</name><trkseg>
     <trkpt lat="34.6536555" lon="135.5056051"><name>Shinsekai Market</name></trkpt>
-    <trkpt lat="34.6653511" lon="135.5062417"><name>Kuromon Market</name></trkpt>
-    <trkpt lat="34.6686393" lon="135.5012014"><name>FamilyMart Ebisubashi</name></trkpt>
-    <trkpt lat="34.6689339" lon="135.5010679"><name>Glico Sign Dotonbori</name></trkpt>
     <trkpt lat="34.6685423" lon="135.4987916"><name>Dotonbori Hotel</name></trkpt>
-  </trkseg></trk>
-  <trk><name>Giorno 2 — Nara</name><trkseg>
+    <trkpt lat="34.6689339" lon="135.5010679"><name>Glico Sign Dotonbori</name></trkpt>
+    <trkpt lat="34.6686393" lon="135.5012014"><name>FamilyMart Ebisubashi</name></trkpt>
+    <trkpt lat="34.6653511" lon="135.5062417"><name>Kuromon Market</name></trkpt>
     <trkpt lat="34.6808126" lon="135.8189522"><name>Nara Station</name></trkpt>
     <trkpt lat="34.6819141" lon="135.8264081"><name>メンズショツプエビスヤ&amp;雑貨</name></trkpt>
     <trkpt lat="34.6849219" lon="135.8328735"><name>奈良県庁前噴水</name></trkpt>
     <trkpt lat="34.685047" lon="135.843012"><name>Nara Park</name></trkpt>
   </trkseg></trk>
-  <trk><name>Giorno 3 — Kyoto</name><trkseg>
+  <trk><name>Giorno 2 — Kyoto</name><trkseg>
     <trkpt lat="34.9670429" lon="135.7746595"><name>Senbon Torii (Thousand Torii Gates)</name></trkpt>
     <trkpt lat="34.9836255" lon="135.7603642"><name>Animate - Kyoto Avanti</name></trkpt>
     <trkpt lat="34.9856948" lon="135.7575095"><name>Katsukura - Kyoto Porta</name></trkpt>
@@ -186,34 +184,32 @@
     <trkpt lat="35.0266194" lon="135.795457"><name>Philosopher&#x27;s Path (Tetsugaku no Michi), North End</name></trkpt>
     <trkpt lat="35.0168187" lon="135.6713013"><name>Arashiyama Bamboo Forest</name></trkpt>
   </trkseg></trk>
-  <trk><name>Giorno 5 — Tokyo</name><trkseg>
-    <trkpt lat="35.5949798" lon="139.7430414"><name>Tokyo City Flea Market</name></trkpt>
-    <trkpt lat="35.6247851" lon="139.7758551"><name>DiverCity Tokyo Plaza</name></trkpt>
-    <trkpt lat="35.6278727" lon="139.7718346"><name>Statue of Liberty</name></trkpt>
-  </trkseg></trk>
-  <trk><name>Giorno 6 — Tokyo</name><trkseg>
-    <trkpt lat="35.6747136" lon="139.7396621"><name>Hie Shrine</name></trkpt>
-    <trkpt lat="35.6979149" lon="139.7719571"><name>Akihabara Radio Kaikan</name></trkpt>
-    <trkpt lat="35.6979497" lon="139.7714597"><name>amiami Akihabara Figure Tower</name></trkpt>
+  <trk><name>Giorno 4 — Tokyo</name><trkseg>
     <trkpt lat="35.659482" lon="139.7005596"><name>Shibuya Crossing</name></trkpt>
+    <trkpt lat="35.6747136" lon="139.7396621"><name>Hie Shrine</name></trkpt>
+    <trkpt lat="35.6979497" lon="139.7714597"><name>amiami Akihabara Figure Tower</name></trkpt>
+    <trkpt lat="35.6979149" lon="139.7719571"><name>Akihabara Radio Kaikan</name></trkpt>
+    <trkpt lat="35.6278727" lon="139.7718346"><name>Statue of Liberty</name></trkpt>
+    <trkpt lat="35.6247851" lon="139.7758551"><name>DiverCity Tokyo Plaza</name></trkpt>
+    <trkpt lat="35.5949798" lon="139.7430414"><name>Tokyo City Flea Market</name></trkpt>
   </trkseg></trk>
-  <trk><name>Giorno 7 — Tokyo</name><trkseg>
+  <trk><name>Giorno 5 — Tokyo</name><trkseg>
+    <trkpt lat="35.6299045" lon="139.7141956"><name>Meguro River</name></trkpt>
+    <trkpt lat="35.6607397" lon="139.7292319"><name>Roppongi Hills</name></trkpt>
     <trkpt lat="35.6700649" lon="139.6949656"><name>Yoyogi Park</name></trkpt>
     <trkpt lat="35.6927037" lon="139.6995778"><name>Omoide Yokocho Memory Lane</name></trkpt>
-    <trkpt lat="35.6966733" lon="139.7044587"><name>Shinjuku Batting Center</name></trkpt>
     <trkpt lat="35.6941118" lon="139.7047611"><name>Shinjuku Golden-Gai</name></trkpt>
-    <trkpt lat="35.6607397" lon="139.7292319"><name>Roppongi Hills</name></trkpt>
-    <trkpt lat="35.6299045" lon="139.7141956"><name>Meguro River</name></trkpt>
+    <trkpt lat="35.6966733" lon="139.7044587"><name>Shinjuku Batting Center</name></trkpt>
   </trkseg></trk>
-  <trk><name>Giorno 8 — Tokyo</name><trkseg>
-    <trkpt lat="35.7092475" lon="139.6656524"><name>Nakano Broadway</name></trkpt>
-    <trkpt lat="35.7311443" lon="139.7154592"><name>animate Ikebukuro Flagship Store</name></trkpt>
-    <trkpt lat="35.7317044" lon="139.7128781"><name>BicCamera Ikebukuro Main Store</name></trkpt>
+  <trk><name>Giorno 6 — Tokyo</name><trkseg>
     <trkpt lat="35.7301469" lon="139.7089269"><name>Ikebukuro Nishi-guchi Park</name></trkpt>
+    <trkpt lat="35.7317044" lon="139.7128781"><name>BicCamera Ikebukuro Main Store</name></trkpt>
+    <trkpt lat="35.7311443" lon="139.7154592"><name>animate Ikebukuro Flagship Store</name></trkpt>
+    <trkpt lat="35.7092475" lon="139.6656524"><name>Nakano Broadway</name></trkpt>
     <trkpt lat="35.7035959" lon="139.5790815"><name>Harmonica Yokocho</name></trkpt>
     <trkpt lat="35.6997476" lon="139.5737018"><name>Inokashira Park</name></trkpt>
   </trkseg></trk>
-  <trk><name>Giorno 9 — Tokyo</name><trkseg>
+  <trk><name>Giorno 7 — Tokyo</name><trkseg>
     <trkpt lat="35.7276965" lon="139.7657226"><name>Yanaka Ginza</name></trkpt>
     <trkpt lat="35.7136973" lon="139.7722533"><name>Gojo-ten Shrine</name></trkpt>
     <trkpt lat="35.7147557" lon="139.7734312"><name>Ueno Park</name></trkpt>
