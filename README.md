@@ -1,12 +1,33 @@
 # maps-list-to-itinerary
 
 Turn a **public Google Maps list** into a day-by-day itinerary: places grouped
-by area, ordered to minimise back-tracking, with arrival times, walking/transit
-legs, "open in Maps" links, and a GPX export.
+by area, ordered to minimise back-tracking, with arrival times, walk/transit
+legs, per-place photo + category + suggested dwell time, "open in Maps" links,
+and a GPX export.
 
 ```
-list URL ──▶ extract ──▶ enrich (opt.) ──▶ filter ──▶ plan ──▶ itinerary.md / .json / .gpx
+list URL ──▶ extract ──▶ enrich (opt.) ──▶ filter ──▶ plan ──▶ itinerary.html / .md / .json / .gpx
 ```
+
+## The interactive page (`itinerary.html`)
+
+A self-contained page (no server, no build) that recomputes the schedule in the
+browser as you change things. All edits are saved to that browser's
+`localStorage` — "Ripristina tutto" clears them.
+
+- **Two switches**: show/hide the list's generic areas (cities, neighborhoods),
+  and show/hide permanently-closed / limited-access places. Off by default.
+- **Per stop**: disable it (the legs after it re-close automatically), or type
+  the **actual arrival time** to re-anchor everything that follows, or
+  "Riottimizza seguito" to re-order the rest of the day from that point.
+- **Add a stop from a Google Maps link** — paste a full URL (`/maps/place/…`
+  or one with `@lat,lng`); choose a day, or let it drop into whichever day the
+  route detour is smallest.
+- **Per day**: editable start time, optional end time (warns if the plan runs
+  past it), "Riottimizza giorno".
+
+Travel times on this page are straight-line estimates; the `.md` / `.json` use
+the real matrix (Routes API) when a key is set.
 
 ## Why it's built in stages
 
@@ -36,7 +57,8 @@ maps-itinerary --from-html saved-list.html
 maps-itinerary --from-json examples/japan-2028.places.json --no-enrich
 ```
 
-Output lands in `./out/` (`itinerary.md`, `itinerary.json`, `itinerary.gpx`).
+Output lands in `./out/` (`itinerary.html`, `itinerary.md`, `itinerary.json`,
+`itinerary.gpx`). Restrict with `--format html` or `--format md,json`.
 
 ## Filtering (what actually gets planned)
 

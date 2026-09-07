@@ -32,6 +32,7 @@ DEFAULT_VISIT_MINUTES = {
     "nightlife_alley": 75,
     "neighborhood": 90,
     "station": 15,
+    "convenience": 10,   # konbini / minimarket - a quick stop, not a visit
     "hotel": 0,
     "default": 45,
 }
@@ -65,7 +66,8 @@ CATEGORY_HINTS = [
     ("fiume", "viewpoint"), ("river", "viewpoint"),
     ("stazione", "station"), ("station", "station"),
     ("hotel", "hotel"),
-    ("minimarket", "shop"), ("konbini", "shop"), ("convenience store", "shop"),
+    ("minimarket", "convenience"), ("konbini", "convenience"),
+    ("convenience store", "convenience"),
 ]
 
 # Category strings that mean "this is an administrative area, not a place".
@@ -98,6 +100,8 @@ class Place:
     opening_hours: list[str] = field(default_factory=list)  # human-readable, per weekday
     editorial: str = ""
     note: str = ""               # the list author's own note, if any
+    photo: str = ""              # hotlinkable photo URL (googleusercontent / Places API)
+    disabled_reason: str = ""    # "generic" | "closed" | "" - off by default in the UI
     source_href: str = ""
 
     # --- derived ---------------------------------------------------------
@@ -190,6 +194,11 @@ class Itinerary:
     skipped_no_coords: list[str] = field(default_factory=list)
     enriched: bool = False
     travel_mode: str = "transit"
+    pace_factor: float = 1.0
+    day_start: str = "09:30"
+    lunch_at: str = "13:00"
+    lunch_minutes: int = 60
+    walk_threshold_km: float = 1.1
 
     def to_json(self) -> str:
         def enc(o):

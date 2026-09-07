@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import math
 import random
+import re
 from dataclasses import dataclass
 
 from .geo import Matrix, build_matrix, haversine_km
@@ -46,32 +47,52 @@ def build_itinerary(
     source_url: str,
     cfg: PlanConfig,
     enriched: bool,
+    anchor_places: list[Place] | None = None,
 ) -> Itinerary:
+    """Plan a day-by-day itinerary.
+
+    ``anchor_places`` (a subset of ``places``) drives the day count and region
+    split; every other place is dropped into the nearest resulting day. Used so
+    that off-by-default entries (generic areas, closed spots) don't inflate the
+    trip - they just ride along in whatever day is closest.
+    """
     random.seed(cfg.seed)
     pace = _PACE_FACTOR.get(cfg.pace, 1.0)
 
-    n_days = cfg.days or _auto_days(places, cfg, pace)
-    n_days = max(1, min(n_days, len(places)))
+    anchors = anchor_places or places
+    extras = [p for p in places if p not in anchors]
+
+    n_days = cfg.days or _auto_days(anchors, cfg, pace)
+    n_days = max(1, min(n_days, len(anchors)))
 
     # 1. split into geographic regions (different cities / day-trip bases)
-    regions = _regions(places, cfg.region_gap_km)
+    regions = _regions(anchors, cfg.region_gap_km)
     # never fewer days than regions, and respect the per-day cap
-    n_days = max(n_days, len(regions), math.ceil(len(places) / cfg.max_per_day))
+    n_days = max(n_days, len(regions), math.ceil(len(anchors) / cfg.max_per_day))
 
     # 2. share the day budget out between regions, by size
     clusters: list[list[Place]] = []
     for region in _order_clusters(regions, cfg.start):
-        share = max(1, round(n_days * len(region) / len(places)))
+        share = max(1, round(n_days * len(region) / len(anchors)))
         share = max(share, math.ceil(len(region) / cfg.max_per_day))
         sub = _cluster(region, min(share, len(region)), cfg)
         sub = _rebalance(sub, cfg.max_per_day)
         clusters.extend(_order_clusters(sub, cfg.start))
+
+    # 3. drop the extras into the nearest day
+    for p in extras:
+        near = min(clusters, key=lambda c: haversine_km((p.lat, p.lng), _centroid(c)))
+        near.append(p)
 
     it = Itinerary(
         title=title,
         source_url=source_url,
         enriched=enriched,
         travel_mode=cfg.travel_mode,
+        pace_factor=pace,
+        day_start=cfg.day_start,
+        lunch_at=cfg.lunch_at,
+        lunch_minutes=cfg.lunch_minutes,
     )
 
     cursor = cfg.start
@@ -316,17 +337,21 @@ def _schedule_day(
         if i > 0:
             leg_min = matrix.time(i - 1, i)
             leg_km = matrix.dist(i - 1, i)
+            # short hops are always faster on foot than waiting for a train
+            mode = "walking" if (leg_km <= 1.1 and cfg.travel_mode != "driving") else cfg.travel_mode
+            if mode == "walking" and not matrix.real:
+                leg_min = round(leg_km * 1.3 / 4.5 * 60 + 2, 1)
             day.legs.append(
                 Leg(
                     from_place=ordered[i - 1].name,
                     to_place=p.name,
                     minutes=int(round(leg_min)),
                     distance_km=round(leg_km, 1),
-                    mode=cfg.travel_mode,
+                    mode=mode,
                     directions_url=_DIR_URL.format(
                         o=f"{ordered[i-1].lat},{ordered[i-1].lng}",
                         d=f"{p.lat},{p.lng}",
-                        m=cfg.travel_mode,
+                        m=mode,
                     ),
                 )
             )
@@ -359,15 +384,31 @@ _KNOWN_AREAS = [
 def _day_label(places: list[Place]) -> str:
     if not places:
         return "—"
-    addrs = [p.address.split(",")[-2].strip() for p in places if p.address.count(",") >= 2]
-    if addrs:
-        return max(set(addrs), key=addrs.count)
+    # if an address names a known area, trust that
+    blob = " ".join(p.address for p in places).lower()
+    for name, _la, _lo in _KNOWN_AREAS:
+        if name.split(" / ")[0].lower() in blob:
+            return name
+    # otherwise label by the nearest known area to the day's centre
     cen = _centroid(places)
     name, dist = min(
         ((n, haversine_km(cen, (la, lo))) for n, la, lo in _KNOWN_AREAS),
         key=lambda t: t[1],
     )
-    return name if dist < 60 else f"{cen[0]:.2f}, {cen[1]:.2f}"
+    base = name if dist < 70 else f"{cen[0]:.2f}, {cen[1]:.2f}"
+    return base + _ward_suffix(places)
+
+
+def _ward_suffix(places: list[Place]) -> str:
+    wards: list[str] = []
+    for p in places:
+        m = re.search(r"([A-Za-zĀ-ヿ]+(?:-ku| City| Ward))", p.address)
+        if m:
+            wards.append(m.group(1).replace(" City", "").replace(" Ward", "").replace("-ku", ""))
+    if not wards:
+        return ""
+    top = max(set(wards), key=wards.count)
+    return f" · {top}" if wards.count(top) >= 2 else ""
 
 
 # --------------------------------------------------------------------------- #

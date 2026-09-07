@@ -61,7 +61,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     out = ap.add_argument_group("output")
     out.add_argument("--out", default="out", help="output directory (default: ./out)")
-    out.add_argument("--format", default="md,json,gpx", help="comma list of: md,json,gpx")
+    out.add_argument("--format", default="html,md,json,gpx", help="comma list of: html,md,json,gpx")
     return ap
 
 
@@ -152,7 +152,30 @@ def main(argv: list[str] | None = None) -> int:
 
     # ---- 5. render ----------------------------------------------- #
     formats = [f.strip() for f in args.format.split(",") if f.strip()]
-    written = write_all(it, args.out, formats)
+
+    written: list[str] = []
+    static = [f for f in formats if f != "html"]
+    if static:
+        written += write_all(it, args.out, static)
+
+    if "html" in formats:
+        # the interactive page also holds the generic + closed places (toggled
+        # off by default) so they can be switched back on in the browser
+        for p in fr.generic:
+            p.disabled_reason = "generic"
+        for p in fr.closed:
+            p.disabled_reason = "closed"
+        extra = [p for p in (fr.generic + fr.closed) if p.has_coords]
+        html_it = build_itinerary(
+            fr.kept + extra,
+            title=title,
+            source_url=source_url,
+            cfg=pcfg,
+            enriched=enricher.enabled,
+            anchor_places=fr.kept,
+        )
+        html_it.skipped_no_coords = it.skipped_no_coords
+        written += write_all(html_it, args.out, ["html"])
     print("Wrote:")
     for w in written:
         print(f"  {w}")

@@ -11,15 +11,15 @@
   </wpt>
   <wpt lat="34.6686393" lon="135.5012014">
     <name>FamilyMart Ebisubashi</name>
-    <desc>Giorno 1 10:28-11:13. Convenience store</desc>
+    <desc>Giorno 1 10:37-10:47. Convenience store</desc>
   </wpt>
   <wpt lat="34.6689339" lon="135.5010679">
     <name>Glico Sign Dotonbori</name>
-    <desc>Giorno 1 11:17-11:47. Cultural landmark</desc>
+    <desc>Giorno 1 10:50-11:20. Cultural landmark</desc>
   </wpt>
   <wpt lat="34.6685423" lon="135.4987916">
     <name>Dotonbori Hotel</name>
-    <desc>Giorno 1 11:52-12:37. </desc>
+    <desc>Giorno 1 11:27-12:12. </desc>
   </wpt>
   <wpt lat="34.6808126" lon="135.8189522">
     <name>Nara Station</name>
@@ -27,15 +27,15 @@
   </wpt>
   <wpt lat="34.6819141" lon="135.8264081">
     <name>メンズショツプエビスヤ&amp;雑貨</name>
-    <desc>Giorno 2 09:53-10:38. Clothing store</desc>
+    <desc>Giorno 2 10:04-10:49. Clothing store</desc>
   </wpt>
   <wpt lat="34.6849219" lon="135.8328735">
     <name>奈良県庁前噴水</name>
-    <desc>Giorno 2 10:45-11:05. Tourist attraction</desc>
+    <desc>Giorno 2 11:07-11:27. Tourist attraction</desc>
   </wpt>
   <wpt lat="34.685047" lon="135.843012">
     <name>Nara Park</name>
-    <desc>Giorno 2 11:14-12:14. Park</desc>
+    <desc>Giorno 2 11:36-12:36. Park</desc>
   </wpt>
   <wpt lat="34.9670429" lon="135.7746595">
     <name>Senbon Torii (Thousand Torii Gates)</name>
@@ -47,19 +47,19 @@
   </wpt>
   <wpt lat="34.9856948" lon="135.7575095">
     <name>Katsukura - Kyoto Porta</name>
-    <desc>Giorno 3 11:22-12:37. Tonkatsu restaurant</desc>
+    <desc>Giorno 3 11:26-12:41. Tonkatsu restaurant</desc>
   </wpt>
   <wpt lat="35.0050258" lon="135.764723">
     <name>Nishiki Market</name>
-    <desc>Giorno 3 12:52-13:52. Market</desc>
+    <desc>Giorno 3 12:57-13:57. Market</desc>
   </wpt>
   <wpt lat="35.0266194" lon="135.795457">
     <name>Philosopher&#x27;s Path (Tetsugaku no Michi), North End</name>
-    <desc>Giorno 3 15:16-15:46. Scenic spot</desc>
+    <desc>Giorno 3 15:21-15:51. Scenic spot</desc>
   </wpt>
   <wpt lat="35.0168187" lon="135.6713013">
     <name>Arashiyama Bamboo Forest</name>
-    <desc>Giorno 3 16:49-17:20. Scenic spot</desc>
+    <desc>Giorno 3 16:54-17:24. Scenic spot</desc>
   </wpt>
   <wpt lat="35.5012626" lon="138.8013852">
     <name>Chureito Pagoda</name>
@@ -75,7 +75,7 @@
   </wpt>
   <wpt lat="35.6278727" lon="139.7718346">
     <name>Statue of Liberty</name>
-    <desc>Giorno 5 12:34-12:54. Tourist attraction</desc>
+    <desc>Giorno 5 12:42-13:02. Tourist attraction</desc>
   </wpt>
   <wpt lat="35.6747136" lon="139.7396621">
     <name>Hie Shrine</name>
@@ -87,11 +87,11 @@
   </wpt>
   <wpt lat="35.6979497" lon="139.7714597">
     <name>amiami Akihabara Figure Tower</name>
-    <desc>Giorno 6 12:14-12:59. Hobby store</desc>
+    <desc>Giorno 6 12:12-12:57. Hobby store</desc>
   </wpt>
   <wpt lat="35.659482" lon="139.7005596">
     <name>Shibuya Crossing</name>
-    <desc>Giorno 6 14:43-15:03. Tourist attraction</desc>
+    <desc>Giorno 6 14:42-15:02. Tourist attraction</desc>
   </wpt>
   <wpt lat="35.6700649" lon="139.6949656">
     <name>Yoyogi Park</name>
@@ -103,19 +103,19 @@
   </wpt>
   <wpt lat="35.6966733" lon="139.7044587">
     <name>Shinjuku Batting Center</name>
-    <desc>Giorno 7 11:15-12:00. Batting cage center</desc>
+    <desc>Giorno 7 11:24-12:10. Batting cage center</desc>
   </wpt>
   <wpt lat="35.6941118" lon="139.7047611">
     <name>Shinjuku Golden-Gai</name>
-    <desc>Giorno 7 12:05-12:25. Tourist attraction</desc>
+    <desc>Giorno 7 12:18-12:38. Tourist attraction</desc>
   </wpt>
   <wpt lat="35.6607397" lon="139.7292319">
     <name>Roppongi Hills</name>
-    <desc>Giorno 7 12:52-14:22. Business park</desc>
+    <desc>Giorno 7 14:05-15:35. Business park</desc>
   </wpt>
   <wpt lat="35.6299045" lon="139.7141956">
     <name>Meguro River</name>
-    <desc>Giorno 7 15:45-16:15. River</desc>
+    <desc>Giorno 7 15:58-16:28. River</desc>
   </wpt>
   <wpt lat="35.7092475" lon="139.6656524">
     <name>Nakano Broadway</name>
@@ -127,19 +127,19 @@
   </wpt>
   <wpt lat="35.7317044" lon="139.7128781">
     <name>BicCamera Ikebukuro Main Store</name>
-    <desc>Giorno 8 12:21-13:06. Electronics store</desc>
+    <desc>Giorno 8 12:24-13:09. Electronics store</desc>
   </wpt>
   <wpt lat="35.7301469" lon="139.7089269">
     <name>Ikebukuro Nishi-guchi Park</name>
-    <desc>Giorno 8 14:12-15:12. Park</desc>
+    <desc>Giorno 8 14:20-15:20. Park</desc>
   </wpt>
   <wpt lat="35.7035959" lon="139.5790815">
     <name>Harmonica Yokocho</name>
-    <desc>Giorno 8 16:20-17:50. Business park</desc>
+    <desc>Giorno 8 16:28-17:58. Business park</desc>
   </wpt>
   <wpt lat="35.6997476" lon="139.5737018">
     <name>Inokashira Park</name>
-    <desc>Giorno 8 17:57-18:57. Park</desc>
+    <desc>Giorno 8 18:16-19:16. Park</desc>
   </wpt>
   <wpt lat="35.7276965" lon="139.7657226">
     <name>Yanaka Ginza</name>
@@ -151,19 +151,19 @@
   </wpt>
   <wpt lat="35.7147557" lon="139.7734312">
     <name>Ueno Park</name>
-    <desc>Giorno 9 10:52-11:52. Park</desc>
+    <desc>Giorno 9 10:54-11:54. Park</desc>
   </wpt>
   <wpt lat="35.7163612" lon="139.7886804">
     <name>Kappabashi Kitchen Supply Town</name>
-    <desc>Giorno 9 12:04-13:34. Business park</desc>
+    <desc>Giorno 9 12:05-13:35. Business park</desc>
   </wpt>
   <wpt lat="35.7134284" lon="139.796664">
     <name>Nakamise Dori shopping street</name>
-    <desc>Giorno 9 14:42-15:27. Grocery store</desc>
+    <desc>Giorno 9 14:43-15:28. Grocery store</desc>
   </wpt>
   <wpt lat="35.7102333" lon="139.8115747">
     <name>Tokyo Solamachi</name>
-    <desc>Giorno 9 15:38-17:08. Shopping mall</desc>
+    <desc>Giorno 9 15:39-17:09. Shopping mall</desc>
   </wpt>
   <trk><name>Giorno 1 — Osaka</name><trkseg>
     <trkpt lat="34.6536555" lon="135.5056051"><name>Shinsekai Market</name></trkpt>

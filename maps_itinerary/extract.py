@@ -141,9 +141,38 @@ def _scroll_list(page, max_scrolls: int) -> None:
             break
 
 
+_JS_PANE = r"""
+() => {
+  const q = s => document.querySelector(s);
+  const addr = q('button[data-item-id="address"]');
+  const cat = q('button[jsaction*="category"]');
+  const h1 = q('[role="main"] h1') || [...document.querySelectorAll('h1')].pop();
+  // the hero photo sits inside the button that opens the photo gallery
+  let photo = '';
+  const hero = q('button[jsaction*="heroHeaderImage"] img, button[aria-label^="Photo"] img, [data-photo-index="0"] img');
+  const cand = hero ? [hero] : [...document.querySelectorAll('[role="main"] img, .RZ66Rb img, .ZKCDEc img')];
+  for (const im of cand) {
+    const s = im.src || '';
+    const m = s.match(/=w(\d+)-h(\d+)/);
+    if (s.includes('googleusercontent') && m && +m[1] >= 90 && !s.includes('=w36') && !s.includes('/a-/')) {
+      photo = s; break;
+    }
+  }
+  return {
+    title: h1 ? h1.textContent.trim() : '',
+    address: addr ? (addr.getAttribute('aria-label') || '').replace(/^Address:\s*/, '').trim() : '',
+    category: cat ? cat.textContent.trim() : '',
+    photo,
+  };
+}
+"""
+
+
 def _resolve_coords(page, places: list[Place]) -> None:
-    """Click each list item, read lat/lng + feature id off the resulting URL."""
+    """Click each list item; read coords/ftid off the URL and photo/address/
+    category off the place pane. All best-effort - failures are skipped."""
     total = len(places)
+    last_photo = ""
     for i, place in enumerate(places):
         try:
             items = page.query_selector_all(_ITEM_SEL)
@@ -152,11 +181,44 @@ def _resolve_coords(page, places: list[Place]) -> None:
                 items = page.query_selector_all(_ITEM_SEL)
             if i >= len(items):
                 continue
+            before = page.url
             items[i].scroll_into_view_if_needed(timeout=4000)
             items[i].click(timeout=5000)
-            page.wait_for_url(re.compile(r"/maps/place/"), timeout=12000)
-            page.wait_for_timeout(600)
+            # wait for the URL to change to a *different* place page
+            try:
+                page.wait_for_function(
+                    "u => location.href !== u && /\\/maps\\/place\\//.test(location.href)",
+                    arg=before,
+                    timeout=12000,
+                )
+            except Exception:
+                page.wait_for_url(re.compile(r"/maps/place/"), timeout=8000)
             _fill_from_url(place, page.url)
+            # wait for the pane to belong to THIS place: address button present and
+            # the title contains a chunk of the name
+            key = (place.name.split()[0][:6] if place.name.split() else "").lower()
+            try:
+                page.wait_for_selector('button[data-item-id="address"]', timeout=8000)
+            except Exception:
+                pass
+            pane = {}
+            for _ in range(8):
+                try:
+                    pane = page.evaluate(_JS_PANE)
+                except Exception:
+                    pane = {}
+                title_ok = not key or key in (pane.get("title") or "").lower()
+                fresh_photo = pane.get("photo") and pane["photo"] != last_photo
+                if title_ok and (fresh_photo or not pane.get("photo")):
+                    break
+                page.wait_for_timeout(500)
+            if pane.get("photo"):
+                last_photo = pane["photo"]
+                place.photo = re.sub(r"=w\d+-h\d+[^&]*", "=w1000-h640-k-no", pane["photo"])
+            if pane.get("address"):
+                place.address = pane["address"]
+            if pane.get("category") and " " in pane["category"]:
+                place.category = pane["category"]
         except Exception as e:  # noqa: BLE001 - keep going, coords are best-effort
             print(f"  ! no coords for {place.name}: {str(e).splitlines()[0]}")
         finally:
