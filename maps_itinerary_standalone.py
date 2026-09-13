@@ -2428,10 +2428,24 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    interactive_launch = argv is None and len(sys.argv) == 1
     args = build_parser().parse_args(argv)
+    rc = _run(args, interactive_launch)
+    if interactive_launch:
+        # keep a double-clicked console window open long enough to read the result
+        try:
+            input("\nPremi Invio per uscire...")
+        except EOFError:
+            pass
+    return rc
 
+
+def _run(args: argparse.Namespace, interactive_launch: bool) -> int:
     if not (args.url or args.from_html or args.from_json):
-        build_parser().error("give a list URL, or --from-html FILE, or --from-json FILE")
+        if interactive_launch or sys.stdin.isatty():
+            args.url = _ask_for_url()
+        else:
+            build_parser().error("give a list URL, or --from-html FILE, or --from-json FILE")
 
     # ---- 1. extract ---------------------------------------------------- #
     source_url = args.url or (args.from_html or args.from_json)
@@ -2541,6 +2555,18 @@ def main(argv: list[str] | None = None) -> int:
     for w in written:
         print(f"  {w}")
     return 0
+
+
+def _ask_for_url() -> str:
+    print("maps-itinerary - da una lista pubblica di Google Maps a un itinerario\n")
+    while True:
+        try:
+            url = input("Incolla qui il link della lista Google Maps: ").strip()
+        except EOFError:
+            raise SystemExit(1)
+        if url:
+            return url
+        print("(vuoto - incolla un link tipo https://maps.app.goo.gl/... o Ctrl+C per uscire)")
 
 
 def _guess_title(source: str) -> str:
