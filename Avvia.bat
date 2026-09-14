@@ -1,5 +1,5 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 title maps-itinerary
 cd /d "%~dp0"
 
@@ -15,23 +15,38 @@ if %errorlevel%==0 (
     )
 )
 
-if "%PYCMD%"=="" (
+if "!PYCMD!"=="" (
     echo.
     echo  Python non e' installato ^(o non e' nel PATH^).
     echo.
-    echo  Scaricalo da: https://www.python.org/downloads/
-    echo  Durante l'installazione spunta "Add python.exe to PATH".
-    echo  Poi rilancia questo file.
-    echo.
-    pause
-    exit /b 1
+    set /p INSTALLA="Vuoi che lo installi ora automaticamente? (S/N): "
+    if /i "!INSTALLA!"=="S" call :install_python
+
+    rem cerco python.exe appena installato senza dover riaprire la finestra
+    where python >nul 2>nul && set "PYCMD=python"
+    if "!PYCMD!"=="" (
+        for /d %%D in ("%LocalAppData%\Programs\Python\Python3*") do (
+            if exist "%%D\python.exe" set "PYCMD=%%D\python.exe"
+        )
+    )
+
+    if "!PYCMD!"=="" (
+        echo.
+        echo  Non sono riuscito a installarlo automaticamente ^(o hai risposto N^).
+        echo  Scaricalo da: https://www.python.org/downloads/
+        echo  Durante l'installazione spunta "Add python.exe to PATH".
+        echo  Poi rilancia questo file.
+        echo.
+        pause
+        exit /b 1
+    )
 )
 
-%PYCMD% -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)" >nul 2>nul
-if not %errorlevel%==0 (
+"!PYCMD!" -c "import sys; sys.exit(0 if sys.version_info >= (3, 10) else 1)" >nul 2>nul
+if not !errorlevel!==0 (
     echo.
     echo  Versione di Python troppo vecchia ^(serve 3.10 o superiore^):
-    %PYCMD% --version
+    "!PYCMD!" --version
     echo.
     echo  Aggiornala da: https://www.python.org/downloads/
     echo.
@@ -39,19 +54,39 @@ if not %errorlevel%==0 (
     exit /b 1
 )
 
-%PYCMD% -c "import requests" >nul 2>nul
-if not %errorlevel%==0 (
+"!PYCMD!" -c "import requests" >nul 2>nul
+if not !errorlevel!==0 (
     echo Installo la libreria "requests" ^(serve una sola volta^)...
-    %PYCMD% -m pip install --quiet requests
-    if not %errorlevel%==0 (
+    "!PYCMD!" -m pip install --quiet requests
+    if not !errorlevel!==0 (
         echo.
         echo  Installazione di "requests" non riuscita. Prova a lanciare a mano:
-        echo    %PYCMD% -m pip install requests
+        echo    !PYCMD! -m pip install requests
         echo.
         pause
         exit /b 1
     )
 )
 
-%PYCMD% "%~dp0maps_itinerary_standalone.py" %*
-if not %errorlevel%==0 pause
+"!PYCMD!" "%~dp0maps_itinerary_standalone.py" %*
+if not !errorlevel!==0 pause
+exit /b
+
+:install_python
+where winget >nul 2>nul
+if %errorlevel%==0 (
+    echo Installo Python con winget, un momento...
+    winget install -e --id Python.Python.3.12 --silent --accept-package-agreements --accept-source-agreements
+    exit /b
+)
+echo winget non disponibile: scarico l'installer da python.org...
+set "PYEXE=%TEMP%\python-installer.exe"
+powershell -NoProfile -Command "try { Invoke-WebRequest -Uri 'https://www.python.org/ftp/python/3.12.6/python-3.12.6-amd64.exe' -OutFile '%PYEXE%' } catch { exit 1 }"
+if not exist "%PYEXE%" (
+    echo Download non riuscito.
+    exit /b
+)
+echo Installo Python ^(nessun clic necessario^)...
+"%PYEXE%" /passive InstallAllUsers=0 PrependPath=1 Include_launcher=1
+del "%PYEXE%" >nul 2>nul
+exit /b
