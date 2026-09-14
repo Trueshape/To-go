@@ -2491,9 +2491,16 @@ body{font:16px/1.5 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
 h1{font-size:22px}
 input[type=text]{width:100%;padding:11px;font:inherit;box-sizing:border-box;margin:12px 0;
   border:1px solid #d8d3c8;border-radius:8px}
-.row{display:flex;gap:16px;flex-wrap:wrap;margin:10px 0 20px;font-size:14px;color:#555}
-.row label{display:flex;flex-direction:column;gap:4px}
-select,input[type=text].small{padding:6px;font:inherit;border:1px solid #d8d3c8;border-radius:6px}
+.row{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end;margin:10px 0 20px;font-size:14px;color:#555}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{white-space:nowrap}
+.field select,.field .pair input[type=text]{
+  height:38px;padding:0 8px;font:inherit;margin:0;width:auto;
+  border:1px solid #d8d3c8;border-radius:6px;box-sizing:border-box}
+.field .pair{display:flex;gap:6px}
+.field .pair input[type=text]{width:66px;text-align:center}
+.field.checkbox{flex-direction:row;align-items:center;height:38px}
+.field.checkbox label{display:flex;align-items:center;gap:6px;color:#1c1b18;white-space:nowrap}
 button{padding:11px 22px;font:inherit;background:#b4472e;color:#fff;border:0;border-radius:8px;cursor:pointer}
 .hint{color:#888;font-size:13px}
 .err{color:#9a2f19;font-weight:600}
@@ -2503,25 +2510,26 @@ button{padding:11px 22px;font:inherit;background:#b4472e;color:#fff;border:0;bor
 <form method="POST" action="/generate">
   <input type="text" name="url" placeholder="Incolla qui il link della lista Google Maps..." required autofocus>
   <div class="row">
-    <label>Inizio/Fine giornata
-      <span style="display:flex;gap:6px">
-        <input type="text" class="small" name="day_start" value="09:30" style="width:70px">
-        <input type="text" class="small" name="day_end" value="20:00" style="width:70px">
-      </span>
-    </label>
-    <label>Ritmo
-      <select name="pace"><option value="normal" selected>normale</option>
+    <div class="field">
+      <label for="day_start">Inizio/Fine giornata</label>
+      <div class="pair">
+        <input type="text" id="day_start" name="day_start" value="09:30">
+        <input type="text" name="day_end" value="20:00">
+      </div>
+    </div>
+    <div class="field">
+      <label for="pace">Ritmo</label>
+      <select id="pace" name="pace"><option value="normal" selected>normale</option>
         <option value="relaxed">tranquillo</option><option value="packed">intenso</option></select>
-    </label>
-    <label>Come ti muovi
-      <select name="travel_mode"><option value="transit" selected>mezzi pubblici</option>
+    </div>
+    <div class="field">
+      <label for="travel_mode">Come ti muovi</label>
+      <select id="travel_mode" name="travel_mode"><option value="transit" selected>mezzi pubblici</option>
         <option value="walking">a piedi</option><option value="driving">auto</option></select>
-    </label>
-    <label><span>&nbsp;</span>
-      <label style="flex-direction:row;align-items:center;gap:6px">
-        <input type="checkbox" name="include_closed"> includi i luoghi chiusi
-      </label>
-    </label>
+    </div>
+    <div class="field checkbox">
+      <label><input type="checkbox" name="include_closed"> includi i luoghi chiusi</label>
+    </div>
   </div>
   <button type="submit">Genera itinerario</button>
   <p class="hint">La prima volta ci vogliono 3-4 minuti: apre un browser invisibile e clicca ogni luogo della lista per leggerne foto e coordinate.</p>
