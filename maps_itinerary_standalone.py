@@ -2411,7 +2411,10 @@ def _job_worker(job_id: str, url: str, opts: dict) -> None:
             p.disabled_reason = "closed"
         extra = [p for p in (fr.generic + fr.closed) if p.has_coords]
 
-        pcfg = PlanConfig(pace=opts["pace"], travel_mode=opts["travel_mode"], day_end=opts["day_end"])
+        pcfg = PlanConfig(
+            pace=opts["pace"], travel_mode=opts["travel_mode"],
+            day_start=opts["day_start"], day_end=opts["day_end"],
+        )
         title = LAST_LIST_TITLE or "Itinerario dalla lista Google Maps"
         it = build_itinerary(
             fr.kept + extra, title=title, source_url=real, cfg=pcfg,
@@ -2467,6 +2470,7 @@ class _Handler(http.server.BaseHTTPRequestHandler):
         opts = {
             "pace": (form.get("pace") or ["normal"])[0],
             "travel_mode": (form.get("travel_mode") or ["transit"])[0],
+            "day_start": (form.get("day_start") or ["09:30"])[0],
             "day_end": (form.get("day_end") or ["20:00"])[0],
             "include_closed": "include_closed" in form,
         }
@@ -2499,8 +2503,11 @@ button{padding:11px 22px;font:inherit;background:#b4472e;color:#fff;border:0;bor
 <form method="POST" action="/generate">
   <input type="text" name="url" placeholder="Incolla qui il link della lista Google Maps..." required autofocus>
   <div class="row">
-    <label>Giorno finisce alle
-      <input type="text" class="small" name="day_end" value="20:00" style="width:70px">
+    <label>Inizio/Fine giornata
+      <span style="display:flex;gap:6px">
+        <input type="text" class="small" name="day_start" value="09:30" style="width:70px">
+        <input type="text" class="small" name="day_end" value="20:00" style="width:70px">
+      </span>
     </label>
     <label>Ritmo
       <select name="pace"><option value="normal" selected>normale</option>
