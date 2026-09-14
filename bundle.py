@@ -3,8 +3,7 @@ import re
 SRC = r"D:\AI\Projects\To go\maps_itinerary"
 OUT = r"D:\AI\Projects\To go\maps_itinerary_standalone.py"
 
-ORDER = ["model.py", "geo.py", "filters.py", "enrich.py", "extract.py", "plan.py", "render.py",
-         "webapp.py", "cli.py"]
+ORDER = ["model.py", "extract.py", "plan.py", "render.py", "webapp.py", "cli.py"]
 
 def strip(text: str, fname: str) -> str:
     # drop the module docstring (first triple-quoted string) - keep as a comment header instead

@@ -7,14 +7,14 @@ import os
 import sys
 
 from . import __version__
-from .enrich import Enricher
 from .extract import (
+    Enricher,
     extract_from_browser,
     extract_from_html,
     load_from_json,
     resolve_list_url,
 )
-from .filters import FilterConfig, apply_filters
+from .model import FilterConfig, apply_filters
 from .plan import PlanConfig, build_itinerary
 from .render import write_all
 

@@ -241,120 +241,10 @@ def _enc(s: str) -> str:
 
     return quote(str(s))
 
-# ============================================================================
-# geo.py — Distances and travel times between places.
-# ============================================================================
-import math
-import os
-from dataclasses import dataclass
 
-import requests
-
-
-# rough door-to-door speeds incl. stops/walking, km/h
-_FALLBACK_SPEED_KMH = {"walking": 4.5, "transit": 16.0, "driving": 22.0}
-_ROUTE_MATRIX = "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix"
-_MODE_MAP = {"walking": "WALK", "transit": "TRANSIT", "driving": "DRIVE"}
-
-
-def haversine_km(a: tuple[float, float], b: tuple[float, float]) -> float:
-    r = 6371.0
-    lat1, lon1, lat2, lon2 = map(math.radians, (a[0], a[1], b[0], b[1]))
-    dlat, dlon = lat2 - lat1, lon2 - lon1
-    h = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
-    return 2 * r * math.asin(math.sqrt(h))
-
-
-@dataclass
-class Matrix:
-    minutes: list[list[float]]
-    km: list[list[float]]
-    mode: str
-    real: bool  # True when it came from the Routes API
-
-    def time(self, i: int, j: int) -> float:
-        return self.minutes[i][j]
-
-    def dist(self, i: int, j: int) -> float:
-        return self.km[i][j]
-
-
-def build_matrix(places: list[Place], mode: str, api_key: str | None = None) -> Matrix:
-    api_key = api_key or os.environ.get("GOOGLE_MAPS_API_KEY")
-    n = len(places)
-    if api_key and n <= 25:  # matrix API caps elements; keep it to day-sized sets
-        try:
-            return _routes_matrix(places, mode, api_key)
-        except requests.RequestException as e:
-            print(f"  ! Routes API matrix failed ({e}); using straight-line estimate")
-    return _fallback_matrix(places, mode)
-
-
-def _fallback_matrix(places: list[Place], mode: str) -> Matrix:
-    speed = _FALLBACK_SPEED_KMH.get(mode, 16.0)
-    n = len(places)
-    km = [[0.0] * n for _ in range(n)]
-    mins = [[0.0] * n for _ in range(n)]
-    for i in range(n):
-        for j in range(n):
-            if i == j:
-                continue
-            d = haversine_km(
-                (places[i].lat, places[i].lng), (places[j].lat, places[j].lng)
-            )
-            # detour factor: real routes are longer than the crow flies
-            d_route = d * (1.3 if mode == "walking" else 1.4)
-            km[i][j] = round(d_route, 2)
-            mins[i][j] = round(d_route / speed * 60 + (4 if mode == "transit" else 0), 1)
-    return Matrix(mins, km, mode, real=False)
-
-
-def _routes_matrix(places: list[Place], mode: str, api_key: str) -> Matrix:
-    pts = [
-        {
-            "waypoint": {
-                "location": {"latLng": {"latitude": p.lat, "longitude": p.lng}}
-            }
-        }
-        for p in places
-    ]
-    body = {
-        "origins": pts,
-        "destinations": pts,
-        "travelMode": _MODE_MAP.get(mode, "TRANSIT"),
-    }
-    if mode == "driving":
-        body["routingPreference"] = "TRAFFIC_AWARE"
-    r = requests.post(
-        _ROUTE_MATRIX,
-        headers={
-            "X-Goog-Api-Key": api_key,
-            "X-Goog-FieldMask": "originIndex,destinationIndex,duration,distanceMeters,condition",
-            "Content-Type": "application/json",
-        },
-        json=body,
-        timeout=60,
-    )
-    r.raise_for_status()
-    n = len(places)
-    km = [[0.0] * n for _ in range(n)]
-    mins = [[0.0] * n for _ in range(n)]
-    for cell in r.json():
-        i, j = cell.get("originIndex", 0), cell.get("destinationIndex", 0)
-        if i == j:
-            continue
-        secs = float(str(cell.get("duration", "0s")).rstrip("s") or 0)
-        mins[i][j] = round(secs / 60, 1)
-        km[i][j] = round(cell.get("distanceMeters", 0) / 1000, 2)
-    return Matrix(mins, km, mode, real=True)
-
-# ============================================================================
-# filters.py — Decide which extracted entries actually make it into the plan.
-# ============================================================================
-from dataclasses import dataclass
-
-
-
+# --------------------------------------------------------------------------- #
+# filtering - decide which extracted entries actually make it into the plan
+# --------------------------------------------------------------------------- #
 @dataclass
 class FilterConfig:
     include_closed: bool = False
@@ -414,149 +304,12 @@ def apply_filters(places: list[Place], cfg: FilterConfig) -> FilterResult:
     return FilterResult(kept, generic, closed, no_coords, below)
 
 # ============================================================================
-# enrich.py — Fill in opening hours / address / a cleaner category via the Places API.
-# ============================================================================
-import json
-import os
-import pathlib
-import time
-
-import requests
-
-
-_TEXT_SEARCH = "https://places.googleapis.com/v1/places:searchText"
-_DETAILS = "https://places.googleapis.com/v1/places/{place_id}"
-
-
-class Enricher:
-    def __init__(self, api_key: str | None = None, cache_dir: str = ".cache", lang: str = "en"):
-        self.api_key = api_key or os.environ.get("GOOGLE_MAPS_API_KEY")
-        self.lang = lang
-        self.cache = pathlib.Path(cache_dir) / "places"
-        self.cache.mkdir(parents=True, exist_ok=True)
-
-    @property
-    def enabled(self) -> bool:
-        return bool(self.api_key)
-
-    # ------------------------------------------------------------------ #
-    def enrich_all(self, places: list[Place]) -> None:
-        if not self.enabled:
-            return
-        for p in places:
-            try:
-                self._enrich_one(p)
-            except requests.RequestException as e:  # keep going on transient errors
-                print(f"  ! enrich failed for {p.name}: {e}")
-            time.sleep(0.05)
-
-    # ------------------------------------------------------------------ #
-    def _enrich_one(self, p: Place) -> None:
-        key = p.ftid or p.place_id or f"{p.name}|{p.lat},{p.lng}"
-        cached = self._cache_get(key)
-        if cached is None:
-            place_id = p.place_id or self._resolve_place_id(p)
-            cached = self._details(place_id) if place_id else {}
-            self._cache_put(key, cached)
-        _apply_details(p, cached)
-
-    def _resolve_place_id(self, p: Place) -> str:
-        body = {"textQuery": p.name, "languageCode": self.lang, "maxResultCount": 1}
-        if p.has_coords:
-            body["locationBias"] = {
-                "circle": {
-                    "center": {"latitude": p.lat, "longitude": p.lng},
-                    "radius": 400.0,
-                }
-            }
-        r = requests.post(
-            _TEXT_SEARCH,
-            headers={
-                "X-Goog-Api-Key": self.api_key,
-                "X-Goog-FieldMask": "places.id,places.location",
-                "Content-Type": "application/json",
-            },
-            json=body,
-            timeout=30,
-        )
-        r.raise_for_status()
-        places = r.json().get("places", [])
-        return places[0]["id"] if places else ""
-
-    def _details(self, place_id: str) -> dict:
-        fields = ",".join(
-            [
-                "id",
-                "displayName",
-                "formattedAddress",
-                "location",
-                "rating",
-                "userRatingCount",
-                "primaryTypeDisplayName",
-                "types",
-                "businessStatus",
-                "regularOpeningHours.weekdayDescriptions",
-                "editorialSummary",
-            ]
-        )
-        r = requests.get(
-            _DETAILS.format(place_id=place_id),
-            headers={
-                "X-Goog-Api-Key": self.api_key,
-                "X-Goog-FieldMask": fields,
-                "Accept-Language": self.lang,
-            },
-            timeout=30,
-        )
-        r.raise_for_status()
-        return r.json()
-
-    # ------------------------------------------------------------------ #
-    def _cache_path(self, key: str) -> pathlib.Path:
-        safe = "".join(c if c.isalnum() else "_" for c in key)[:120]
-        return self.cache / f"{safe}.json"
-
-    def _cache_get(self, key: str):
-        p = self._cache_path(key)
-        if p.exists():
-            return json.loads(p.read_text(encoding="utf-8"))
-        return None
-
-    def _cache_put(self, key: str, value: dict) -> None:
-        self._cache_path(key).write_text(
-            json.dumps(value, ensure_ascii=False), encoding="utf-8"
-        )
-
-
-def _apply_details(p: Place, d: dict) -> None:
-    if not d:
-        return
-    p.place_id = d.get("id", p.place_id)
-    loc = d.get("location") or {}
-    if loc.get("latitude") is not None:
-        p.lat, p.lng = loc["latitude"], loc["longitude"]
-    p.address = d.get("formattedAddress", p.address)
-    if d.get("rating") is not None:
-        p.rating = d["rating"]
-    if d.get("userRatingCount") is not None:
-        p.reviews = d["userRatingCount"]
-    cat = (d.get("primaryTypeDisplayName") or {}).get("text")
-    if cat:
-        p.category = cat
-    if d.get("businessStatus") == "CLOSED_PERMANENTLY":
-        p.permanently_closed = True
-    hours = (d.get("regularOpeningHours") or {}).get("weekdayDescriptions") or []
-    if hours:
-        p.opening_hours = hours
-    summary = (d.get("editorialSummary") or {}).get("text")
-    if summary:
-        p.editorial = summary
-
-# ============================================================================
 # extract.py — Get the raw list of places out of a public Google Maps list.
 # ============================================================================
 import html as _html
 import json
+import os
+import pathlib
 import re
 import time
 from typing import Iterable
@@ -980,19 +733,255 @@ def _dedupe(places: Iterable[Place]) -> list[Place]:
         out.append(p)
     return out
 
+
+# --------------------------------------------------------------------------- #
+# enrichment - fill in opening hours / address / a cleaner category via the
+# Places API. Optional: without GOOGLE_MAPS_API_KEY the pipeline just uses
+# what was scraped plus category-based default visit durations.
+# --------------------------------------------------------------------------- #
+_TEXT_SEARCH = "https://places.googleapis.com/v1/places:searchText"
+_DETAILS = "https://places.googleapis.com/v1/places/{place_id}"
+
+
+class Enricher:
+    """Text Search to resolve a place_id, then Place Details. Cached on disk."""
+
+    def __init__(self, api_key: str | None = None, cache_dir: str = ".cache", lang: str = "en"):
+        self.api_key = api_key or os.environ.get("GOOGLE_MAPS_API_KEY")
+        self.lang = lang
+        self.cache = pathlib.Path(cache_dir) / "places"
+        self.cache.mkdir(parents=True, exist_ok=True)
+
+    @property
+    def enabled(self) -> bool:
+        return bool(self.api_key)
+
+    # ------------------------------------------------------------------ #
+    def enrich_all(self, places: list[Place]) -> None:
+        if not self.enabled:
+            return
+        for p in places:
+            try:
+                self._enrich_one(p)
+            except requests.RequestException as e:  # keep going on transient errors
+                print(f"  ! enrich failed for {p.name}: {e}")
+            time.sleep(0.05)
+
+    # ------------------------------------------------------------------ #
+    def _enrich_one(self, p: Place) -> None:
+        key = p.ftid or p.place_id or f"{p.name}|{p.lat},{p.lng}"
+        cached = self._cache_get(key)
+        if cached is None:
+            place_id = p.place_id or self._resolve_place_id(p)
+            cached = self._details(place_id) if place_id else {}
+            self._cache_put(key, cached)
+        _apply_details(p, cached)
+
+    def _resolve_place_id(self, p: Place) -> str:
+        body = {"textQuery": p.name, "languageCode": self.lang, "maxResultCount": 1}
+        if p.has_coords:
+            body["locationBias"] = {
+                "circle": {
+                    "center": {"latitude": p.lat, "longitude": p.lng},
+                    "radius": 400.0,
+                }
+            }
+        r = requests.post(
+            _TEXT_SEARCH,
+            headers={
+                "X-Goog-Api-Key": self.api_key,
+                "X-Goog-FieldMask": "places.id,places.location",
+                "Content-Type": "application/json",
+            },
+            json=body,
+            timeout=30,
+        )
+        r.raise_for_status()
+        places = r.json().get("places", [])
+        return places[0]["id"] if places else ""
+
+    def _details(self, place_id: str) -> dict:
+        fields = ",".join(
+            [
+                "id",
+                "displayName",
+                "formattedAddress",
+                "location",
+                "rating",
+                "userRatingCount",
+                "primaryTypeDisplayName",
+                "types",
+                "businessStatus",
+                "regularOpeningHours.weekdayDescriptions",
+                "editorialSummary",
+            ]
+        )
+        r = requests.get(
+            _DETAILS.format(place_id=place_id),
+            headers={
+                "X-Goog-Api-Key": self.api_key,
+                "X-Goog-FieldMask": fields,
+                "Accept-Language": self.lang,
+            },
+            timeout=30,
+        )
+        r.raise_for_status()
+        return r.json()
+
+    # ------------------------------------------------------------------ #
+    def _cache_path(self, key: str) -> pathlib.Path:
+        safe = "".join(c if c.isalnum() else "_" for c in key)[:120]
+        return self.cache / f"{safe}.json"
+
+    def _cache_get(self, key: str):
+        p = self._cache_path(key)
+        if p.exists():
+            return json.loads(p.read_text(encoding="utf-8"))
+        return None
+
+    def _cache_put(self, key: str, value: dict) -> None:
+        self._cache_path(key).write_text(
+            json.dumps(value, ensure_ascii=False), encoding="utf-8"
+        )
+
+
+def _apply_details(p: Place, d: dict) -> None:
+    if not d:
+        return
+    p.place_id = d.get("id", p.place_id)
+    loc = d.get("location") or {}
+    if loc.get("latitude") is not None:
+        p.lat, p.lng = loc["latitude"], loc["longitude"]
+    p.address = d.get("formattedAddress", p.address)
+    if d.get("rating") is not None:
+        p.rating = d["rating"]
+    if d.get("userRatingCount") is not None:
+        p.reviews = d["userRatingCount"]
+    cat = (d.get("primaryTypeDisplayName") or {}).get("text")
+    if cat:
+        p.category = cat
+    if d.get("businessStatus") == "CLOSED_PERMANENTLY":
+        p.permanently_closed = True
+    hours = (d.get("regularOpeningHours") or {}).get("weekdayDescriptions") or []
+    if hours:
+        p.opening_hours = hours
+    summary = (d.get("editorialSummary") or {}).get("text")
+    if summary:
+        p.editorial = summary
+
 # ============================================================================
 # plan.py — Group places into days and order each day sensibly.
 # ============================================================================
 import math
+import os
 import random
 import re
 from dataclasses import dataclass
+
+import requests
 
 
 _DIR_URL = (
     "https://www.google.com/maps/dir/?api=1"
     "&origin={o}&destination={d}&travelmode={m}"
 )
+
+# rough door-to-door speeds incl. stops/walking, km/h
+_FALLBACK_SPEED_KMH = {"walking": 4.5, "transit": 16.0, "driving": 22.0}
+_ROUTE_MATRIX = "https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix"
+_MODE_MAP = {"walking": "WALK", "transit": "TRANSIT", "driving": "DRIVE"}
+
+
+def haversine_km(a: tuple[float, float], b: tuple[float, float]) -> float:
+    r = 6371.0
+    lat1, lon1, lat2, lon2 = map(math.radians, (a[0], a[1], b[0], b[1]))
+    dlat, dlon = lat2 - lat1, lon2 - lon1
+    h = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+    return 2 * r * math.asin(math.sqrt(h))
+
+
+@dataclass
+class Matrix:
+    minutes: list[list[float]]
+    km: list[list[float]]
+    mode: str
+    real: bool  # True when it came from the Routes API
+
+    def time(self, i: int, j: int) -> float:
+        return self.minutes[i][j]
+
+    def dist(self, i: int, j: int) -> float:
+        return self.km[i][j]
+
+
+def build_matrix(places: list[Place], mode: str, api_key: str | None = None) -> Matrix:
+    api_key = api_key or os.environ.get("GOOGLE_MAPS_API_KEY")
+    n = len(places)
+    if api_key and n <= 25:  # matrix API caps elements; keep it to day-sized sets
+        try:
+            return _routes_matrix(places, mode, api_key)
+        except requests.RequestException as e:
+            print(f"  ! Routes API matrix failed ({e}); using straight-line estimate")
+    return _fallback_matrix(places, mode)
+
+
+def _fallback_matrix(places: list[Place], mode: str) -> Matrix:
+    speed = _FALLBACK_SPEED_KMH.get(mode, 16.0)
+    n = len(places)
+    km = [[0.0] * n for _ in range(n)]
+    mins = [[0.0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                continue
+            d = haversine_km(
+                (places[i].lat, places[i].lng), (places[j].lat, places[j].lng)
+            )
+            # detour factor: real routes are longer than the crow flies
+            d_route = d * (1.3 if mode == "walking" else 1.4)
+            km[i][j] = round(d_route, 2)
+            mins[i][j] = round(d_route / speed * 60 + (4 if mode == "transit" else 0), 1)
+    return Matrix(mins, km, mode, real=False)
+
+
+def _routes_matrix(places: list[Place], mode: str, api_key: str) -> Matrix:
+    pts = [
+        {
+            "waypoint": {
+                "location": {"latLng": {"latitude": p.lat, "longitude": p.lng}}
+            }
+        }
+        for p in places
+    ]
+    body = {
+        "origins": pts,
+        "destinations": pts,
+        "travelMode": _MODE_MAP.get(mode, "TRANSIT"),
+    }
+    if mode == "driving":
+        body["routingPreference"] = "TRAFFIC_AWARE"
+    r = requests.post(
+        _ROUTE_MATRIX,
+        headers={
+            "X-Goog-Api-Key": api_key,
+            "X-Goog-FieldMask": "originIndex,destinationIndex,duration,distanceMeters,condition",
+            "Content-Type": "application/json",
+        },
+        json=body,
+        timeout=60,
+    )
+    r.raise_for_status()
+    n = len(places)
+    km = [[0.0] * n for _ in range(n)]
+    mins = [[0.0] * n for _ in range(n)]
+    for cell in r.json():
+        i, j = cell.get("originIndex", 0), cell.get("destinationIndex", 0)
+        if i == j:
+            continue
+        secs = float(str(cell.get("duration", "0s")).rstrip("s") or 0)
+        mins[i][j] = round(secs / 60, 1)
+        km[i][j] = round(cell.get("distanceMeters", 0) / 1000, 2)
+    return Matrix(mins, km, mode, real=True)
 
 
 @dataclass

@@ -16,9 +16,8 @@ import uuid
 import webbrowser
 
 from . import extract as _extract
-from .enrich import Enricher
-from .extract import extract_from_browser, resolve_list_url
-from .filters import FilterConfig, apply_filters
+from .extract import Enricher, extract_from_browser, resolve_list_url
+from .model import FilterConfig, apply_filters
 from .plan import PlanConfig, build_itinerary
 from .render import to_html
 
