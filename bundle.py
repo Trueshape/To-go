@@ -3,7 +3,8 @@ import re
 SRC = r"D:\AI\Projects\To go\maps_itinerary"
 OUT = r"D:\AI\Projects\To go\maps_itinerary_standalone.py"
 
-ORDER = ["model.py", "geo.py", "filters.py", "enrich.py", "extract.py", "plan.py", "render.py", "cli.py"]
+ORDER = ["model.py", "geo.py", "filters.py", "enrich.py", "extract.py", "plan.py", "render.py",
+         "webapp.py", "cli.py"]
 
 def strip(text: str, fname: str) -> str:
     # drop the module docstring (first triple-quoted string) - keep as a comment header instead
@@ -11,15 +12,24 @@ def strip(text: str, fname: str) -> str:
     doc = doc_m.group(1).strip() if doc_m else ""
     if doc_m:
         text = text[doc_m.end():]
-    # drop local imports: single-line "from .xxx import ..." and multi-line "from .xxx import (\n ... \n)"
-    text = re.sub(r'^from \. import[^\n]*\n', '', text, flags=re.M)
-    text = re.sub(r'^from \.\w+ import \([^)]*\)\n', '', text, flags=re.M)
-    text = re.sub(r'^from \.\w+ import[^\n]*\n', '', text, flags=re.M)
+
+    # "from . import xxx" / "from . import xxx as yyy" (any indent, e.g. inside a
+    # function): drop the import, then inline "yyy." as nothing - every module's
+    # globals already share one namespace in the bundle, so `webapp.run_server(...)`
+    # becomes plain `run_server(...)`.
+    alias_imports = list(re.finditer(r'^[ \t]*from \. import (\w+)(?: as (\w+))?\n', text, flags=re.M))
+    for m in alias_imports:
+        text = text.replace(m.group(0), '', 1)
+    for m in alias_imports:
+        alias = m.group(2) or m.group(1)
+        text = re.sub(rf'\b{re.escape(alias)}\.', '', text)
+
+    # "from .module import a, b" and the multi-line "(...)" form
+    text = re.sub(r'^[ \t]*from \.\w+ import \([^)]*\)\n', '', text, flags=re.M)
+    text = re.sub(r'^[ \t]*from \.\w+ import[^\n]*\n', '', text, flags=re.M)
     # drop "from __future__ import annotations" (re-added once at top of bundle)
-    text = re.sub(r'^from __future__ import annotations\n', '', text, flags=re.M)
-    # cli.py special case: it aliases the whole extract module just to reach one global
-    text = text.replace("    from . import extract as _extract\n\n    title = _extract.LAST_LIST_TITLE or _guess_title(source_url)",
-                         "    title = LAST_LIST_TITLE or _guess_title(source_url)")
+    text = re.sub(r'^[ \t]*from __future__ import annotations\n', '', text, flags=re.M)
+
     doc_first_line = doc.splitlines()[0].strip() if doc else ""
     header = f"# {'='*76}\n# {fname}" + (f" \u2014 {doc_first_line}" if doc_first_line else "") + f"\n# {'='*76}\n"
     return header + text.strip("\n") + "\n"

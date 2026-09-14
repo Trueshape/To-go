@@ -60,6 +60,11 @@ def build_parser() -> argparse.ArgumentParser:
     pl.add_argument("--day-start", default="09:30")
     pl.add_argument("--day-end", default="20:00", help="target end of a day (default 20:00)")
 
+    ui = ap.add_argument_group("local web page")
+    ui.add_argument("--serve", action="store_true",
+                     help="open a local page to paste the list link, instead of the CLI")
+    ui.add_argument("--port", type=int, default=8765, help="port for --serve (default 8765)")
+
     out = ap.add_argument_group("output")
     out.add_argument("--out", default="out", help="output directory (default: ./out)")
     out.add_argument("--format", default="html,md,json,gpx", help="comma list of: html,md,json,gpx")
@@ -69,19 +74,21 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     interactive_launch = argv is None and len(sys.argv) == 1
     args = build_parser().parse_args(argv)
-    rc = _run(args, interactive_launch)
-    if interactive_launch:
-        # keep a double-clicked console window open long enough to read the result
-        try:
-            input("\nPremi Invio per uscire...")
-        except EOFError:
-            pass
-    return rc
+
+    # double-clicked, or run with no arguments at all: open the local page
+    # instead of demanding a URL on the command line
+    if args.serve or (interactive_launch and not (args.url or args.from_html or args.from_json)):
+        from . import webapp
+
+        webapp.run_server(args.port)
+        return 0
+
+    return _run(args)
 
 
-def _run(args: argparse.Namespace, interactive_launch: bool) -> int:
+def _run(args: argparse.Namespace) -> int:
     if not (args.url or args.from_html or args.from_json):
-        if interactive_launch or sys.stdin.isatty():
+        if sys.stdin.isatty():
             args.url = _ask_for_url()
         else:
             build_parser().error("give a list URL, or --from-html FILE, or --from-json FILE")
